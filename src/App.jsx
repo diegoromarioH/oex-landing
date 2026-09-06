@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "./assets/logo.png";
 import { supabase } from "./supabase";
+import { registrarEvento } from "./analytics";
 import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen } from "lucide-react";
 
 // Anima una sección hacia arriba/opacidad cuando entra en pantalla.
@@ -250,6 +251,22 @@ function Seo({ title, description, path }) {
 
 export default function App() {
   const path = window.location.pathname;
+
+  useEffect(() => {
+    registrarEvento(path.startsWith("/guias/") ? "guia_vista" : "pagina_vista");
+    if (path === "/prealerta") registrarEvento("prealerta_inicio");
+
+    const registrarWhatsapp = (event) => {
+      if (event.target.closest('a[href*="wa.me"]')) registrarEvento("whatsapp_click");
+    };
+    const registrarInstalacion = () => registrarEvento("app_instalada");
+    document.addEventListener("click", registrarWhatsapp);
+    window.addEventListener("appinstalled", registrarInstalacion);
+    return () => {
+      document.removeEventListener("click", registrarWhatsapp);
+      window.removeEventListener("appinstalled", registrarInstalacion);
+    };
+  }, [path]);
 
   if (path === "/prealerta") {
     return <PrealertaPage />;
@@ -827,10 +844,12 @@ function TrackingLookup({ standalone = false }) {
           return;
         }
         if (!data || data.length === 0) {
+          registrarEvento("tracking_busqueda", { modo: "tracking", resultado: "sin_resultados" });
           setError("No encontramos ese número de tracking. Verifica que esté bien escrito o consúltanos por WhatsApp.");
           return;
         }
         setResultado(data[0]);
+        registrarEvento("tracking_busqueda", { modo: "tracking", resultado: "encontrado" });
       } else {
         const { data, error: err } = await supabase.rpc("buscar_trackings_por_codigo_cliente", { p_codigo: texto });
         if (err) {
@@ -839,10 +858,12 @@ function TrackingLookup({ standalone = false }) {
           return;
         }
         if (!data || data.length === 0) {
+          registrarEvento("tracking_busqueda", { modo: "cliente", resultado: "sin_resultados" });
           setError("No encontramos envíos activos con ese código. Verifica que esté bien escrito o consúltanos por WhatsApp.");
           return;
         }
         setResultados(data);
+        registrarEvento("tracking_busqueda", { modo: "cliente", resultado: "encontrado" });
       }
     } catch (err) {
       console.error(err);
@@ -1316,6 +1337,7 @@ function PrealertaPage() {
       }
 
       setMensaje("✅ Prealerta recibida. Gracias por registrar tu paquete. Revisaremos la información y te contactaremos por WhatsApp.");
+      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length });
 
       setTipoCliente("nuevo");
       setCodigoCliente("");
@@ -1578,6 +1600,7 @@ function InstallAppButton() {
   if (instalada || (!installPrompt && !esIos)) return null;
 
   const instalar = async () => {
+    registrarEvento("app_instalar_click");
     if (installPrompt) {
       await installPrompt.prompt();
       await installPrompt.userChoice;
