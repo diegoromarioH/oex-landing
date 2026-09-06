@@ -1300,3 +1300,570 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
     text-align: center;
   }
 }
+
+/* Guías y artículos */
+.guidesPage,
+.guideArticlePage {
+  background: #f4f7fb;
+}
+
+.guideNavActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navButtonSoft {
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid #dfe5ee;
+}
+
+.guidesWrap,
+.guideArticleWrap {
+  width: min(1160px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.guidesWrap {
+  padding: 72px 0 88px;
+}
+
+.guidesHero {
+  max-width: 790px;
+  margin-bottom: 40px;
+}
+
+.guidesHero .miniBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.guidesHero h1 {
+  max-width: 700px;
+  margin: 18px 0 14px;
+  color: var(--navy);
+  font-family: "Sora", sans-serif;
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.guidesHero > p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.guidesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.guideCard {
+  position: relative;
+  display: flex;
+  min-height: 310px;
+  padding: 30px;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid #e1e7ef;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 14px 40px rgba(11, 31, 58, 0.07);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.guideCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 82, 51, 0.35);
+  box-shadow: 0 18px 48px rgba(11, 31, 58, 0.11);
+}
+
+.guideCardFeatured {
+  grid-column: 1 / -1;
+  min-height: 330px;
+  padding-right: min(42%, 470px);
+  background: linear-gradient(125deg, #0b203b 0%, #112d52 62%, #ff5233 180%);
+  border-color: transparent;
+}
+
+.guideCardFeatured::after {
+  content: "OEX";
+  position: absolute;
+  right: 7%;
+  bottom: -20px;
+  color: rgba(255, 255, 255, 0.08);
+  font-family: "Sora", sans-serif;
+  font-size: clamp(110px, 16vw, 210px);
+  font-weight: 800;
+  letter-spacing: -0.1em;
+  pointer-events: none;
+}
+
+.guideCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 42px;
+}
+
+.guideCardTop span,
+.guideCategory {
+  display: inline-flex;
+  width: fit-content;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #fff0ec;
+  color: #d93d24;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.guideCardTop small {
+  color: #7b8798;
+  font-weight: 600;
+}
+
+.guideCard h2 {
+  max-width: 760px;
+  margin: 0 0 12px;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(22px, 2.7vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.guideCard h2 a {
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.guideCard > p {
+  max-width: 720px;
+  margin: 0 0 26px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.guideReadLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: auto;
+  color: var(--coral);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.guideCardFeatured h2 a,
+.guideCardFeatured > p,
+.guideCardFeatured .guideReadLink {
+  color: #ffffff;
+}
+
+.guideCardFeatured .guideCardTop small {
+  color: #b9c8dc;
+}
+
+.guidesCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 34px;
+  padding: 32px 36px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid #e1e7ef;
+}
+
+.guidesCta span {
+  color: var(--coral);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guidesCta h2 {
+  margin: 6px 0 7px;
+  color: var(--navy);
+  font-family: "Sora", sans-serif;
+  font-size: 25px;
+}
+
+.guidesCta p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.guideArticleWrap {
+  padding: 34px 0 88px;
+}
+
+.guideBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 28px;
+  color: #778396;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.guideBreadcrumb a {
+  color: var(--navy);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.guideBreadcrumb > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.guideArticle {
+  overflow: hidden;
+  border: 1px solid #e1e7ef;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 18px 55px rgba(11, 31, 58, 0.08);
+}
+
+.guideArticleHeader,
+.guideArticleBody,
+.guideArticleFooter {
+  padding-right: clamp(28px, 7vw, 90px);
+  padding-left: clamp(28px, 7vw, 90px);
+}
+
+.guideArticleHeader {
+  padding-top: clamp(42px, 7vw, 80px);
+  padding-bottom: 46px;
+  background: linear-gradient(180deg, #ffffff 20%, #f7f9fc 100%);
+  border-bottom: 1px solid #e7ebf1;
+}
+
+.guideArticleHeader h1 {
+  max-width: 880px;
+  margin: 18px 0;
+  color: var(--navy);
+  font-family: "Sora", sans-serif;
+  font-size: clamp(34px, 5.2vw, 60px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.guideArticleHeader p {
+  max-width: 780px;
+  margin: 0 0 24px;
+  color: #536176;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.7;
+}
+
+.guideArticleHeader small {
+  color: #7b8798;
+  font-weight: 600;
+}
+
+.guideArticleBody {
+  max-width: 900px;
+  padding-top: 52px;
+  padding-bottom: 60px;
+}
+
+.guideArticleBody section + section {
+  margin-top: 46px;
+}
+
+.guideArticleBody h2 {
+  margin: 0 0 16px;
+  color: var(--navy);
+  font-family: "Sora", sans-serif;
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+.guideArticleBody p,
+.guideArticleBody li {
+  color: #445267;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.guideArticleBody p {
+  margin: 0 0 15px;
+}
+
+.guideArticleBody ol {
+  margin: 22px 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: guide-step;
+}
+
+.guideArticleBody li {
+  position: relative;
+  min-height: 42px;
+  padding: 7px 0 13px 54px;
+  counter-increment: guide-step;
+}
+
+.guideArticleBody li::before {
+  content: counter(guide-step);
+  position: absolute;
+  top: 3px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #fff0ec;
+  color: var(--coral);
+  font-weight: 800;
+}
+
+.guideNote {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--coral);
+  border-radius: 4px 14px 14px 4px;
+  background: #fff6f3;
+  color: #49566a;
+  line-height: 1.65;
+}
+
+.guideArticleFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 34px;
+  padding-bottom: 34px;
+  background: var(--navy);
+}
+
+.guideArticleFooter h2 {
+  margin: 0 0 7px;
+  color: #ffffff;
+  font-family: "Sora", sans-serif;
+  font-size: 23px;
+}
+
+.guideArticleFooter p {
+  margin: 0;
+  color: #c1cde0;
+}
+
+.guideArticleFooter > div:last-child {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 10px;
+}
+
+.guideArticleFooter .primaryCta,
+.guideArticleFooter .secondaryCta {
+  min-height: 46px;
+  padding: 12px 17px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.guideArticleFooter .secondaryCta {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  background: transparent;
+}
+
+.relatedGuides {
+  padding-top: 50px;
+}
+
+.relatedGuides > h2 {
+  margin: 0 0 20px;
+  color: var(--navy);
+  font-family: "Sora", sans-serif;
+  font-size: 28px;
+}
+
+.relatedGuides > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.relatedGuides a {
+  display: flex;
+  min-height: 150px;
+  padding: 22px;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e1e7ef;
+  border-radius: 18px;
+  background: #ffffff;
+  color: var(--navy);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.relatedGuides a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 82, 51, 0.4);
+}
+
+.relatedGuides span {
+  color: var(--coral);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.relatedGuides b {
+  font-family: "Sora", sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+@media (max-width: 760px) {
+  .guideNavActions .navButtonSoft {
+    display: none;
+  }
+
+  .guidesWrap,
+  .guideArticleWrap {
+    width: min(100% - 24px, 1160px);
+  }
+
+  .guidesWrap {
+    padding: 44px 0 60px;
+  }
+
+  .guidesHero {
+    margin-bottom: 28px;
+  }
+
+  .guidesHero h1 {
+    font-size: 39px;
+  }
+
+  .guidesHero > p {
+    font-size: 16px;
+  }
+
+  .guidesGrid,
+  .relatedGuides > div {
+    grid-template-columns: 1fr;
+  }
+
+  .guideCard,
+  .guideCardFeatured {
+    grid-column: auto;
+    min-height: 270px;
+    padding: 24px;
+  }
+
+  .guideCardFeatured {
+    padding-right: 24px;
+  }
+
+  .guideCardFeatured::after {
+    right: 9%;
+    bottom: -4px;
+    font-size: 95px;
+  }
+
+  .guideCardTop {
+    margin-bottom: 30px;
+  }
+
+  .guideCard h2 {
+    position: relative;
+    z-index: 1;
+    font-size: 24px;
+  }
+
+  .guideCard > p,
+  .guideReadLink {
+    position: relative;
+    z-index: 1;
+  }
+
+  .guidesCta,
+  .guideArticleFooter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .guidesCta {
+    padding: 26px 24px;
+  }
+
+  .guideArticleWrap {
+    padding-top: 22px;
+    padding-bottom: 60px;
+  }
+
+  .guideArticle {
+    border-radius: 20px;
+  }
+
+  .guideArticleHeader,
+  .guideArticleBody,
+  .guideArticleFooter {
+    padding-right: 22px;
+    padding-left: 22px;
+  }
+
+  .guideArticleHeader {
+    padding-top: 38px;
+    padding-bottom: 34px;
+  }
+
+  .guideArticleHeader h1 {
+    font-size: 34px;
+  }
+
+  .guideArticleBody {
+    padding-top: 38px;
+    padding-bottom: 44px;
+  }
+
+  .guideArticleBody section + section {
+    margin-top: 38px;
+  }
+
+  .guideArticleBody p,
+  .guideArticleBody li {
+    font-size: 16px;
+  }
+
+  .guideArticleFooter > div:last-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .guideArticleFooter .primaryCta,
+  .guideArticleFooter .secondaryCta {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .relatedGuides {
+    padding-top: 38px;
+  }
+}

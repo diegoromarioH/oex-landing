@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "./assets/logo.png";
 import { supabase } from "./supabase";
-import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2 } from "lucide-react";
+import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen } from "lucide-react";
 
 // Anima una sección hacia arriba/opacidad cuando entra en pantalla.
 // Respeta prefers-reduced-motion (ver styles.css).
@@ -138,6 +138,116 @@ const TARIFAS = [
 const DESTINOS = ["Ometepe", "Managua"];
 const TIPOS_ENVIO = ["Marítimo", "Aéreo"];
 
+const GUIAS = [
+  {
+    slug: "envios-estados-unidos-ometepe",
+    category: "Envíos a Ometepe",
+    title: "Envíos de Estados Unidos a Ometepe: tarifas, tiempos y proceso",
+    description: "Conoce cómo recibir en Ometepe tus compras de Estados Unidos por envío aéreo o marítimo con OEX.",
+    readingTime: "5 min",
+    intro: "Comprar en Estados Unidos desde la isla de Ometepe es más sencillo cuando conoces cada paso. En esta guía explicamos cómo usar la dirección de OEX en Miami, registrar el tracking y elegir el tipo de envío.",
+    sections: [
+      {
+        title: "¿Cómo funciona el envío hacia Ometepe?",
+        paragraphs: ["OEX te brinda una dirección de recepción en Miami. Colocas esa dirección al comprar en la tienda, esperas a que la tienda genere el número de seguimiento y luego prealertas el paquete en nuestra web.", "Cuando el paquete llega a Miami, se identifica con tus datos y continúa hacia Nicaragua por la modalidad que seleccionaste. Al finalizar el proceso coordinamos contigo el retiro o la entrega correspondiente en Ometepe."],
+        steps: ["Solicita y copia tu dirección OEX.", "Compra en la tienda de Estados Unidos.", "Espera el tracking proporcionado por la tienda.", "Prealerta el tracking antes de su llegada a Miami.", "Consulta el estado del paquete y espera la coordinación de entrega."]
+      },
+      {
+        title: "Tarifas y tiempos estándar para Ometepe",
+        paragraphs: ["El envío marítimo estándar cuesta USD 3.00 por libra y tarda aproximadamente de 17 a 20 días hábiles. El envío aéreo estándar cuesta USD 7.50 por libra y tarda aproximadamente de 4 a 6 días hábiles."],
+        note: "Los tiempos comienzan cuando OEX recibe el paquete en Miami y son estimados. Algunos productos requieren una cotización especial."
+      },
+      {
+        title: "¿Cuál modalidad te conviene?",
+        paragraphs: ["El marítimo suele convenir para ropa, zapatos, artículos del hogar o compras que no necesitas con urgencia. El aéreo es útil para paquetes pequeños o pedidos que deseas recibir en menos tiempo."]
+      }
+    ]
+  },
+  {
+    slug: "envio-aereo-o-maritimo-nicaragua",
+    category: "Consejos de envío",
+    title: "Envío aéreo o marítimo a Nicaragua: ¿cuál elegir?",
+    description: "Compara precio, tiempo y usos del envío aéreo y marítimo para recibir compras de Estados Unidos en Nicaragua.",
+    readingTime: "4 min",
+    intro: "La mejor modalidad no siempre es la más rápida ni la más económica: depende del peso, la urgencia y el tipo de producto. Esta comparación te ayuda a decidir.",
+    sections: [
+      {
+        title: "Envío aéreo",
+        paragraphs: ["Es la opción más rápida. Para Managua el tiempo estándar es de 3 a 5 días hábiles y la tarifa es USD 6.50 por libra. Para Ometepe es de 4 a 6 días hábiles y USD 7.50 por libra.", "Suele ser conveniente para paquetes pequeños, documentos permitidos, ropa ligera o compras que necesitas pronto."]
+      },
+      {
+        title: "Envío marítimo",
+        paragraphs: ["Es la alternativa más económica para compras pesadas o que no son urgentes. Para Managua el tiempo estándar es de 16 a 19 días hábiles y la tarifa es USD 2.50 por libra. Para Ometepe es de 17 a 20 días hábiles y USD 3.00 por libra."]
+      },
+      {
+        title: "Antes de elegir",
+        paragraphs: ["Confirma si el producto puede viajar bajo la tarifa estándar. Electrónicos, artículos voluminosos, productos delicados o mercancía especial pueden necesitar revisión y cotización previa."],
+        note: "Los plazos son estimados desde la recepción en Miami y pueden variar por aduanas, transportistas, clima o temporadas de alta demanda."
+      }
+    ]
+  },
+  {
+    slug: "como-comprar-shein-nicaragua",
+    category: "Compras en línea",
+    title: "Cómo comprar en SHEIN desde Nicaragua paso a paso",
+    description: "Aprende a comprar en SHEIN desde Nicaragua, usar tu dirección OEX en Miami y registrar el tracking de tu pedido.",
+    readingTime: "6 min",
+    intro: "Puedes comprar directamente en la aplicación o página de SHEIN y recibir tu pedido en Managua u Ometepe. Solo necesitas utilizar correctamente la dirección de recepción de OEX.",
+    sections: [
+      {
+        title: "Paso a paso",
+        paragraphs: ["Agrega al carrito los productos, revisa tallas, colores y cantidades, y continúa al pago. SHEIN solicitará una dirección de entrega en Estados Unidos: allí debes colocar la dirección que OEX te brinda."],
+        steps: ["Agrega y verifica los productos del carrito.", "Coloca tu dirección OEX en Miami.", "Realiza el pago con tu tarjeta.", "Espera uno o dos días para recibir el tracking.", "Registra el tracking en la página de prealerta.", "Espera la confirmación de recepción y el traslado a Nicaragua."]
+      },
+      {
+        title: "Si no tienes tarjeta",
+        paragraphs: ["OEX puede realizar la compra asistida. Nos envías los enlaces o el carrito y transfieres únicamente el monto que cobra SHEIN. La compra asistida no tiene costo adicional; al retirar pagas el peso según la tarifa de envío correspondiente."]
+      },
+      {
+        title: "Revisa las tallas antes de pagar",
+        paragraphs: ["Consulta la tabla de medidas de cada producto y compárala con tus medidas en centímetros. No te guíes únicamente por las letras S, M, L o XL, porque las medidas pueden cambiar entre productos."]
+      }
+    ]
+  },
+  {
+    slug: "que-es-tracking-como-prealertarlo",
+    category: "Rastreo",
+    title: "Qué es un tracking y cómo prealertarlo en OEX",
+    description: "Descubre dónde encontrar el número de tracking de una compra y cómo registrarlo para identificar tu paquete en Miami.",
+    readingTime: "3 min",
+    intro: "El tracking es el número de seguimiento asignado por la tienda o transportista. Permite identificar el paquete y consultar su recorrido hasta la recepción en Miami.",
+    sections: [
+      {
+        title: "¿Dónde encuentro mi tracking?",
+        paragraphs: ["Normalmente aparece en el correo de confirmación de envío, dentro de los detalles del pedido en la aplicación de la tienda o en la página del transportista. No es lo mismo que el número de orden o de compra."]
+      },
+      {
+        title: "Cómo prealertarlo",
+        steps: ["Abre la página de prealerta de OEX.", "Indica si eres cliente nuevo o si ya tienes código de cliente.", "Escribe tu WhatsApp y el número de tracking.", "Selecciona destino, modalidad y tienda o remitente.", "Revisa la información y envía la prealerta."],
+        paragraphs: ["Puedes registrar varios trackings en una misma prealerta. Escríbelos exactamente como los muestra la tienda, sin agregar palabras adicionales."]
+      },
+      {
+        title: "¿Por qué conviene prealertar?",
+        paragraphs: ["La prealerta ayuda a relacionar el paquete con tus datos desde antes de su llegada a Miami y facilita el seguimiento operativo."],
+        note: "Prealertar no significa que el paquete ya fue recibido. Puedes comprobar su estado posteriormente en la página de rastreo."
+      }
+    ]
+  }
+];
+
+function Seo({ title, description, path }) {
+  useEffect(() => {
+    document.title = title;
+    const canonicalUrl = `https://oexni.com${path}`;
+    const descriptionMeta = document.querySelector('meta[name="description"]');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (descriptionMeta) descriptionMeta.setAttribute("content", description);
+    if (canonical) canonical.setAttribute("href", canonicalUrl);
+  }, [title, description, path]);
+
+  return null;
+}
+
 export default function App() {
   const path = window.location.pathname;
 
@@ -151,6 +261,16 @@ export default function App() {
 
   if (path === "/politicas") {
     return <PoliticasPage />;
+  }
+
+  if (path === "/guias" || path === "/guias/") {
+    return <GuiasPage />;
+  }
+
+  if (path.startsWith("/guias/")) {
+    const slug = path.split("/").filter(Boolean)[1];
+    const guia = GUIAS.find((item) => item.slug === slug);
+    if (guia) return <GuiaArticlePage guia={guia} />;
   }
 
   return <LandingPage />;
@@ -243,6 +363,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           <a onClick={() => setMenuAbierto(false)} href="#inicio">Inicio</a>
           <a onClick={() => setMenuAbierto(false)} href="/rastreo">Rastrear paquete</a>
           <a onClick={() => setMenuAbierto(false)} href="#tarifas">Tarifas</a>
+          <a onClick={() => setMenuAbierto(false)} href="/guias">Guías</a>
           <a onClick={() => setMenuAbierto(false)} href="/politicas">Políticas</a>
           <a onClick={() => setMenuAbierto(false)} href="#contacto">Contacto</a>
           <a onClick={() => setMenuAbierto(false)} href="/prealerta" className="mobilePrealerta"><IconBox size={16} /> Prealertar</a>
@@ -1090,6 +1211,7 @@ function Footer() {
         <b>OEX |  Managua - Ometepe </b>
         <p>Compras y paquetería USA a Nicaragua</p>
         <p><a href="/politicas">Políticas de servicio</a></p>
+        <p><a href="/guias">Guías para comprar y recibir</a></p>
         <p>Ometepe Express 2026</p>
       </div>
     </footer>
@@ -1559,5 +1681,130 @@ function PolicyBlock({ title, text }) {
       <h3>{title}</h3>
       <p>{text}</p>
     </article>
+  );
+}
+
+function GuiasNav({ subtitle = "Guías y consejos" }) {
+  return (
+    <nav className="topNav simpleNav guideNav">
+      <a className="brand" href="/">
+        <img src={logo} className="brandLogo" alt="OEX" />
+        <div>
+          <strong>OEX</strong>
+          <span>{subtitle}</span>
+        </div>
+      </a>
+      <div className="guideNavActions">
+        <a href="/guias" className="navButton navButtonSoft">Todas las guías</a>
+        <a href="/" className="navButton">Inicio</a>
+      </div>
+    </nav>
+  );
+}
+
+function GuiasPage() {
+  return (
+    <div className="page guidesPage">
+      <Seo
+        title="Guías para comprar en Estados Unidos y recibir en Nicaragua | OEX"
+        description="Guías de OEX sobre envíos a Nicaragua, compras en SHEIN, tracking, prealertas y modalidades aéreas o marítimas."
+        path="/guias"
+      />
+      <GuiasNav />
+
+      <main className="guidesWrap">
+        <header className="guidesHero">
+          <div className="miniBadge"><BookOpen size={15} /> Guías OEX</div>
+          <h1>Compra y recibe con más claridad</h1>
+          <p>Respuestas sencillas para comprar en Estados Unidos, elegir tu envío y darle seguimiento a cada paquete.</p>
+        </header>
+
+        <section className="guidesGrid" aria-label="Artículos y guías de OEX">
+          {GUIAS.map((guia, index) => (
+            <article className={`guideCard ${index === 0 ? "guideCardFeatured" : ""}`} key={guia.slug}>
+              <div className="guideCardTop">
+                <span>{guia.category}</span>
+                <small>{guia.readingTime} de lectura</small>
+              </div>
+              <h2><a href={`/guias/${guia.slug}`}>{guia.title}</a></h2>
+              <p>{guia.description}</p>
+              <a className="guideReadLink" href={`/guias/${guia.slug}`}>Leer guía <IconArrowRight size={17} /></a>
+            </article>
+          ))}
+        </section>
+
+        <aside className="guidesCta">
+          <div>
+            <span>¿Todavía tienes dudas?</span>
+            <h2>Te ayudamos antes de comprar</h2>
+            <p>Escríbenos por WhatsApp y revisamos contigo el proceso o la modalidad de envío.</p>
+          </div>
+          <a href="https://wa.me/50557067044" target="_blank" rel="noreferrer" className="greenCta"><IconWhatsapp size={17} /> Consultar por WhatsApp</a>
+        </aside>
+      </main>
+
+      <Footer />
+      <FloatingWhatsApp />
+    </div>
+  );
+}
+
+function GuiaArticlePage({ guia }) {
+  return (
+    <div className="page guideArticlePage">
+      <Seo title={`${guia.title} | OEX Nicaragua`} description={guia.description} path={`/guias/${guia.slug}`} />
+      <GuiasNav subtitle={guia.category} />
+
+      <main className="guideArticleWrap">
+        <nav className="guideBreadcrumb" aria-label="Ruta de navegación">
+          <a href="/">Inicio</a><span>›</span><a href="/guias">Guías</a><span>›</span><span>{guia.category}</span>
+        </nav>
+
+        <article className="guideArticle">
+          <header className="guideArticleHeader">
+            <span className="guideCategory">{guia.category}</span>
+            <h1>{guia.title}</h1>
+            <p>{guia.intro}</p>
+            <small>Actualizado en septiembre de 2026 · {guia.readingTime} de lectura</small>
+          </header>
+
+          <div className="guideArticleBody">
+            {guia.sections.map((section) => (
+              <section key={section.title}>
+                <h2>{section.title}</h2>
+                {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                {section.steps && (
+                  <ol>{section.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+                )}
+                {section.note && <div className="guideNote"><b>Importante:</b> {section.note}</div>}
+              </section>
+            ))}
+          </div>
+
+          <footer className="guideArticleFooter">
+            <div>
+              <h2>¿Listo para registrar tu paquete?</h2>
+              <p>Prealerta tu tracking o consulta tus envíos desde la web de OEX.</p>
+            </div>
+            <div>
+              <a href="/prealerta" className="primaryCta">Prealertar tracking</a>
+              <a href="/rastreo" className="secondaryCta">Rastrear paquete</a>
+            </div>
+          </footer>
+        </article>
+
+        <section className="relatedGuides">
+          <h2>Continúa aprendiendo</h2>
+          <div>
+            {GUIAS.filter((item) => item.slug !== guia.slug).slice(0, 3).map((item) => (
+              <a href={`/guias/${item.slug}`} key={item.slug}><span>{item.category}</span><b>{item.title}</b></a>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+      <FloatingWhatsApp />
+    </div>
   );
 }

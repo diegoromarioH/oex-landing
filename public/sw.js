@@ -1,7 +1,8 @@
-const CACHE_NAME = "oex-rastreo-v5";
+const CACHE_NAME = "oex-rastreo-v6";
 const APP_SHELL = [
   "/",
   "/rastreo",
+  "/guias",
   "/manifest.webmanifest",
   "/llms.txt",
   "/oex-icon-192.png?v=2",
