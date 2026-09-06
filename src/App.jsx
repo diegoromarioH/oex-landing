@@ -1402,6 +1402,58 @@ function PrealertaPage() {
   );
 }
 
+function InstallAppButton() {
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [esIos, setEsIos] = useState(false);
+  const [instalada, setInstalada] = useState(false);
+
+  useEffect(() => {
+    const enModoApp =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true;
+
+    setInstalada(enModoApp);
+    setEsIos(/iphone|ipad|ipod/i.test(window.navigator.userAgent) && !enModoApp);
+
+    const guardarPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+    };
+
+    const confirmarInstalacion = () => {
+      setInstalada(true);
+      setInstallPrompt(null);
+    };
+
+    window.addEventListener("beforeinstallprompt", guardarPrompt);
+    window.addEventListener("appinstalled", confirmarInstalacion);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", guardarPrompt);
+      window.removeEventListener("appinstalled", confirmarInstalacion);
+    };
+  }, []);
+
+  if (instalada || (!installPrompt && !esIos)) return null;
+
+  const instalar = async () => {
+    if (installPrompt) {
+      await installPrompt.prompt();
+      await installPrompt.userChoice;
+      setInstallPrompt(null);
+      return;
+    }
+
+    alert("En iPhone: toca Compartir y luego “Agregar a pantalla de inicio”.");
+  };
+
+  return (
+    <button type="button" className="installAppButton" onClick={instalar}>
+      <IconBox size={17} /> Instalar app de rastreo
+    </button>
+  );
+}
+
 function RastreoPage() {
   return (
     <div className="page formPage">
@@ -1418,6 +1470,7 @@ function RastreoPage() {
       </nav>
 
       <main className="prealertaWrap">
+        <div className="installAppRow"><InstallAppButton /></div>
         <TrackingLookup standalone />
       </main>
 
