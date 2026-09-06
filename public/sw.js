@@ -3,6 +3,7 @@ const APP_SHELL = [
   "/",
   "/rastreo",
   "/manifest.webmanifest",
+  "/llms.txt",
   "/oex-icon-192.png?v=2",
   "/oex-icon-512.png?v=2",
   "/oex-icon-maskable-512.png?v=2",
