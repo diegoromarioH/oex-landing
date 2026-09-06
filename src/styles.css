@@ -779,7 +779,7 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
 
 
 /* Instalación de OEX Rastreo como aplicación */
-.installAppRow {
+.trackingQuickActions {
   display: flex;
   justify-content: flex-end;
   margin: 0 auto 14px;
@@ -809,11 +809,32 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
 }
 
 @media (max-width: 640px) {
-  .installAppRow {
+  .trackingQuickActions {
     justify-content: stretch;
   }
 
   .installAppButton {
     width: 100%;
   }
+}
+
+
+.prealertQuickButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  background: #ff6b35;
+  color: #ffffff;
+  font-weight: 750;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(255, 107, 53, 0.2);
+}
+
+.prealertQuickButton:hover {
+  background: #e95b28;
+  transform: translateY(-1px);
 }
