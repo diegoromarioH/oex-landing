@@ -1867,3 +1867,44 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
     padding-top: 38px;
   }
 }
+
+/* Mantiene el menú compacto en tablets y portátiles donde seis enlaces no caben. */
+@media (min-width: 900px) and (max-width: 1180px) {
+  .topNav:not(.simpleNav) .menuToggle {
+    display: grid;
+  }
+
+  .topNav:not(.simpleNav) .navActions {
+    display: none;
+  }
+
+  .topNav:not(.simpleNav) .navLinks {
+    display: none;
+    position: fixed;
+    top: var(--nav-h);
+    right: 12px;
+    left: 12px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    background: var(--navy);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .topNav:not(.simpleNav) .navLinksOpen {
+    display: flex;
+  }
+
+  .topNav:not(.simpleNav) .navLinks a {
+    padding: 13px 14px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .topNav:not(.simpleNav) .navLinks a.mobilePrealerta {
+    display: flex;
+  }
+}
