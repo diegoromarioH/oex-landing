@@ -129,7 +129,7 @@ const SOCIAL_LINKS = {
 
 // Tarifas estándar (solo informativas, no calculadora interactiva)
 const TARIFAS = [
-  { destino: "Ometepe", tipo: "Marítimo", precio: 2.9, tiempo: "16 a 22 días hábiles" },
+  { destino: "Ometepe", tipo: "Marítimo", precio: 3, tiempo: "16 a 22 días hábiles" },
   { destino: "Ometepe", tipo: "Aéreo", precio: 7.5, tiempo: "3 a 6 días hábiles" },
   { destino: "Managua", tipo: "Marítimo", precio: 2.5, tiempo: "15 a 19 días hábiles" },
   { destino: "Managua", tipo: "Aéreo", precio: 6.5, tiempo: "2 a 5 días hábiles" }
