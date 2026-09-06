@@ -996,3 +996,223 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
     text-align: left;
   }
 }
+
+
+/* Prealerta UX: más compacta en escritorio y clara en móvil */
+.prealertaIntro {
+  margin-bottom: 18px;
+}
+
+.prealertaIntro h1 {
+  line-height: 1.08;
+}
+
+.prealertaIntro p {
+  margin: 8px 0 0;
+}
+
+.prealertSteps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.prealertSteps span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #dce3ed;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .72);
+  color: var(--navy);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.prealertSteps b {
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: white;
+  font-size: 11px;
+}
+
+.largeForm {
+  margin-top: 0;
+}
+
+.largeForm .formSectionTitle {
+  margin: 22px 0 12px;
+}
+
+.largeForm .formSectionTitle:first-child {
+  margin-top: 0;
+}
+
+.personalFields,
+.trackingMainFields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.personalFields > label,
+.trackingMainFields > label,
+.trackingCard .twoColumns > label {
+  min-width: 0;
+}
+
+.requiredMark {
+  color: var(--coral-deep);
+}
+
+.optionalMark {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.largeForm input,
+.largeForm select {
+  min-height: 48px;
+}
+
+.largeForm textarea {
+  min-height: 82px;
+}
+
+.largeForm .trackingCard {
+  padding: 16px;
+}
+
+.largeForm .trackingCard label {
+  margin-bottom: 12px;
+}
+
+.largeForm .trackingCard .twoColumns label {
+  margin-bottom: 0;
+}
+
+.largeForm .ghostButton {
+  min-height: 46px;
+}
+
+.largeForm .check {
+  padding: 13px 14px;
+  border: 1px solid #dce3ed;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.largeForm .check input {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+.largeForm .submitButton {
+  min-height: 54px;
+  margin-top: 14px;
+}
+
+@media (max-width: 640px) {
+  .prealertaIntro {
+    margin-bottom: 14px;
+  }
+
+  .prealertaIntro h1 {
+    font-size: 30px;
+    margin: 8px 0 0;
+  }
+
+  .prealertaIntro p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .prealertSteps {
+    gap: 5px;
+    margin-top: 14px;
+  }
+
+  .prealertSteps span {
+    min-height: 40px;
+    padding: 7px 5px;
+    gap: 5px;
+    font-size: 10.5px;
+  }
+
+  .prealertSteps b {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .formCard.largeForm {
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
+
+  .clientTypeToggle {
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+
+  .clientTypeToggle button {
+    min-height: 48px;
+    padding: 10px 7px;
+    font-size: 12.5px;
+  }
+
+  .personalFields,
+  .trackingMainFields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .largeForm .formSectionTitle {
+    margin: 20px 0 11px;
+    font-size: 16px;
+  }
+
+  .largeForm .trackingCard {
+    padding: 14px 12px;
+  }
+
+  .trackingCardHead {
+    margin-bottom: 10px;
+  }
+
+  .twoColumns {
+    gap: 9px;
+  }
+
+  .largeForm input,
+  .largeForm select {
+    min-height: 50px;
+    font-size: 16px;
+  }
+
+  .largeForm .submitButton {
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .prealertSteps span {
+    display: grid;
+    justify-items: center;
+  }
+
+  .twoColumns {
+    grid-template-columns: 1fr;
+  }
+}
