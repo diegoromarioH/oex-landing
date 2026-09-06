@@ -1280,7 +1280,7 @@ function PrealertaPage() {
           <div className="personalFields">
             {tipoCliente === "nuevo" && (
               <label>
-                Nombre y apellido <span className="requiredMark">*</span>
+                Nombre y apellido *
                 <input
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
@@ -1292,7 +1292,7 @@ function PrealertaPage() {
             )}
 
             <label>
-              WhatsApp <span className="requiredMark">*</span>
+              WhatsApp *
               <input
                 value={whatsapp}
                 onChange={(e) => setWhatsapp(e.target.value)}
@@ -1319,7 +1319,7 @@ function PrealertaPage() {
 
                 <div className="trackingMainFields">
                   <label>
-                    Número de tracking <span className="requiredMark">*</span>
+                    Número de tracking *
                     <input
                       value={t.codigo}
                       onChange={(e) => cambiarTracking(index, "codigo", e.target.value)}
@@ -1332,7 +1332,7 @@ function PrealertaPage() {
                   </label>
 
                   <label>
-                    Tienda o remitente <span className="requiredMark">*</span>
+                    Tienda o remitente *
                     <input
                       value={t.remitente}
                       onChange={(e) => cambiarTracking(index, "remitente", e.target.value)}
@@ -1380,7 +1380,7 @@ function PrealertaPage() {
           <FormSectionTitle icon={IconCheck} tone="coral">Confirmación</FormSectionTitle>
 
           <label>
-            Nota <span className="optionalMark">Opcional</span>
+            Nota (opcional)
             <textarea
               value={nota}
               onChange={(e) => setNota(e.target.value)}
