@@ -129,10 +129,10 @@ const SOCIAL_LINKS = {
 
 // Tarifas estándar (solo informativas, no calculadora interactiva)
 const TARIFAS = [
-  { destino: "Ometepe", tipo: "Marítimo", precio: 3, tiempo: "16 a 22 días hábiles" },
-  { destino: "Ometepe", tipo: "Aéreo", precio: 7.5, tiempo: "3 a 6 días hábiles" },
-  { destino: "Managua", tipo: "Marítimo", precio: 2.5, tiempo: "15 a 19 días hábiles" },
-  { destino: "Managua", tipo: "Aéreo", precio: 6.5, tiempo: "2 a 5 días hábiles" }
+  { destino: "Ometepe", tipo: "Marítimo", precio: 3, tiempo: "17 a 20 días hábiles" },
+  { destino: "Ometepe", tipo: "Aéreo", precio: 7.5, tiempo: "4 a 6 días hábiles" },
+  { destino: "Managua", tipo: "Marítimo", precio: 2.5, tiempo: "16 a 19 días hábiles" },
+  { destino: "Managua", tipo: "Aéreo", precio: 6.5, tiempo: "3 a 5 días hábiles" }
 ];
 
 const DESTINOS = ["Ometepe", "Managua"];
@@ -306,14 +306,14 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
                   <div className="routeOptionIcon"><Plane size={18} strokeWidth={1.8} /></div>
                   <div>
                     <b>Aéreo</b>
-                    <p>2 a 5 días hábiles</p>
+                    <p>Managua 3–5 · Ometepe 4–6</p>
                   </div>
                 </div>
                 <div className="routeOption">
                   <div className="routeOptionIcon"><Ship size={18} strokeWidth={1.8} /></div>
                   <div>
                     <b>Marítimo</b>
-                    <p>17 a 20 días hábiles</p>
+                    <p>Managua 16–19 · Ometepe 17–20</p>
                   </div>
                 </div>
               </div>
@@ -474,7 +474,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
 
           <Reveal className="faqGrid">
-            <Faq question="¿Cuánto tarda en llegar mi paquete?" answer="Aéreo suele tardar 2 a 5 días hábiles y marítimo 17 a 22 días hábiles desde que recibimos en Miami." />
+            <Faq question="¿Cuánto tarda en llegar mi paquete?" answer="Desde que recibimos en Miami: Managua tarda de 3 a 5 días hábiles por vía aérea o de 16 a 19 por vía marítima; Ometepe tarda de 4 a 6 días hábiles por vía aérea o de 17 a 20 por vía marítima." />
             <Faq question="¿Entregan en toda Nicaragua?" answer="Trabajamos Ometepe y Managua. Otros destinos pueden coordinarse por WhatsApp." />
             <Faq question="¿Compran por mí en las tiendas?" answer="Sí, podemos ayudarte con compra asistida. Para SHEIN hay opciones específicas de financiamiento." />
             <Faq question="¿Cómo registro mi tracking?" answer="Ingresa a la sección Prealertar, escribe tus datos y agrega uno o varios tracking numbers." />
@@ -552,8 +552,8 @@ function formatearFechaCorta(fecha) {
 // hábiles = lunes a viernes — a propósito NO se descuentan feriados,
 // para no depender de un calendario que hay que actualizar cada año.
 const RANGOS_ENTREGA = {
-  Managua: { "Aéreo": [2, 5], "Marítimo": [16, 19] },
-  Ometepe: { "Aéreo": [3, 6], "Marítimo": [17, 20] }
+  Managua: { "Aéreo": [3, 5], "Marítimo": [16, 19] },
+  Ometepe: { "Aéreo": [4, 6], "Marítimo": [17, 20] }
 };
 
 function sumarDiasHabiles(fechaInicio, cantidadDias) {
@@ -869,11 +869,15 @@ function RatesTable({ whatsapp }) {
 
 function DeliveryCalculator() {
   const [fechaBodega, setFechaBodega] = useState("");
+  const [destino, setDestino] = useState("Managua");
   const [tipoEnvio, setTipoEnvio] = useState("Aéreo");
 
-  const rango = tipoEnvio === "Aéreo"
-    ? { min: 2, max: 5, label: "2 a 5 días hábiles aproximados" }
-    : { min: 17, max: 22, label: "17 a 20 días hábiles aproximados" };
+  const [min, max] = RANGOS_ENTREGA[destino][tipoEnvio];
+  const rango = {
+    min,
+    max,
+    label: `${min} a ${max} días hábiles aproximados`
+  };
 
   const formatearFecha = (fecha) => {
     return fecha.toLocaleDateString("es-NI", {
@@ -921,6 +925,14 @@ function DeliveryCalculator() {
         </label>
 
         <label>
+          Destino
+          <select value={destino} onChange={(e) => setDestino(e.target.value)}>
+            <option value="Managua">Managua</option>
+            <option value="Ometepe">Ometepe</option>
+          </select>
+        </label>
+
+        <label>
           Tipo de envío
           <select value={tipoEnvio} onChange={(e) => setTipoEnvio(e.target.value)}>
             <option value="Aéreo">Aéreo</option>
@@ -935,7 +947,7 @@ function DeliveryCalculator() {
 
       <div className="calculatorResult">
         <span>Resultado estimado</span>
-        <h3>{tipoEnvio}</h3>
+        <h3>{tipoEnvio} · {destino}</h3>
 
         {!fechaBodega ? (
           <p>Selecciona la fecha en que recibimos tu paquete.</p>
