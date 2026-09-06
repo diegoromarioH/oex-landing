@@ -731,6 +731,9 @@ function TrackingLookup({ standalone = false }) {
     }
   };
 
+  const enviosActivos = (resultados || []).filter((r) => r.estado !== "Prealertado");
+  const prealertados = (resultados || []).filter((r) => r.estado === "Prealertado");
+
   return (
     <section id="rastreo" className={`section trackingSection ${standalone ? "trackingSectionPage" : ""}`}>
       <Reveal className="trackingBox card">
@@ -799,32 +802,51 @@ function TrackingLookup({ standalone = false }) {
             {resultados[0]?.cliente_nombre && (
               <p className="trackingGreeting">Hola, {resultados[0].cliente_nombre.split(" ")[0]} 👋 Este es el estado de tus envíos:</p>
             )}
-            {resultados.map((r) => {
-              const expandido = abierto === r.tracking;
-              return (
-                <div key={r.tracking} className={`trackingResultCard ${expandido ? "trackingResultCardOpen" : ""}`}>
-                  <button
-                    type="button"
-                    className="trackingResultCardHead"
-                    onClick={() => setAbierto(expandido ? null : r.tracking)}
-                    aria-expanded={expandido}
-                  >
-                    <div className="trackingResultCardInfo">
-                      <b>{r.tracking}</b>
-                      <span>{r.destino} · {r.tipo_envio}</span>
-                    </div>
-                    <b className="trackingStatusPill">{r.estado}</b>
-                    <IconArrowRight size={16} className={`trackingResultChevron ${expandido ? "trackingResultChevronOpen" : ""}`} />
-                  </button>
-                  {expandido && (
-                    <div className="trackingResultCardBody">
-                      <EstimacionLlegada estado={r.estado} destino={r.destino} tipoEnvio={r.tipo_envio} fechaRegistro={r.fecha} historial={r.historial} />
-                      <PipelineTimeline estado={r.estado} destino={r.destino} tipoEnvio={r.tipo_envio} historial={r.historial} />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+
+            {enviosActivos.length > 0 ? (
+              enviosActivos.map((r) => {
+                const expandido = abierto === r.tracking;
+                return (
+                  <div key={r.tracking} className={`trackingResultCard ${expandido ? "trackingResultCardOpen" : ""}`}>
+                    <button
+                      type="button"
+                      className="trackingResultCardHead"
+                      onClick={() => setAbierto(expandido ? null : r.tracking)}
+                      aria-expanded={expandido}
+                    >
+                      <div className="trackingResultCardInfo">
+                        <b>{r.tracking}</b>
+                        <span>{r.destino} · {r.tipo_envio}</span>
+                      </div>
+                      <b className="trackingStatusPill">{r.estado}</b>
+                      <IconArrowRight size={16} className={`trackingResultChevron ${expandido ? "trackingResultChevronOpen" : ""}`} />
+                    </button>
+                    {expandido && (
+                      <div className="trackingResultCardBody">
+                        <EstimacionLlegada estado={r.estado} destino={r.destino} tipoEnvio={r.tipo_envio} fechaRegistro={r.fecha} historial={r.historial} />
+                        <PipelineTimeline estado={r.estado} destino={r.destino} tipoEnvio={r.tipo_envio} historial={r.historial} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            ) : (
+              <p className="trackingEmpty">No tienes envíos activos en este momento.</p>
+            )}
+
+            {prealertados.length > 0 && (
+              <details className="prealertedDropdown">
+                <summary>
+                  <span>Trackings prealertados</span>
+                  <b>{prealertados.length}</b>
+                </summary>
+                <ul>
+                  {prealertados.map((r) => (
+                    <li key={r.tracking}>{r.tracking}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </div>
         )}
       </Reveal>
