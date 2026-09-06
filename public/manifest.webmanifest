@@ -1,0 +1,41 @@
+{
+  "name": "OEX Rastreo",
+  "short_name": "OEX Rastreo",
+  "description": "Consulta el estado de tus paquetes OEX.",
+  "id": "/rastreo",
+  "start_url": "/rastreo",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f8fb",
+  "theme_color": "#15233c",
+  "lang": "es-NI",
+  "icons": [
+    {
+      "src": "/oex-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/oex-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Rastrear paquete",
+      "short_name": "Rastrear",
+      "url": "/rastreo",
+      "icons": [
+        {
+          "src": "/oex-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
