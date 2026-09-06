@@ -1470,7 +1470,12 @@ function RastreoPage() {
       </nav>
 
       <main className="prealertaWrap">
-        <div className="installAppRow"><InstallAppButton /></div>
+        <div className="trackingQuickActions">
+          <a href="/prealerta" className="prealertQuickButton">
+            <IconPlus size={17} /> Prealertar tracking nuevo
+          </a>
+          <InstallAppButton />
+        </div>
         <TrackingLookup standalone />
       </main>
 
