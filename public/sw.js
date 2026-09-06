@@ -1,4 +1,4 @@
-const CACHE_NAME = "oex-rastreo-v1";
+const CACHE_NAME = "oex-rastreo-v2";
 const APP_SHELL = ["/", "/rastreo", "/manifest.webmanifest", "/oex-icon.svg", "/favicon.png"];
 
 self.addEventListener("install", (event) => {
