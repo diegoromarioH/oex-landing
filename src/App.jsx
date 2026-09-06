@@ -250,7 +250,10 @@ function Seo({ title, description, path }) {
 }
 
 export default function App() {
-  const path = window.location.pathname;
+  // Hostinger sirve las páginas SEO como directorios y puede añadir una
+  // barra final (/prealerta/). Normalizamos ambas variantes para que React
+  // siempre abra la pantalla correcta.
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
 
   useEffect(() => {
     registrarEvento(path.startsWith("/guias/") ? "guia_vista" : "pagina_vista");
