@@ -1,5 +1,13 @@
-const CACHE_NAME = "oex-rastreo-v4";
-const APP_SHELL = ["/", "/rastreo", "/manifest.webmanifest", "/oex-icon.svg", "/favicon.png"];
+const CACHE_NAME = "oex-rastreo-v5";
+const APP_SHELL = [
+  "/",
+  "/rastreo",
+  "/manifest.webmanifest",
+  "/oex-icon-192.png?v=2",
+  "/oex-icon-512.png?v=2",
+  "/oex-icon-maskable-512.png?v=2",
+  "/apple-touch-icon.png?v=2"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
