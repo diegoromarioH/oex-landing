@@ -140,21 +140,21 @@ const TIPOS_ENVIO = ["Marítimo", "Aéreo"];
 
 const GUIAS = [
   {
-    slug: "envios-estados-unidos-ometepe",
-    category: "Envíos a Ometepe",
-    title: "Envíos de Estados Unidos a Ometepe: tarifas, tiempos y proceso",
-    description: "Conoce cómo recibir en Ometepe tus compras de Estados Unidos por envío aéreo o marítimo con OEX.",
+    slug: "envios-estados-unidos-nicaragua-2026",
+    category: "Envíos a Nicaragua",
+    title: "Envíos de Estados Unidos a Nicaragua 2026: tarifas, tiempos y proceso",
+    description: "Guía 2026 para recibir en Nicaragua tus compras de Estados Unidos por envío aéreo o marítimo con OEX.",
     readingTime: "5 min",
-    intro: "Comprar en Estados Unidos desde la isla de Ometepe es más sencillo cuando conoces cada paso. En esta guía explicamos cómo usar la dirección de OEX en Miami, registrar el tracking y elegir el tipo de envío.",
+    intro: "Comprar en Estados Unidos y recibir en Nicaragua es más sencillo cuando conoces cada paso. En esta guía 2026 explicamos cómo usar la dirección de OEX en Miami, registrar el tracking y elegir el tipo de envío para Managua u Ometepe.",
     sections: [
       {
-        title: "¿Cómo funciona el envío hacia Ometepe?",
-        paragraphs: ["OEX te brinda una dirección de recepción en Miami. Colocas esa dirección al comprar en la tienda, esperas a que la tienda genere el número de seguimiento y luego prealertas el paquete en nuestra web.", "Cuando el paquete llega a Miami, se identifica con tus datos y continúa hacia Nicaragua por la modalidad que seleccionaste. Al finalizar el proceso coordinamos contigo el retiro o la entrega correspondiente en Ometepe."],
+        title: "¿Cómo funciona el envío hacia Nicaragua?",
+        paragraphs: ["OEX te brinda una dirección de recepción en Miami. Colocas esa dirección al comprar en la tienda, esperas a que la tienda genere el número de seguimiento y luego prealertas el paquete en nuestra web.", "Cuando el paquete llega a Miami, se identifica con tus datos y continúa hacia Nicaragua por la modalidad que seleccionaste. Al finalizar el proceso coordinamos contigo el retiro o la entrega correspondiente en Managua u Ometepe."],
         steps: ["Solicita y copia tu dirección OEX.", "Compra en la tienda de Estados Unidos.", "Espera el tracking proporcionado por la tienda.", "Prealerta el tracking antes de su llegada a Miami.", "Consulta el estado del paquete y espera la coordinación de entrega."]
       },
       {
-        title: "Tarifas y tiempos estándar para Ometepe",
-        paragraphs: ["El envío marítimo estándar cuesta USD 3.00 por libra y tarda aproximadamente de 17 a 20 días hábiles. El envío aéreo estándar cuesta USD 7.50 por libra y tarda aproximadamente de 4 a 6 días hábiles."],
+        title: "Tarifas y tiempos estándar en 2026",
+        paragraphs: ["Para Managua, el envío marítimo estándar cuesta USD 2.50 por libra y tarda aproximadamente de 16 a 19 días hábiles; el aéreo cuesta USD 6.50 por libra y tarda de 3 a 5 días hábiles.", "Para Ometepe, el envío marítimo estándar cuesta USD 3.00 por libra y tarda aproximadamente de 17 a 20 días hábiles; el aéreo cuesta USD 7.50 por libra y tarda de 4 a 6 días hábiles."],
         note: "Los tiempos comienzan cuando OEX recibe el paquete en Miami y son estimados. Algunos productos requieren una cotización especial."
       },
       {
