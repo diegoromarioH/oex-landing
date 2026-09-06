@@ -1221,7 +1221,7 @@ function PrealertaPage() {
           </div>
         </a>
 
-        <a href="/" className="navButton">Volver al inicio</a>
+        <a href="/" className="navButton">← Inicio</a>
       </nav>
 
       <main className="prealertaWrap">
@@ -1229,11 +1229,13 @@ function PrealertaPage() {
           <div className="miniBadge">Prealerta</div>
           <h1>Registra tu paquete</h1>
           <p>
-            Completa la información para que podamos identificar tu paquete cuando llegue a nuestra bodega en Miami.
+            Déjanos tus datos y el tracking para identificar tu paquete al llegar a Miami.
           </p>
 
-          <div className="notice">
-            Registra el Tracking Number. Al enviarlo, tu prealerta llegará directamente a nuestro sistema.
+          <div className="prealertSteps" aria-label="Pasos de la prealerta">
+            <span><b>1</b> Tus datos</span>
+            <span><b>2</b> Tracking</span>
+            <span><b>3</b> Confirmar</span>
           </div>
         </section>
 
@@ -1275,28 +1277,33 @@ function PrealertaPage() {
 
           <FormSectionTitle icon={IconBag} tone="orange">Datos personales</FormSectionTitle>
 
-          {tipoCliente === "nuevo" && (
-            <label>
-              Nombre y apellido (obligatorio)
-              <input value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Ej. Juan Pérez" />
-            </label>
-          )}
+          <div className="personalFields">
+            {tipoCliente === "nuevo" && (
+              <label>
+                Nombre y apellido <span className="requiredMark">*</span>
+                <input
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  placeholder="Ej. Juan Pérez"
+                  autoComplete="name"
+                  required
+                />
+              </label>
+            )}
 
-          <label>
-            WhatsApp (obligatorio)
-            <input
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              placeholder="Ej. 57067044 o 50557067044"
-              inputMode="tel"
-              required
-            />
-            <small className="helpText">
-              Puedes escribirlo con o sin el 505 adelante. Lo usamos para{" "}
-              {tipoCliente === "nuevo" ? "vincular tu cuenta de cliente y " : ""}
-              avisarte del estado de tu paquete.
-            </small>
-          </label>
+            <label>
+              WhatsApp <span className="requiredMark">*</span>
+              <input
+                value={whatsapp}
+                onChange={(e) => setWhatsapp(e.target.value)}
+                placeholder="Ej. 57067044"
+                inputMode="tel"
+                autoComplete="tel"
+                required
+              />
+              <small className="helpText">Con o sin 505. Aquí recibirás las actualizaciones.</small>
+            </label>
+          </div>
 
           <FormSectionTitle icon={IconBox} tone="green">Tus trackings</FormSectionTitle>
 
@@ -1305,27 +1312,37 @@ function PrealertaPage() {
               <div className="trackingCard" key={index}>
                 <div className="trackingCardHead">
                   <span className="trackingCardBadge">Tracking {index + 1}</span>
-                  <button type="button" onClick={() => eliminarTracking(index)}>Eliminar</button>
+                  {trackings.length > 1 && (
+                    <button type="button" onClick={() => eliminarTracking(index)} aria-label={`Eliminar tracking ${index + 1}`}>Eliminar</button>
+                  )}
                 </div>
 
-                <label>
-                  Número de tracking
-                  <input
-                    value={t.codigo}
-                    onChange={(e) => cambiarTracking(index, "codigo", e.target.value)}
-                    placeholder="Ej. 1Z999AA10123456784"
-                  />
-                </label>
+                <div className="trackingMainFields">
+                  <label>
+                    Número de tracking <span className="requiredMark">*</span>
+                    <input
+                      value={t.codigo}
+                      onChange={(e) => cambiarTracking(index, "codigo", e.target.value)}
+                      placeholder="Ej. 1Z999AA10123456784"
+                      autoCapitalize="characters"
+                      autoComplete="off"
+                      spellCheck={false}
+                      required
+                    />
+                  </label>
 
-                <label>
-                  Remitente o plataforma donde compró
-                  <input
-                    value={t.remitente}
-                    onChange={(e) => cambiarTracking(index, "remitente", e.target.value)}
-                    placeholder="Ej. Amazon, SHEIN, Temu, Walmart..."
-                    list="remitentes-sugeridos"
-                  />
-                </label>
+                  <label>
+                    Tienda o remitente <span className="requiredMark">*</span>
+                    <input
+                      value={t.remitente}
+                      onChange={(e) => cambiarTracking(index, "remitente", e.target.value)}
+                      placeholder="Ej. Amazon, SHEIN o Temu"
+                      list="remitentes-sugeridos"
+                      autoComplete="off"
+                      required
+                    />
+                  </label>
+                </div>
 
                 <div className="twoColumns">
                   <label>
@@ -1360,8 +1377,10 @@ function PrealertaPage() {
             <IconPlus size={15} /> Agregar otro tracking
           </button>
 
+          <FormSectionTitle icon={IconCheck} tone="coral">Confirmación</FormSectionTitle>
+
           <label>
-            Nota (opcional)
+            Nota <span className="optionalMark">Opcional</span>
             <textarea
               value={nota}
               onChange={(e) => setNota(e.target.value)}
@@ -1378,7 +1397,7 @@ function PrealertaPage() {
             <span>He leído y acepto las <a href="/politicas" target="_blank" rel="noreferrer">políticas del servicio</a>.</span>
           </label>
 
-          {mensaje && <div className="message">{mensaje}</div>}
+          {mensaje && <div className="message" role="alert">{mensaje}</div>}
 
           {mensaje.startsWith("✅") && (
             <div className="successCard">
@@ -1391,7 +1410,7 @@ function PrealertaPage() {
           )}
 
           <button className="submitButton" disabled={enviando}>
-            {enviando ? "Registrando..." : <><IconBox size={17} /> Registrar mi paquete</>}
+            {enviando ? "Enviando..." : <><IconBox size={17} /> Enviar prealerta</>}
           </button>
         </form>
       </main>
