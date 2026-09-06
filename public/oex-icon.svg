@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">OEX Rastreo</title>
+  <rect width="512" height="512" rx="112" fill="#15233c"/>
+  <path d="M74 164h364v184H74z" fill="#ff6b35" opacity=".14"/>
+  <text x="256" y="291" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="150" font-weight="800" letter-spacing="-10" fill="#ffffff">OEX</text>
+  <path d="M120 342h272" stroke="#ff6b35" stroke-width="22" stroke-linecap="round"/>
+</svg>
