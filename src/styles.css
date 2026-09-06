@@ -842,3 +842,157 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
   background: #e95b28;
   transform: translateY(-1px);
 }
+
+
+/* UX de subpáginas: la navegación ocupa su propio espacio y no cubre acciones */
+.formPage .simpleNav,
+.policyPage .simpleNav {
+  position: sticky;
+  top: 0;
+}
+
+.formPage,
+.policyPage {
+  padding-top: 0;
+}
+
+.formPage .prealertaWrap {
+  padding-top: clamp(18px, 4vw, 36px);
+}
+
+.trackingQuickActions {
+  position: relative;
+  z-index: 1;
+}
+
+.trackingForm input {
+  min-width: 0;
+}
+
+.trackingResultRow b,
+.trackingResultCardInfo b {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --nav-h: 64px;
+  }
+
+  .formPage .simpleNav {
+    min-height: 64px;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .formPage .simpleNav .brandLogo {
+    width: 42px;
+  }
+
+  .formPage .simpleNav .brand strong {
+    font-size: 14px;
+  }
+
+  .formPage .simpleNav .brand span {
+    font-size: 10px;
+  }
+
+  .formPage .simpleNav .navButton {
+    min-height: 40px;
+    padding: 9px 13px;
+    font-size: 13px;
+  }
+
+  .prealertaWrap {
+    padding: 16px 12px 48px;
+  }
+
+  .trackingQuickActions {
+    margin-bottom: 12px;
+  }
+
+  .trackingSectionPage {
+    padding-top: 0;
+  }
+
+  .trackingSectionPage .trackingBox {
+    gap: 15px;
+    padding: 20px 16px;
+    border-radius: 18px;
+    box-shadow: 0 16px 38px rgba(6, 15, 30, 0.14);
+  }
+
+  .trackingBoxCopy h2 {
+    font-size: 24px;
+    line-height: 1.16;
+  }
+
+  .trackingBoxCopy p {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .trackingModeToggle {
+    margin: 8px 0 2px;
+    gap: 7px;
+  }
+
+  .trackingModeToggle button {
+    min-height: 48px;
+    padding: 10px 8px;
+    font-size: 12.5px;
+    line-height: 1.25;
+  }
+
+  .trackingForm {
+    gap: 9px;
+  }
+
+  .trackingForm input,
+  .trackingForm .primaryCta {
+    min-height: 50px;
+  }
+
+  .trackingForm .primaryCta {
+    width: 100%;
+  }
+
+  .trackingResultRow {
+    align-items: flex-start;
+    padding: 13px 14px;
+  }
+
+  .trackingResultRow b {
+    max-width: 62%;
+  }
+
+  .trackingResultCardHead {
+    gap: 8px;
+    padding: 13px;
+  }
+
+  .trackingResultCardInfo {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .formPage .simpleNav .brand span {
+    display: none;
+  }
+
+  .trackingModeToggle {
+    grid-template-columns: 1fr;
+  }
+
+  .trackingResultRow {
+    display: grid;
+    gap: 5px;
+  }
+
+  .trackingResultRow b {
+    max-width: 100%;
+    text-align: left;
+  }
+}
