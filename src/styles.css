@@ -719,3 +719,60 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
   .pipelineStep { min-width: 60px; }
   .pipelineLabel { font-size: 9.5px; max-width: 62px; }
 }
+
+/* Lista compacta de prealertas dentro del rastreo por cliente */
+.trackingEmpty {
+  margin: 6px 0 14px;
+  color: var(--muted, #64748b);
+}
+
+.prealertedDropdown {
+  margin-top: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.prealertedDropdown summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 17px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.prealertedDropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.prealertedDropdown summary b {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #fff0e8;
+  color: #d9541e;
+  font-size: 0.82rem;
+}
+
+.prealertedDropdown ul {
+  margin: 0;
+  padding: 0 17px 15px;
+  list-style: none;
+}
+
+.prealertedDropdown li {
+  padding: 11px 0;
+  border-top: 1px solid #e2e8f0;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: #18243a;
+}
