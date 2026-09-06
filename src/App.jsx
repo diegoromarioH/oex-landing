@@ -1518,6 +1518,7 @@ function PoliticasPage() {
           <PolicyBlock title="Pagos y entrega" text="Todo saldo pendiente debe cancelarse antes de la entrega del paquete. Puede solicitarse referencia bancaria o comprobante de pago." />
           <PolicyBlock title="Reclamos" text="Cualquier reclamo debe notificarse lo antes posible después de recibir el paquete, idealmente dentro de las primeras 16 horas." />
           <PolicyBlock title="Privacidad" text="Los datos proporcionados en formularios, prealertas o mensajes se utilizan únicamente para gestionar compras, envíos y seguimiento operativo." />
+          <PolicyBlock title="Comunicaciones por WhatsApp" text="Al proporcionar su número de teléfono, el cliente autoriza a OEX a contactarle mediante WhatsApp para comunicaciones relacionadas con la prestación del servicio, incluyendo confirmaciones, actualizaciones sobre sus envíos, recepción de paquetes, coordinación de entregas o retiros, pagos, incidencias y otras gestiones necesarias para completar el servicio solicitado." />
         </section>
 
         <div className="policyFinal">
