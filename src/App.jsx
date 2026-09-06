@@ -740,7 +740,7 @@ function TrackingLookup({ standalone = false }) {
         <div className="trackingBoxCopy">
           <span className="trackingEyebrow">Rastreo</span>
           <h2>¿Dónde va tu paquete?</h2>
-          <p>Escoge como ver tus envíos: tu número de tracking para seguir un envío específico, o tu código de cliente para ver todos tus envíos activos a la vez. Sin tantos requisitos, rápido, fácil y personalizado.</p>
+          <p>Busca un paquete por su tracking o consulta todos tus envíos con tu código de cliente.</p>
         </div>
 
         <div className="trackingModeToggle" role="tablist" aria-label="Buscar por">
@@ -1466,7 +1466,7 @@ function RastreoPage() {
           </div>
         </a>
 
-        <a href="/" className="navButton">Volver al inicio</a>
+        <a href="/" className="navButton">← Inicio</a>
       </nav>
 
       <main className="prealertaWrap">
