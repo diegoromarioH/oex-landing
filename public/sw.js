@@ -1,8 +1,10 @@
-const CACHE_NAME = "oex-rastreo-v6";
+const CACHE_NAME = "oex-rastreo-v7";
 const APP_SHELL = [
   "/",
-  "/rastreo",
-  "/guias",
+  "/rastreo/",
+  "/prealerta/",
+  "/politicas/",
+  "/guias/",
   "/manifest.webmanifest",
   "/llms.txt",
   "/oex-icon-192.png?v=2",
@@ -36,10 +38,15 @@ self.addEventListener("fetch", (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("/rastreo", copy));
+          // Cada ruta conserva su propia respuesta. Antes todas las páginas
+          // se guardaban como /rastreo y podían mostrar la portada incorrecta.
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
           return response;
         })
-        .catch(() => caches.match("/rastreo"))
+        .catch(async () => {
+          const cached = await caches.match(request);
+          return cached || caches.match("/");
+        })
     );
     return;
   }
