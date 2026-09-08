@@ -937,6 +937,7 @@ function TrackingLookup({ standalone = false }) {
                   : "—"}
               </b>
             </div>
+            {resultado.nota && <div className="trackingResultRow"><span>Nota</span><b>{resultado.nota}</b></div>}
             <EstimacionLlegada estado={resultado.estado} destino={resultado.destino} tipoEnvio={resultado.tipo_envio} fechaRegistro={resultado.fecha} historial={resultado.historial} />
             <PipelineTimeline estado={resultado.estado} destino={resultado.destino} tipoEnvio={resultado.tipo_envio} historial={resultado.historial} />
           </div>
@@ -968,6 +969,7 @@ function TrackingLookup({ standalone = false }) {
                     </button>
                     {expandido && (
                       <div className="trackingResultCardBody">
+                        {r.nota && <div className="trackingResultRow"><span>Nota</span><b>{r.nota}</b></div>}
                         <EstimacionLlegada estado={r.estado} destino={r.destino} tipoEnvio={r.tipo_envio} fechaRegistro={r.fecha} historial={r.historial} />
                         <PipelineTimeline estado={r.estado} destino={r.destino} tipoEnvio={r.tipo_envio} historial={r.historial} />
                       </div>
