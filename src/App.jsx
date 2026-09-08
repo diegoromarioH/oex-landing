@@ -1247,7 +1247,8 @@ function crearTrackingVacio() {
     codigo: "",
     remitente: "",
     destino: "Ometepe",
-    tipoEnvio: "Marítimo"
+    tipoEnvio: "Marítimo",
+    nota: ""
   };
 }
 
@@ -1256,9 +1257,10 @@ function crearTrackingVacio() {
 // el mismo formato "505########" para que el equipo pueda buscarlo o
 // contactarlo sin ambigüedad.
 function normalizarWhatsapp(valor) {
-  const soloDigitos = (valor || "").replace(/\D/g, "");
+  const original = String(valor || "").trim();
+  const soloDigitos = original.replace(/\D/g, "");
   if (!soloDigitos) return "";
-  if (soloDigitos.startsWith("505") && soloDigitos.length > 8) return soloDigitos;
+  if (original.startsWith("+") || soloDigitos.length > 8) return soloDigitos;
   return `505${soloDigitos}`;
 }
 
@@ -1278,7 +1280,7 @@ function PrealertaPage() {
   const [tipoCliente, setTipoCliente] = useState("nuevo");
   const [codigoCliente, setCodigoCliente] = useState("");
   const [nombre, setNombre] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
+  const [whatsapp, setWhatsapp] = useState("+505 ");
   const [trackings, setTrackings] = useState([crearTrackingVacio()]);
   const [nota, setNota] = useState("");
   const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
@@ -1324,7 +1326,7 @@ function PrealertaPage() {
         tipo_envio: t.tipoEnvio,
         courier: t.remitente.trim(),
         tracking: t.codigo.trim(),
-        nota: nota.trim(),
+        nota: String(t.nota || "").trim().slice(0, 160),
         estado: "Prealertado",
         fecha: new Date().toISOString()
       }));
@@ -1345,7 +1347,7 @@ function PrealertaPage() {
       setTipoCliente("nuevo");
       setCodigoCliente("");
       setNombre("");
-      setWhatsapp("");
+      setWhatsapp("+505 ");
       setTrackings([crearTrackingVacio()]);
       setNota("");
       setAceptaPoliticas(false);
@@ -1443,12 +1445,12 @@ function PrealertaPage() {
               <input
                 value={whatsapp}
                 onChange={(e) => setWhatsapp(e.target.value)}
-                placeholder="Ej. 57067044"
+                placeholder="+505 5706-7044"
                 inputMode="tel"
                 autoComplete="tel"
                 required
               />
-              <small className="helpText">Con o sin 505. Aquí recibirás las actualizaciones.</small>
+              <small className="helpText">Incluye el código del país. Puedes cambiar +505 si tu WhatsApp es de otro país.</small>
             </label>
           </div>
 
@@ -1491,6 +1493,11 @@ function PrealertaPage() {
                   </label>
                 </div>
 
+                <label>
+                  Nota de este tracking (opcional)
+                  <input value={t.nota || ""} maxLength={160} onChange={(e) => cambiarTracking(index, "nota", e.target.value)} placeholder="Máximo 160 caracteres" />
+                </label>
+
                 <div className="twoColumns">
                   <label>
                     Destino
@@ -1525,15 +1532,6 @@ function PrealertaPage() {
           </button>
 
           <FormSectionTitle icon={IconCheck} tone="coral">Confirmación</FormSectionTitle>
-
-          <label>
-            Nota (opcional)
-            <textarea
-              value={nota}
-              onChange={(e) => setNota(e.target.value)}
-              placeholder="Ej. Compra de ropa, caja pequeña, viene a mi nombre, etc."
-            />
-          </label>
 
           <label className="check">
             <input
