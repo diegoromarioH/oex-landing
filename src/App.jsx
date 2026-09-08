@@ -1339,7 +1339,7 @@ function PrealertaPage() {
 
       if (error) {
         console.error("Error guardando prealerta:", error);
-        setMensaje("No pudimos registrar tu paquete. Intenta nuevamente o escríbenos por WhatsApp.");
+        setMensaje(error.code === "23505" ? "Este tracking ya está registrado. Revisa el número antes de continuar." : "No pudimos registrar tu paquete. Intenta nuevamente o escríbenos por WhatsApp.");
         return;
       }
 
