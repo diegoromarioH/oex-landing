@@ -1908,3 +1908,51 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
     display: flex;
   }
 }
+
+
+/* OEX responsive visual refinement — September 2026 */
+:where(.page, .heroNew, .section, .topNav) { min-width: 0; }
+:where(.heroContent, .heroCopy, .heroVisual, .routeCard, .threePanelGrid, .addressGrid, .storeGrid) > * { min-width: 0; }
+.topNav { z-index: 100; }
+.topNav a, .topNav button { -webkit-tap-highlight-color: transparent; }
+.topNav a:focus-visible, .topNav button:focus-visible, .heroActions a:focus-visible, .panelCta:focus-visible { outline: 3px solid #ff775e; outline-offset: 3px; }
+.heroNew h1 { text-wrap: balance; }
+.heroDescription { max-width: 56ch; }
+.routeCard { max-width: 100%; }
+.routeOption p, .routeCities span, .heroBenefits { overflow-wrap: anywhere; }
+@media (max-width: 1180px) {
+  .topNav:not(.simpleNav) .navLinksOpen { max-height: calc(100dvh - var(--nav-h, 72px) - 20px); overflow-y: auto; overscroll-behavior: contain; }
+}
+@media (max-width: 760px) {
+  .topNav:not(.simpleNav) { gap: 10px; padding-inline: 16px; }
+  .topNav:not(.simpleNav) .brand { min-width: 0; }
+  .topNav:not(.simpleNav) .brand > div { min-width: 0; }
+  .topNav:not(.simpleNav) .brand span { font-size: 11px; line-height: 1.25; }
+  .topNav:not(.simpleNav) .menuToggle { flex: 0 0 auto; min-width: 44px; min-height: 44px; }
+  .topNav:not(.simpleNav) .navLinks { left: 12px; right: 12px; max-width: calc(100vw - 24px); }
+  .topNav:not(.simpleNav) .navLinks a { min-height: 44px; display: flex; align-items: center; }
+  .heroNew { overflow: clip; }
+  .heroContent { width: min(100% - 32px, 560px); margin-inline: auto; }
+  .heroCopy h1 { font-size: clamp(30px, 8.2vw, 46px); line-height: 1.12; letter-spacing: -.035em; }
+  .heroCopy h1 br { display: none; }
+  .heroDescription { font-size: 15px; line-height: 1.65; }
+  .heroActions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .heroActions a { width: 100%; min-height: 48px; justify-content: center; text-align: center; }
+  .routeCard { width: 100%; }
+  .routeOption { min-width: 0; }
+  .routeOption p { line-height: 1.45; }
+  .sectionTitle h2 { text-wrap: balance; }
+  .threePanelGrid, .addressGrid, .storeGrid { min-width: 0; }
+  .addressRows { min-width: 0; }
+  .addressRows * { overflow-wrap: anywhere; }
+  input, select, textarea { max-width: 100%; }
+}
+@media (max-width: 380px) {
+  .heroContent { width: calc(100% - 28px); }
+  .topNav:not(.simpleNav) .brand span { display: none; }
+  .heroCopy h1 { font-size: 30px; }
+  .routeCard { padding-inline: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .topNav a, .topNav button, .heroActions a { transition-duration: .01ms !important; }
+}
