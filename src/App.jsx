@@ -356,7 +356,7 @@ function useWebConfig() {
 }
 
 function LandingPage() {
-  const config = useWebConfig();
+  const config = useWebConfig();\n  const operativa = useOperativaPublica();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [nombreDireccion, setNombreDireccion] = useState("");
   const [tipoDireccion, setTipoDireccion] = useState("MAR");
@@ -612,7 +612,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
 
           <Reveal>
-            <RatesTable whatsapp={config.whatsapp || "50557067044"} />
+            <RatesTable whatsapp={config.whatsapp || "50557067044"} tarifas={operativa.tarifas} tiemposEntrega={operativa.tiemposEntrega} />
           </Reveal>
         </section>
 
@@ -635,7 +635,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
 
           <Reveal>
-            <DeliveryCalculator />
+            <DeliveryCalculator tiemposEntrega={operativa.tiemposEntrega} feriados={operativa.feriados} />
           </Reveal>
         </section>
 
@@ -1032,11 +1032,11 @@ function TrackingLookup({ standalone = false }) {
   );
 }
 
-function RatesTable({ whatsapp }) {
+function RatesTable({ whatsapp, tarifas, tiemposEntrega }) {
   return (
     <div className="ratesTableWrap card">
       <div className="ratesGrid">
-        {TARIFAS.map((tarifa) => (
+        {tarifas.map((tarifa) => { const rango = tiemposEntrega?.[tarifa.destino]?.[tarifa.tipo] || RANGOS_FALLBACK[tarifa.destino][tarifa.tipo]; return (
           <div className="rateCard" key={`${tarifa.destino}-${tarifa.tipo}`}>
             <div className="rateCardHead">
               <span className="rateDestino">{tarifa.destino}</span>
