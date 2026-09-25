@@ -128,13 +128,44 @@ const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/oex.ni"
 };
 
-// Tarifas estándar (solo informativas, no calculadora interactiva)
-const TARIFAS = [
-  { destino: "Ometepe", tipo: "Marítimo", precio: 3, tiempo: "17 a 20 días hábiles" },
-  { destino: "Ometepe", tipo: "Aéreo", precio: 7.5, tiempo: "4 a 6 días hábiles" },
-  { destino: "Managua", tipo: "Marítimo", precio: 2.5, tiempo: "16 a 19 días hábiles" },
-  { destino: "Managua", tipo: "Aéreo", precio: 6.5, tiempo: "3 a 5 días hábiles" }
+const TARIFAS_FALLBACK = [
+  { destino: "Ometepe", tipo: "Marítimo", precio: 3 },
+  { destino: "Ometepe", tipo: "Aéreo", precio: 7.5 },
+  { destino: "Managua", tipo: "Marítimo", precio: 2.5 },
+  { destino: "Managua", tipo: "Aéreo", precio: 6.5 }
 ];
+
+const RANGOS_FALLBACK = {
+  Managua: { "Aéreo": [5, 7], "Marítimo": [16, 19] },
+  Ometepe: { "Aéreo": [5, 7], "Marítimo": [18, 20] }
+};
+
+function useOperativaPublica() {
+  const [datos, setDatos] = useState({ tarifas: TARIFAS_FALLBACK, tiemposEntrega: RANGOS_FALLBACK, feriados: [] });
+  useEffect(() => {
+    let activo = true;
+    Promise.all([
+      supabase.from("tarifas").select("id,destino,maritimo,aereo").in("id", ["managua_estandar", "ometepe_estandar"]),
+      supabase.from("empresa_config").select("config_operativa").eq("id", 1).maybeSingle(),
+      supabase.from("feriados_nicaragua").select("fecha").eq("activo", true)
+    ]).then(([tarifasRes, configRes, feriadosRes]) => {
+      if (!activo) return;
+      const estandar = tarifasRes.data || [];
+      const tarifas = TARIFAS_FALLBACK.map((base) => {
+        const fila = estandar.find((t) => t.destino === base.destino);
+        const valor = base.tipo === "Aéreo" ? fila?.aereo : fila?.maritimo;
+        return { ...base, precio: Number(valor) > 0 ? Number(valor) : base.precio };
+      });
+      setDatos({
+        tarifas,
+        tiemposEntrega: configRes.data?.config_operativa?.tiemposEntrega || RANGOS_FALLBACK,
+        feriados: (feriadosRes.data || []).map((f) => f.fecha)
+      });
+    }).catch(() => {}).finally(() => {});
+    return () => { activo = false; };
+  }, []);
+  return datos;
+}
 
 const DESTINOS = ["Ometepe", "Managua"];
 const TIPOS_ENVIO = ["Marítimo", "Aéreo"];
