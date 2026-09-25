@@ -356,7 +356,8 @@ function useWebConfig() {
 }
 
 function LandingPage() {
-  const config = useWebConfig();\n  const operativa = useOperativaPublica();
+  const config = useWebConfig();
+  const operativa = useOperativaPublica();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [nombreDireccion, setNombreDireccion] = useState("");
   const [tipoDireccion, setTipoDireccion] = useState("MAR");
