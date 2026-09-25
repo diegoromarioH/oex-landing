@@ -186,7 +186,7 @@ const GUIAS = [
       },
       {
         title: "Tarifas y tiempos estándar en 2026",
-        paragraphs: ["Para Managua, el envío marítimo estándar cuesta USD 2.50 por libra y tarda aproximadamente de 16 a 19 días hábiles; el aéreo cuesta USD 6.50 por libra y tarda de 3 a 5 días hábiles.", "Para Ometepe, el envío marítimo estándar cuesta USD 3.00 por libra y tarda aproximadamente de 17 a 20 días hábiles; el aéreo cuesta USD 7.50 por libra y tarda de 4 a 6 días hábiles."],
+        paragraphs: ["Para Managua, el envío marítimo estándar cuesta USD 2.50 por libra y tarda aproximadamente de 16 a 19 días hábiles; el aéreo cuesta USD 6.50 por libra y tarda de 5 a 7 días hábiles.", "Para Ometepe, el envío marítimo estándar cuesta USD 3.00 por libra y tarda aproximadamente de 18 a 20 días hábiles; el aéreo cuesta USD 7.50 por libra y tarda de 5 a 7 días hábiles."],
         note: "Los tiempos comienzan cuando OEX recibe el paquete en Miami y son estimados. Algunos productos requieren una cotización especial."
       },
       {
@@ -205,11 +205,11 @@ const GUIAS = [
     sections: [
       {
         title: "Envío aéreo",
-        paragraphs: ["Es la opción más rápida. Para Managua el tiempo estándar es de 3 a 5 días hábiles y la tarifa es USD 6.50 por libra. Para Ometepe es de 4 a 6 días hábiles y USD 7.50 por libra.", "Suele ser conveniente para paquetes pequeños, documentos permitidos, ropa ligera o compras que necesitas pronto."]
+        paragraphs: ["Es la opción más rápida. Para Managua el tiempo estándar es de 5 a 7 días hábiles y la tarifa es USD 6.50 por libra. Para Ometepe es de 5 a 7 días hábiles y USD 7.50 por libra.", "Suele ser conveniente para paquetes pequeños, documentos permitidos, ropa ligera o compras que necesitas pronto."]
       },
       {
         title: "Envío marítimo",
-        paragraphs: ["Es la alternativa más económica para compras pesadas o que no son urgentes. Para Managua el tiempo estándar es de 16 a 19 días hábiles y la tarifa es USD 2.50 por libra. Para Ometepe es de 17 a 20 días hábiles y USD 3.00 por libra."]
+        paragraphs: ["Es la alternativa más económica para compras pesadas o que no son urgentes. Para Managua el tiempo estándar es de 16 a 19 días hábiles y la tarifa es USD 2.50 por libra. Para Ometepe es de 18 a 20 días hábiles y USD 3.00 por libra."]
       },
       {
         title: "Antes de elegir",
@@ -647,7 +647,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
 
           <Reveal className="faqGrid">
-            <Faq question="¿Cuánto tarda en llegar mi paquete?" answer="Desde que recibimos en Miami: Managua tarda de 3 a 5 días hábiles por vía aérea o de 16 a 19 por vía marítima; Ometepe tarda de 4 a 6 días hábiles por vía aérea o de 17 a 20 por vía marítima." />
+            <Faq question="¿Cuánto tarda en llegar mi paquete?" answer="Desde que recibimos en Miami: Managua tarda de 5 a 7 días hábiles por vía aérea o de 16 a 19 por vía marítima; Ometepe tarda de 5 a 7 días hábiles por vía aérea o de 18 a 20 por vía marítima." />
             <Faq question="¿Entregan en toda Nicaragua?" answer="Trabajamos Ometepe y Managua. Otros destinos pueden coordinarse por WhatsApp." />
             <Faq question="¿Compran por mí en las tiendas?" answer="Sí, podemos ayudarte con compra asistida. Para SHEIN hay opciones específicas de financiamiento." />
             <Faq question="¿Cómo registro mi tracking?" answer="Ingresa a la sección Prealertar, escribe tus datos y agrega uno o varios tracking numbers." />
