@@ -1013,35 +1013,29 @@ function TrackingLookup({ standalone = false }) {
   );
 }
 
-function RatesTable({ whatsapp, tarifas, tiemposEntrega }) {
+function RatesTable({ whatsapp, tarifas = TARIFAS_FALLBACK, tiemposEntrega = RANGOS_FALLBACK }) {
   return (
     <div className="ratesTableWrap card">
       <div className="ratesGrid">
-        {tarifas.map((tarifa) => { const rango = tiemposEntrega?.[tarifa.destino]?.[tarifa.tipo] || RANGOS_FALLBACK[tarifa.destino][tarifa.tipo]; return (
-          <div className="rateCard" key={`${tarifa.destino}-${tarifa.tipo}`}>
-            <div className="rateCardHead">
-              <span className="rateDestino">{tarifa.destino}</span>
-              <span className="rateTipo">{tarifa.tipo === "Aéreo" ? <Plane size={14} strokeWidth={1.8} /> : <Ship size={14} strokeWidth={1.8} />} {tarifa.tipo}</span>
+        {tarifas.map((tarifa) => {
+          const rango = tiemposEntrega?.[tarifa.destino]?.[tarifa.tipo] || RANGOS_FALLBACK[tarifa.destino][tarifa.tipo];
+          return (
+            <div className="rateCard" key={`${tarifa.destino}-${tarifa.tipo}`}>
+              <div className="rateCardHead">
+                <span className="rateDestino">{tarifa.destino}</span>
+                <span className="rateTipo">{tarifa.tipo === "Aéreo" ? <Plane size={14} strokeWidth={1.8} /> : <Ship size={14} strokeWidth={1.8} />} {tarifa.tipo}</span>
+              </div>
+              <div className="ratePrice">
+                <strong>${Number(tarifa.precio).toFixed(2)}</strong>
+                <small>por libra</small>
+              </div>
+              <div className="rateTime">{rango[0]} a {rango[1]} días hábiles</div>
             </div>
-            <div className="ratePrice">
-              <strong>${tarifa.precio.toFixed(2)}</strong>
-              <small>por libra</small>
-            </div>
-            <div className="rateTime">{tarifa.tiempo}</div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-
-      <div className="notice">
-        Sin redondeos de peso. El costo final se calcula con el peso real recibido en Managua.
-      </div>
-
-      <a
-        className="blueButton"
-        href={`https://wa.me/${whatsapp}?text=Hola,%20quiero%20cotizar%20un%20env%C3%ADo%20con%20OEX`}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <div className="notice">Sin redondeos de peso. El costo final se calcula con el peso real recibido en Managua.</div>
+      <a className="blueButton" href={`https://wa.me/${whatsapp}?text=Hola,%20quiero%20cotizar%20un%20env%C3%ADo%20con%20OEX`} target="_blank" rel="noreferrer">
         <IconWhatsapp size={17} /> Cotizar por WhatsApp
       </a>
     </div>
