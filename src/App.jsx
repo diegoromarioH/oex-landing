@@ -719,60 +719,41 @@ function formatearFechaCorta(fecha) {
 }
 
 // ===== Fecha estimada de llegada =====
-//
-// Rango de días hábiles esperado según destino + tipo de envío. Días
-// hábiles = lunes a viernes — a propósito NO se descuentan feriados,
-// para no depender de un calendario que hay que actualizar cada año.
-const RANGOS_ENTREGA = {
-  Managua: { "Aéreo": [3, 5], "Marítimo": [16, 19] },
-  Ometepe: { "Aéreo": [4, 6], "Marítimo": [17, 20] }
+const claveFecha = (valor) => {
+  const d = new Date(valor);
+  if (Number.isNaN(d.getTime())) return "";
+  return [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
 };
 
-function sumarDiasHabiles(fechaInicio, cantidadDias) {
+function sumarDiasHabiles(fechaInicio, cantidadDias, feriados = []) {
   const fecha = new Date(fechaInicio);
+  const noLaborables = new Set(feriados);
   let sumados = 0;
   while (sumados < cantidadDias) {
     fecha.setDate(fecha.getDate() + 1);
-    const dia = fecha.getDay(); // 0 = domingo, 6 = sábado
-    if (dia !== 0 && dia !== 6) sumados++;
+    const dia = fecha.getDay();
+    if (dia !== 0 && dia !== 6 && !noLaborables.has(claveFecha(fecha))) sumados++;
   }
   return fecha;
 }
 
-function calcularRangoLlegada(fechaMiami, destino, tipoEnvio) {
+function calcularFechaMaxima(fechaMiami, destino, tipoEnvio, tiemposEntrega = RANGOS_FALLBACK, feriados = []) {
   if (!fechaMiami) return null;
-  const porDestino = RANGOS_ENTREGA[destino] || RANGOS_ENTREGA.Ometepe;
-  const [minDias, maxDias] = porDestino[tipoEnvio] || porDestino["Marítimo"];
-  return {
-    desde: sumarDiasHabiles(fechaMiami, minDias),
-    hasta: sumarDiasHabiles(fechaMiami, maxDias)
-  };
+  const rango = tiemposEntrega?.[destino]?.[tipoEnvio] || RANGOS_FALLBACK?.[destino]?.[tipoEnvio];
+  if (!rango) return null;
+  return sumarDiasHabiles(fechaMiami, rango[1], feriados);
 }
 
-// El conteo arranca desde que el paquete entró a "Miami" — el primer
-// paso real del pipeline. Se busca esa fecha en `historial` (más
-// preciso); si el backend todavía no manda historial, se usa
-// `fechaRegistro` como respaldo — en la práctica es la misma fecha,
-// porque todo tracking nace en Miami al registrarse.
-//
-// No se muestra nada si ya está "Entregado" (la estimación ya no aporta
-// nada ahí) o si no se pudo determinar ninguna fecha de partida.
 function EstimacionLlegada({ estado, destino, tipoEnvio, fechaRegistro, historial }) {
+  const operativa = useOperativaPublica();
   if (estado === "Entregado") return null;
-
   const fechaMiami = (historial || []).find((h) => h && h.estado === "Miami")?.fecha || fechaRegistro;
-  const rango = calcularRangoLlegada(fechaMiami, destino, tipoEnvio);
-  if (!rango) return null;
-
-  const opciones = { day: "numeric", month: "short" };
-  const desdeTxt = rango.desde.toLocaleDateString("es-NI", opciones);
-  const hastaTxt = rango.hasta.toLocaleDateString("es-NI", opciones);
-  const textoRango = desdeTxt === hastaTxt ? desdeTxt : `${desdeTxt} – ${hastaTxt}`;
-
+  const fechaMax = calcularFechaMaxima(fechaMiami, destino, tipoEnvio, operativa.tiemposEntrega, operativa.feriados);
+  if (!fechaMax) return null;
   return (
     <div className="trackingResultRow">
-      <span>Llegada estimada</span>
-      <b>{textoRango}</b>
+      <span>Fecha estimada de entrega</span>
+      <b>{fechaMax.toLocaleDateString("es-NI", { day: "numeric", month: "short", year: "numeric" })}</b>
     </div>
   );
 }
@@ -1067,100 +1048,27 @@ function RatesTable({ whatsapp, tarifas, tiemposEntrega }) {
   );
 }
 
-function DeliveryCalculator() {
+function DeliveryCalculator({ tiemposEntrega, feriados }) {
   const [fechaBodega, setFechaBodega] = useState("");
   const [destino, setDestino] = useState("Managua");
   const [tipoEnvio, setTipoEnvio] = useState("Aéreo");
-
-  const [min, max] = RANGOS_ENTREGA[destino][tipoEnvio];
-  const rango = {
-    min,
-    max,
-    label: `${min} a ${max} días hábiles aproximados`
-  };
-
-  const formatearFecha = (fecha) => {
-    return fecha.toLocaleDateString("es-NI", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
-  };
-
-  const sumarDiasHabiles = (fecha, dias) => {
-    const resultado = new Date(fecha);
-    let agregados = 0;
-
-    while (agregados < dias) {
-      resultado.setDate(resultado.getDate() + 1);
-      const dia = resultado.getDay();
-
-      if (dia !== 0 && dia !== 6) {
-        agregados++;
-      }
-    }
-
-    return resultado;
-  };
-
-  const fechaMin = fechaBodega
-    ? sumarDiasHabiles(new Date(fechaBodega + "T12:00:00"), rango.min)
-    : null;
-
-  const fechaMax = fechaBodega
-    ? sumarDiasHabiles(new Date(fechaBodega + "T12:00:00"), rango.max)
-    : null;
-
+  const rango = tiemposEntrega?.[destino]?.[tipoEnvio] || RANGOS_FALLBACK[destino][tipoEnvio];
+  const fechaMax = fechaBodega ? calcularFechaMaxima(new Date(fechaBodega + "T12:00:00"), destino, tipoEnvio, tiemposEntrega, feriados) : null;
+  const formatearFecha = (fecha) => fecha.toLocaleDateString("es-NI", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
   return (
     <div className="calculatorGrid">
       <div className="calculatorCard card">
-        <label>
-          Fecha en que recibimos tu paquete en bodega Miami
-          <input
-            type="date"
-            value={fechaBodega}
-            onChange={(e) => setFechaBodega(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Destino
-          <select value={destino} onChange={(e) => setDestino(e.target.value)}>
-            <option value="Managua">Managua</option>
-            <option value="Ometepe">Ometepe</option>
-          </select>
-        </label>
-
-        <label>
-          Tipo de envío
-          <select value={tipoEnvio} onChange={(e) => setTipoEnvio(e.target.value)}>
-            <option value="Aéreo">Aéreo</option>
-            <option value="Marítimo">Marítimo</option>
-          </select>
-        </label>
-
-        <div className="notice">
-          Las fechas son aproximadas. El conteo inicia una vez recibamos tu paquete en Miami.
-        </div>
+        <label>Fecha en que recibimos tu paquete en bodega Miami<input type="date" value={fechaBodega} onChange={(e) => setFechaBodega(e.target.value)} /></label>
+        <label>Destino<select value={destino} onChange={(e) => setDestino(e.target.value)}><option value="Managua">Managua</option><option value="Ometepe">Ometepe</option></select></label>
+        <label>Tipo de envío<select value={tipoEnvio} onChange={(e) => setTipoEnvio(e.target.value)}><option value="Aéreo">Aéreo</option><option value="Marítimo">Marítimo</option></select></label>
+        <div className="notice">Fecha estimada usando el plazo máximo configurado. No se cuentan sábados, domingos ni feriados de Nicaragua.</div>
       </div>
-
       <div className="calculatorResult">
-        <span>Resultado estimado</span>
-        <h3>{tipoEnvio} · {destino}</h3>
-
-        {!fechaBodega ? (
-          <p>Selecciona la fecha en que recibimos tu paquete.</p>
-        ) : (
-          <>
-            <p className="estimateRange">{rango.label}</p>
-            <div className="dateBox">
-              <small>Fecha aproximada entre:</small>
-              <strong>{formatearFecha(fechaMin)}</strong>
-              <strong>{formatearFecha(fechaMax)}</strong>
-            </div>
-          </>
-        )}
+        <span>Resultado estimado</span><h3>{tipoEnvio} · {destino}</h3>
+        {!fechaBodega ? <p>Selecciona la fecha en que recibimos tu paquete.</p> : <>
+          <p className="estimateRange">Plazo estimado: {rango[0]} a {rango[1]} días hábiles</p>
+          <div className="dateBox"><small>Fecha estimada de entrega:</small><strong>{formatearFecha(fechaMax)}</strong></div>
+        </>}
       </div>
     </div>
   );
