@@ -174,6 +174,90 @@ const TIPOS_ENVIO = ["Marítimo", "Aéreo"];
 
 const GUIAS = [
 {
+  "slug": "enviar-encomiendas-familiares-estados-unidos-nicaragua-2026",
+  "category": "Encomiendas familiares",
+  "title": "Envía encomiendas de Estados Unidos a tu familia en Nicaragua: guía 2026",
+  "description": "Cómo enviar una encomienda a tus familiares en Managua u Ometepe con OEX: preparación de la caja, tarifas por libra, prealerta y seguimiento.",
+  "readingTime": "6 min",
+  "updatedAt": "2026-09-29",
+  "intro": "Una caja puede llevar ropa, regalos y detalles para las personas que más quieres. Si estás en Estados Unidos y deseas enviarla a tu familia en Nicaragua, aquí te explicamos qué confirmar antes de despacharla y cómo acompañar el envío hasta su entrega.",
+  "sections": [
+    {
+      "title": "Antes de enviar, confirma el contenido y el destino",
+      "paragraphs": [
+        "Cuéntanos qué deseas enviar, desde qué ciudad de Estados Unidos y quién recibirá en Managua u Ometepe. Confirma con OEX que el contenido sea aceptado, la modalidad y las condiciones del servicio antes de entregar tu caja a un transportista.",
+        "No asumas que todos los artículos pueden viajar igual. Perfumes, líquidos, baterías, medicamentos, electrónicos y artículos voluminosos requieren consulta previa. La aceptación y el precio dependerán del producto y de las condiciones aplicables."
+      ]
+    },
+    {
+      "title": "Cómo preparar una caja para tu familia",
+      "steps": [
+        "Haz una lista del contenido y conserva comprobantes o referencias de valor cuando estén disponibles.",
+        "Utiliza una caja resistente del tamaño adecuado y protege cada artículo para evitar movimiento dentro del empaque.",
+        "Consulta con OEX cómo identificar la caja y qué datos del remitente y destinatario incluir.",
+        "Toma fotografías del contenido y de la caja cerrada antes de despacharla.",
+        "Guarda el comprobante del transportista y su número de seguimiento."
+      ],
+      "note": "El empaque ayuda a proteger el contenido, pero no elimina todos los riesgos del transporte. Consulta antes de enviar artículos frágiles."
+    },
+    {
+      "title": "De tu ciudad a Miami y de Miami a Nicaragua",
+      "paragraphs": [
+        "Solicita a OEX la dirección vigente de recepción en Miami y las instrucciones para identificar tu encomienda. Evita reutilizar una dirección antigua o enviarla sin confirmar sus datos.",
+        "Si necesitas un transportista para llevar la caja desde tu ciudad hasta Miami, confirma y paga ese servicio según sus condiciones. Su costo y tiempo son distintos del traslado de OEX desde Miami a Nicaragua. Confirma ambos tramos para conocer el costo completo."
+      ]
+    },
+    {
+      "title": "Tarifas estándar OEX revisadas el 29 de septiembre de 2026",
+      "paragraphs": [
+        "Managua: marítimo US$2.50 por libra; aéreo US$6.50 por libra. Ometepe: marítimo US$3.00 por libra; aéreo US$7.50 por libra.",
+        "Ejemplo de una caja de 10 lb bajo tarifa estándar: marítimo a Managua US$25.00 y a Ometepe US$30.00; aéreo a Managua US$65.00 y a Ometepe US$75.00.",
+        "Estos ejemplos corresponden únicamente al traslado OEX bajo tarifa estándar. No incluyen el valor de los artículos ni el transporte hasta Miami. El importe final depende del peso aplicable y de las condiciones del contenido. Confirma cualquier cargo adicional o cotización especial antes de enviar."
+      ],
+      "note": "Tarifas verificadas en la fecha indicada. Si consultas esta guía después, revisa las tarifas vigentes en la página principal o confirma con OEX."
+    },
+    {
+      "title": "¿Envío aéreo o marítimo para tu encomienda?",
+      "paragraphs": [
+        "El marítimo puede convenirte si tu familia puede esperar y buscas un menor costo por libra. El aéreo puede ser útil si necesitas recibir antes y el contenido es aceptado en esa modalidad.",
+        "Los tiempos estándar actualmente registrados son de 5 a 7 días hábiles para aéreo en Managua y Ometepe, de 16 a 19 días hábiles para marítimo en Managua y de 18 a 20 días hábiles para marítimo en Ometepe.",
+        "El conteo de OEX comienza desde la recepción en Miami según las condiciones del servicio. El tiempo previo del transportista no forma parte de ese plazo. Son estimaciones, no una garantía para una fecha específica; deja margen para cumpleaños, fiestas y otras ocasiones."
+      ]
+    },
+    {
+      "title": "Prealerta la encomienda y guarda el tracking",
+      "paragraphs": [
+        "Cuando el transportista te entregue el tracking, regístralo en la prealerta de OEX con tus datos, remitente, destino y modalidad. Si envías varias cajas con trackings distintos, registra cada una.",
+        "El tracking permite identificar la encomienda y consultar su avance. Que el transportista marque entregado en Miami no significa que la caja ya esté lista para retirar en Nicaragua. Verifica su estado con OEX."
+      ]
+    },
+    {
+      "title": "Coordina con el familiar que recibirá",
+      "paragraphs": [
+        "Comparte con tu familiar el número de seguimiento y mantén actualizado su contacto. Confirma con OEX el punto de entrega, horario, pago y datos necesarios para retirar.",
+        "Evita prometer un día de entrega antes de que OEX confirme la disponibilidad. Cuando se coordine el retiro, pide a tu familiar revisar el paquete y conservar el empaque si encuentra una incidencia."
+      ]
+    },
+    {
+      "title": "¿Qué hago si tengo dudas o hay una incidencia?",
+      "paragraphs": [
+        "Guarda fotografías, comprobantes y tracking. Si falta información de seguimiento, hay un daño o detectas un error, comunícate con OEX lo antes posible y describe lo ocurrido para que podamos revisar los registros.",
+        "Antes de enviar, solicita una explicación de la tarifa, lo que incluye y las condiciones aplicables al contenido. Tener esos datos por escrito ayuda a evitar malentendidos."
+      ]
+    },
+    {
+      "title": "Tu primera encomienda, paso a paso",
+      "steps": [
+        "Consulta con OEX el contenido, modalidad, destino y dirección de Miami.",
+        "Prepara y documenta la caja.",
+        "Despacha con tu transportista y conserva el tracking.",
+        "Registra la prealerta y consulta el seguimiento.",
+        "Coordina con OEX y tu familiar el pago y retiro cuando esté disponible."
+      ]
+    }
+  ]
+},
+{
   "slug": "preguntas-frecuentes-compras-online-compra-asistida",
   "category": "Compras en línea",
   "title": "Preguntas frecuentes sobre compras en línea y compra asistida con OEX",
@@ -1884,7 +1968,19 @@ function GuiasNav({ subtitle = "Guías y consejos" }) {
   );
 }
 
+function GuiaCover({ guia }) {
+  const compras = guia.category === "Compras en línea";
+  return <div className={"guiaCover " + (compras ? "guiaCoverCompras" : "")} aria-hidden="true">
+    <span className="guiaCoverMarca">OEX</span><div className="guiaCoverRuta"><span>Estados Unidos</span><span>→</span><span>Nicaragua</span></div>
+    <div className="guiaCoverDibujo">{compras ? <Store size={74} strokeWidth={1.3} /> : <Package size={74} strokeWidth={1.3} />}<Plane size={30} strokeWidth={1.5} /><Ship size={30} strokeWidth={1.5} /></div>
+    <span className="guiaCoverTema">{guia.category}</span>
+  </div>;
+}
+const fechaGuia = guia => new Date((guia.updatedAt || (guia.slug === "preguntas-frecuentes-compras-online-compra-asistida" ? "2026-09-29" : "2026-09-06")) + "T12:00:00-06:00").toLocaleDateString("es-NI", {day:"numeric",month:"long",year:"numeric",timeZone:"America/Managua"});
+
 function GuiasPage() {
+  const [categoria, setCategoria] = useState("Todas");
+  const categorias = ["Todas", ...new Set(GUIAS.map(g => g.category))];
   return (
     <div className="page guidesPage">
       <Seo
@@ -1897,19 +1993,21 @@ function GuiasPage() {
       <main className="guidesWrap">
         <header className="guidesHero">
           <div className="miniBadge"><BookOpen size={15} /> Guías OEX</div>
-          <h1>Compra y recibe con más claridad</h1>
-          <p>Respuestas sencillas para comprar en Estados Unidos, elegir tu envío y darle seguimiento a cada paquete.</p>
+          <h1>Historias, consejos y guías para tus envíos</h1>
+          <p>Artículos de OEX para comprar en línea, enviar encomiendas a tu familia y recibir en Managua u Ometepe con información clara.</p>
         </header>
 
+        <div className="guiaCategorias" aria-label="Filtrar artículos por categoría">{categorias.map(c => <button key={c} type="button" aria-pressed={categoria === c} onClick={() => setCategoria(c)}>{c}</button>)}</div>
         <section className="guidesGrid" aria-label="Artículos y guías de OEX">
-          {GUIAS.map((guia, index) => (
+          {GUIAS.filter(g => categoria === "Todas" || g.category === categoria).map((guia, index) => (
             <article className={`guideCard ${index === 0 ? "guideCardFeatured" : ""}`} key={guia.slug}>
+              <a className="guiaCoverLink" href={`/guias/${guia.slug}`} aria-label={`Leer ${guia.title}`}><GuiaCover guia={guia} /></a>
               <div className="guideCardTop">
                 <span>{guia.category}</span>
                 <small>{guia.readingTime} de lectura</small>
               </div>
               <h2><a href={`/guias/${guia.slug}`}>{guia.title}</a></h2>
-              <p>{guia.description}</p>
+              <p>{guia.description}</p><small className="guiaFecha">Actualizado: {fechaGuia(guia)}</small>
               <a className="guideReadLink" href={`/guias/${guia.slug}`}>Leer guía <IconArrowRight size={17} /></a>
             </article>
           ))}
@@ -1943,11 +2041,12 @@ function GuiaArticlePage({ guia }) {
         </nav>
 
         <article className="guideArticle">
+          <GuiaCover guia={guia} />
           <header className="guideArticleHeader">
             <span className="guideCategory">{guia.category}</span>
             <h1>{guia.title}</h1>
             <p>{guia.intro}</p>
-            <small>Actualizado en septiembre de 2026 · {guia.readingTime} de lectura</small>
+            <small>Por OEX · Actualizado: {fechaGuia(guia)} · {guia.readingTime} de lectura</small>
           </header>
 
           <div className="guideArticleBody">
@@ -1963,6 +2062,7 @@ function GuiaArticlePage({ guia }) {
             ))}
           </div>
 
+          <aside className="guiaRelacionadas"><h2>Sigue leyendo</h2><ul>{GUIAS.filter(g => g.slug !== guia.slug).slice(0,3).map(g => <li key={g.slug}><a href={`/guias/${g.slug}`}>{g.title}</a></li>)}</ul><a href="/#tarifas">Consultar tarifas vigentes</a> · <a href="/rastreo">Rastrear mi paquete</a></aside>
           <footer className="guideArticleFooter">
             <div>
               <h2>¿Listo para registrar tu paquete?</h2>
