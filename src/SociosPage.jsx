@@ -30,7 +30,7 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
       setSocio(data);
       setRecursos([]); setErrorBiblioteca("");
       try {
-        const { data: materiales, error: falloMateriales } = await supabase.from("socios_recursos").select("id,titulo,descripcion,tipo,archivo_path,nombre_archivo").eq("activo", true).order("creado_en", { ascending: false });
+        const { data: materiales, error: falloMateriales } = await supabase.from("socios_recursos").select("id,titulo,descripcion,tipo,formato,archivo_path,nombre_archivo").eq("activo", true).order("creado_en", { ascending: false });
         if (falloMateriales) throw falloMateriales;
         const lista = await Promise.all((materiales || []).map(async material => {
           const { data: url } = await supabase.storage.from("socios-recursos").createSignedUrl(material.archivo_path, 3600);
@@ -80,7 +80,7 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
         {errorBiblioteca && <p className="sociosError" role="alert">{errorBiblioteca}</p>}
         {recursos.length > 0 && <section><h2>Biblioteca OEX</h2><p>Materiales publicados por el equipo OEX para tus recomendaciones.</p><div className="guidesGrid sociosBanners">{recursos.map(material => <article className="guideCard" key={material.id}>
           {/\.(png|jpg|webp)$/.test(material.archivo_path) && material.url && <img src={material.url} alt={material.titulo} />}
-          <h3>{material.titulo}</h3><p>{material.descripcion}</p><small>{({banner:"Banner",guia:"Guía",reglamento:"Reglamento",otro:"Material"})[material.tipo]}</small>
+          <h3>{material.titulo}</h3><p>{material.descripcion}</p><small>{material.tipo === "banner" ? ({post:"Post / publicación",historia:"Historia / estado",horizontal:"Banner horizontal"}[material.formato] || "Banner") : ({guia:"Guía",reglamento:"Reglamento",otro:"Material"})[material.tipo]}</small>
           <button className="guideReadLink" disabled={descargando === material.id} onClick={() => descargar(material)}>{descargando === material.id ? "Descargando…" : "Descargar archivo"}</button>
         </article>)}</div></section>}
         <h2>Banners para compartir</h2><p>Descarga el formato que necesitas y acompáñalo con tu enlace personal.</p>
