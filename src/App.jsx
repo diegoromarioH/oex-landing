@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import logo from "./assets/logo.png";
 import { supabase } from "./supabase";
 import { registrarEvento } from "./analytics";
 import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen } from "lucide-react";
+
+const SociosPage = lazy(() => import("./SociosPage"));
 
 // Anima una sección hacia arriba/opacidad cuando entra en pantalla.
 // Respeta prefers-reduced-motion (ver styles.css).
@@ -400,6 +402,8 @@ export default function App() {
     const identificadorRecomendacion = path.split("/").filter(Boolean)[1] || "";
     return <PrealertaPage identificadorRecomendacion={identificadorRecomendacion} />;
   }
+
+  if (path === "/socios") return <Suspense fallback={<div className="recomendacionLoading">Cargando recursos…</div>}><SociosPage Nav={GuiasNav} Footer={Footer} Seo={Seo} useWebConfig={useWebConfig} /></Suspense>;
 
   if (path === "/rastreo") {
     return <RastreoPage />;
@@ -1273,6 +1277,7 @@ function Footer() {
         <p>Compras y paquetería USA a Nicaragua</p>
         <p><a href="/politicas">Políticas de servicio</a></p>
         <p><a href="/guias">Guías para comprar y recibir</a></p>
+        <p><a href="/socios">Recursos para socios</a></p>
         <p>Ometepe Express 2026</p>
       </div>
     </footer>
