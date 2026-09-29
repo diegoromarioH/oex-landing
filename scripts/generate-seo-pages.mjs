@@ -134,7 +134,7 @@ function render(page) {
     .replace(/<meta name="twitter:title" content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${page.title}" />`)
     .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${page.description}" />`)
     .replace("</head>", `${page.noindex ? '<meta name="robots" content="noindex,follow" />' : ""}\n    ${jsonLd}\n  </head>`)
-    .replace('<div id="root"></div>', `<div id="root">${page.body}</div>`);
+    .replace('<div id="root"></div>', `<div id="root"><noscript>${page.body}</noscript></div>`);
   return html;
 }
 
