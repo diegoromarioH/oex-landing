@@ -171,6 +171,100 @@ const DESTINOS = ["Ometepe", "Managua"];
 const TIPOS_ENVIO = ["Marítimo", "Aéreo"];
 
 const GUIAS = [
+{
+  "slug": "preguntas-frecuentes-compras-online-compra-asistida",
+  "category": "Compras en línea",
+  "title": "Preguntas frecuentes sobre compras en línea y compra asistida con OEX",
+  "description": "Compra sin tarjeta en SHEIN, Amazon y Temu con OEX: pedidos menores a US$200, transferencia, prealerta, tracking y envío a Nicaragua.",
+  "readingTime": "6 min",
+  "intro": "Resuelve tus dudas antes de comprar: cómo usar OEX, cómo funciona la compra asistida si no tienes tarjeta y qué se paga por separado.",
+  "sections": [
+    {
+      "title": "¿Puedo comprar sin tarjeta?",
+      "paragraphs": [
+        "Sí. OEX ofrece compra asistida únicamente en SHEIN, Amazon y Temu para compras menores a US$200. Nos envías los enlaces o el carrito, confirmamos el monto, nos transfieres y realizamos la compra por ti. Una compra de US$200 o más no entra en este servicio."
+      ]
+    },
+    {
+      "title": "¿Puedo revertir una compra asistida?",
+      "paragraphs": [
+        "Una vez realizada la compra, no hay reversión. Antes de confirmar, revisa los productos, tallas, colores, cantidades y monto total del carrito."
+      ]
+    },
+    {
+      "title": "¿El precio de la tienda incluye el envío de OEX?",
+      "paragraphs": [
+        "No. El monto de la compra en la tienda y el servicio de envío de OEX son separados. El envío de OEX se cobra aparte según el peso, destino, modalidad y condiciones aplicables."
+      ]
+    },
+    {
+      "title": "¿En qué tiendas puedo comprar?",
+      "paragraphs": [
+        "Puedes comprar directamente en tiendas que envíen a la dirección de recepción de OEX y acepten tu medio de pago. La compra asistida está limitada a SHEIN, Amazon y Temu. Confirma con OEX que el contenido del paquete sea permitido antes de comprar."
+      ]
+    },
+    {
+      "title": "¿Qué dirección pongo en la tienda?",
+      "paragraphs": [
+        "Utiliza la dirección vigente de recepción en Miami que OEX te indique para la modalidad elegida. Copia correctamente el nombre, dirección e identificadores. Si vas a usar OEX, la compra de la tienda debe llegar a esa dirección de recepción."
+      ]
+    },
+    {
+      "title": "¿Qué es el tracking y dónde lo encuentro?",
+      "paragraphs": [
+        "Es el número de seguimiento que entrega la tienda o transportista después del despacho. Búscalo en el detalle del pedido o el correo de envío. El número de orden de compra no siempre es el tracking."
+      ]
+    },
+    {
+      "title": "¿Cuándo hago la prealerta?",
+      "paragraphs": [
+        "Cuando tengas el tracking, regístralo antes de que llegue a Miami. Incluye tus datos, tienda o remitente, destino y modalidad. Si te recomendó un Socio OEX, utiliza su enlace o escribe su código en el campo opcional."
+      ]
+    },
+    {
+      "title": "¿Qué pasa si mi pedido llega en varios paquetes?",
+      "paragraphs": [
+        "Registra cada tracking por separado. Puedes agregar varios en una misma prealerta. No registres dos veces un mismo tracking; si varias compras lo comparten, consulta con OEX cómo identificar el contenido."
+      ]
+    },
+    {
+      "title": "¿Cómo sé cuánto pagaré por el envío?",
+      "paragraphs": [
+        "Consulta la tarifa según destino y modalidad. El costo depende del peso aplicable y las condiciones del paquete. Confirma con OEX si tu artículo necesita cotización o manejo especial."
+      ]
+    },
+    {
+      "title": "¿Qué me conviene: aéreo o marítimo?",
+      "paragraphs": [
+        "El aéreo suele ser más rápido y el marítimo suele ser más económico para compras que pueden esperar. Confirma que tu artículo sea aceptado en la modalidad elegida."
+      ]
+    },
+    {
+      "title": "¿Desde cuándo cuentan los días de entrega?",
+      "paragraphs": [
+        "El tiempo de la tienda hasta Miami es distinto del traslado de OEX a Nicaragua. El plazo estimado de OEX comienza desde la recepción en Miami según las condiciones del servicio. Los tiempos son estimados y pueden variar."
+      ]
+    },
+    {
+      "title": "La tienda dice entregado. ¿Mi paquete ya está en Nicaragua?",
+      "paragraphs": [
+        "Si compraste con dirección de Miami, entregado normalmente se refiere a la recepción en esa dirección, no a que el paquete ya esté listo en Nicaragua. Consulta el rastreo de OEX; si no aparece, envía el tracking y la constancia de entrega para su revisión."
+      ]
+    },
+    {
+      "title": "¿Puedo enviar perfumes, baterías, líquidos o medicamentos?",
+      "paragraphs": [
+        "Algunos artículos tienen restricciones de transporte o aduana. Envía a OEX el enlace o descripción del producto antes de comprarlo para confirmar aceptación, modalidad y condiciones."
+      ]
+    },
+    {
+      "title": "¿Dónde retiro mi paquete y qué hago si hay un problema?",
+      "paragraphs": [
+        "Confirma con OEX el punto de entrega, horario y requisitos antes de retirarlo. Si detectas daño, faltantes o un error, conserva el empaque, toma fotos y comunícate con OEX lo antes posible para que revise el caso."
+      ]
+    }
+  ]
+},
   {
     slug: "envios-estados-unidos-nicaragua-2026",
     category: "Envíos a Nicaragua",
@@ -233,7 +327,7 @@ const GUIAS = [
       },
       {
         title: "Si no tienes tarjeta",
-        paragraphs: ["OEX puede realizar la compra asistida. Nos envías los enlaces o el carrito y transfieres únicamente el monto que cobra SHEIN. La compra asistida no tiene costo adicional; al retirar pagas el peso según la tarifa de envío correspondiente."]
+        paragraphs: ["OEX ofrece compra asistida en SHEIN, Amazon y Temu para compras menores a US$200. Nos envías los enlaces o el carrito, confirmamos el monto, nos transfieres y realizamos la compra. Una vez hecha no hay reversión. El precio de la tienda no incluye el envío de OEX, que se cobra aparte."]
       },
       {
         title: "Revisa las tallas antes de pagar",
@@ -654,9 +748,11 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           <Reveal className="faqGrid">
             <Faq question="¿Cuánto tarda en llegar mi paquete?" answer="Desde que recibimos en Miami: Managua tarda de 5 a 7 días hábiles por vía aérea o de 16 a 19 por vía marítima; Ometepe tarda de 5 a 7 días hábiles por vía aérea o de 18 a 20 por vía marítima." />
             <Faq question="¿Entregan en toda Nicaragua?" answer="Trabajamos Ometepe y Managua. Otros destinos pueden coordinarse por WhatsApp." />
-            <Faq question="¿Compran por mí en las tiendas?" answer="Sí, podemos ayudarte con compra asistida. Para SHEIN hay opciones específicas de financiamiento." />
+            <Faq question="¿Compran por mí en las tiendas?" answer="Sí. OEX ofrece compra asistida únicamente en SHEIN, Amazon y Temu para compras menores a US$200. Nos envías los enlaces o el carrito, confirmamos el monto, nos transfieres y realizamos la compra por ti. Una compra de US$200 o más no entra en este servicio. Una vez hecha la compra no hay reversión. El envío de OEX se cobra aparte." />
             <Faq question="¿Cómo registro mi tracking?" answer="Ingresa a la sección Prealertar, escribe tus datos y agrega uno o varios tracking numbers." />
-            <Faq question="¿Necesito tarjeta de crédito?" answer="No necesariamente. Si necesitas ayuda, puedes solicitar compra asistida por WhatsApp." />
+            <Faq question="¿Necesito tarjeta de crédito?" answer="No. Puedes transferirnos el monto confirmado y OEX compra por ti únicamente en SHEIN, Amazon o Temu, para compras menores a US$200. Una vez realizada la compra no hay reversión. El envío de OEX se paga aparte." />
+            <Faq question="¿El precio de la tienda incluye el envío de OEX?" answer="No. El monto de la compra en la tienda y el servicio de envío de OEX son separados. El envío de OEX se cobra aparte según el peso, destino, modalidad y condiciones aplicables." />
+            <a className="guideReadLink" href="/guias/preguntas-frecuentes-compras-online-compra-asistida">Ver todas las preguntas sobre compras en línea <IconArrowRight size={17} /></a>
             <Faq question="¿Cómo elijo bien mi talla?" answer="Revisa siempre la guía de tallas de la tienda y compara tus medidas en centímetros. No te guíes solo por S, M, L o XL, porque cada tienda puede manejar medidas diferentes." />
             <Faq question="¿Qué pasa si el producto viene en otra talla o diferente?" answer="Si fue compra asistida y verificamos que el error fue nuestro, te damos respaldo 100%. Si fue una compra hecha por ti mismo, la responsabilidad por talla, color, modelo o elección del producto la asumes tú." />
             <Faq question="¿Qué pasa si el producto viene dañado?" answer="Se revisa el caso para determinar si el daño ocurrió durante el envío o si la tienda entregó el producto así. Te orientamos con la evidencia disponible, pero la respuesta final puede depender de la tienda o courier." />
