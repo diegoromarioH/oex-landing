@@ -41,6 +41,11 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
     } catch (err) { setError(err.message); }
     finally { setCargando(false); }
   };
+  const cerrarSesion = () => {
+    setSocio(null); setCodigo(""); setFoto(null); setCopiado("");
+    setRecursos([]); setErrorBiblioteca(""); setError(""); setDescargando(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const copiar = async (texto, etiqueta) => {
     try { await navigator.clipboard.writeText(texto); setCopiado(etiqueta); }
     catch { setCopiado("No se pudo copiar. Selecciona el texto y cópialo manualmente."); }
@@ -69,7 +74,7 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
       </section> : <>
         <header className="sociosBienvenida">
           <div className="sociosIdentidad">{foto ? <img src={foto} alt="" onError={() => setFoto(null)} /> : <span className="sociosIniciales">{socio.nombre.split(" ").slice(0, 2).map(p => p[0]).join("")}</span>}<div><span className="miniBadge">Socio OEX · {socio.identificador.toUpperCase()}</span><h1>Hola, {socio.nombre.split(" ")[0]}</h1><p>Comparte, recomienda y encuentra aquí tus materiales.</p></div></div>
-          <button className="navButton" onClick={() => { setSocio(null); setCodigo(""); setFoto(null); setCopiado(""); }}>Cambiar código</button>
+          <button type="button" className="navButton" onClick={cerrarSesion} disabled={cargando || descargando !== null}>Cerrar sesión</button>
         </header>
         <section className="sociosEnlace"><h2>Tu enlace de recomendación</h2><p>Compártelo junto con tus publicaciones para identificar a tus clientes.</p><div><input readOnly aria-label="Tu enlace personal" value={enlace} onFocus={e => e.target.select()} /><button className="primaryCta" onClick={() => copiar(enlace, "Enlace copiado")}>Copiar enlace</button></div>{copiado && <p role="status">{copiado}</p>}</section>
         {errorBiblioteca && <p className="sociosError" role="alert">{errorBiblioteca}</p>}
