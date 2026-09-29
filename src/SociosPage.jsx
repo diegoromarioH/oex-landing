@@ -3,6 +3,9 @@ import { supabase } from "./supabase";
 import { documentosSocios, bannersSocios } from "./recursosSocios";
 
 export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
+  const [recursos, setRecursos] = useState([]);
+  const [errorBiblioteca, setErrorBiblioteca] = useState("");
+  const [descargando, setDescargando] = useState(null);
   const [codigo, setCodigo] = useState("");
   const [socio, setSocio] = useState(null);
   const [foto, setFoto] = useState(null);
@@ -25,6 +28,16 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
         try { const { data: imagen } = await supabase.storage.from("socios-oex").createSignedUrl(data.foto_path, 3600); setFoto(imagen?.signedUrl || null); } catch { /* Iniciales como alternativa. */ }
       }
       setSocio(data);
+      setRecursos([]); setErrorBiblioteca("");
+      try {
+        const { data: materiales, error: falloMateriales } = await supabase.from("socios_recursos").select("id,titulo,descripcion,tipo,archivo_path,nombre_archivo").eq("activo", true).order("creado_en", { ascending: false });
+        if (falloMateriales) throw falloMateriales;
+        const lista = await Promise.all((materiales || []).map(async material => {
+          const { data: url } = await supabase.storage.from("socios-recursos").createSignedUrl(material.archivo_path, 3600);
+          return { ...material, url: url?.signedUrl };
+        }));
+        setRecursos(lista);
+      } catch { setErrorBiblioteca("No pudimos cargar la biblioteca. Recarga la página para intentarlo nuevamente."); }
     } catch (err) { setError(err.message); }
     finally { setCargando(false); }
   };
@@ -32,7 +45,18 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
     try { await navigator.clipboard.writeText(texto); setCopiado(etiqueta); }
     catch { setCopiado("No se pudo copiar. Selecciona el texto y cópialo manualmente."); }
   };
-  return <div className="page guidesPage">
+  const descargar = async material => {
+    setDescargando(material.id); setErrorBiblioteca("");
+    try {
+      const { data, error } = await supabase.storage.from("socios-recursos").download(material.archivo_path);
+      if (error) throw error;
+      const url = URL.createObjectURL(data);
+      const a = document.createElement("a"); a.href = url; a.download = material.nombre_archivo;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch { setErrorBiblioteca("No pudimos descargar el archivo. Intenta nuevamente."); }
+    finally { setDescargando(null); }
+  };
+  return <div className="page guidesPage sociosPage">
     <Seo title="Recursos para Socios OEX" description="Banners, guías y recursos del Programa de Recomendaciones OEX." path="/socios" />
     <Nav subtitle="Socios OEX" />
     <main className="guidesWrap sociosWrap">
@@ -48,6 +72,12 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
           <button className="navButton" onClick={() => { setSocio(null); setCodigo(""); setFoto(null); setCopiado(""); }}>Cambiar código</button>
         </header>
         <section className="sociosEnlace"><h2>Tu enlace de recomendación</h2><p>Compártelo junto con tus publicaciones para identificar a tus clientes.</p><div><input readOnly aria-label="Tu enlace personal" value={enlace} onFocus={e => e.target.select()} /><button className="primaryCta" onClick={() => copiar(enlace, "Enlace copiado")}>Copiar enlace</button></div>{copiado && <p role="status">{copiado}</p>}</section>
+        {errorBiblioteca && <p className="sociosError" role="alert">{errorBiblioteca}</p>}
+        {recursos.length > 0 && <section><h2>Biblioteca OEX</h2><p>Materiales publicados por el equipo OEX para tus recomendaciones.</p><div className="guidesGrid sociosBanners">{recursos.map(material => <article className="guideCard" key={material.id}>
+          {/\.(png|jpg|webp)$/.test(material.archivo_path) && material.url && <img src={material.url} alt={material.titulo} />}
+          <h3>{material.titulo}</h3><p>{material.descripcion}</p><small>{({banner:"Banner",guia:"Guía",reglamento:"Reglamento",otro:"Material"})[material.tipo]}</small>
+          <button className="guideReadLink" disabled={descargando === material.id} onClick={() => descargar(material)}>{descargando === material.id ? "Descargando…" : "Descargar archivo"}</button>
+        </article>)}</div></section>}
         <h2>Banners para compartir</h2><p>Descarga el formato que necesitas y acompáñalo con tu enlace personal.</p>
         <section className="guidesGrid sociosBanners">{[
           ["publicacion", "Publicación", "1080 × 1080"], ["historia", "Historia / estado", "1080 × 1920"], ["horizontal", "Banner horizontal", "1200 × 630"],
