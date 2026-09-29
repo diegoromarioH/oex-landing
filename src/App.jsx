@@ -1404,7 +1404,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
               ) : socioRecomendacion.nombre.split(" ").slice(0, 2).map((parte) => parte[0]).join("").toUpperCase()}
             </div>
             <div>
-              <span>Recomendación OEX</span>
+              <span>Socio OEX</span>
               <h2>Estás realizando tu prealerta con {socioRecomendacion.nombre.split(" ")[0]}</h2>
               <p>Tu paquete será gestionado directamente por OEX.</p>
             </div>
