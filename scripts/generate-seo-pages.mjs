@@ -28,6 +28,7 @@ const businessSchema = {
 };
 
 const pages = [
+{"path":"/socios","title":"Recursos para Socios OEX","description":"Banners, guías y recursos del Programa de Recomendaciones OEX.","noindex":true,"body":"<main><h1>Recursos para Socios OEX</h1><p>Ingresa tu código de socio activo para encontrar tus materiales de recomendación.</p></main>"},
 {
   "path": "/guias/preguntas-frecuentes-compras-online-compra-asistida",
   "title": "Preguntas frecuentes sobre compras en línea y compra asistida con OEX | OEX",
