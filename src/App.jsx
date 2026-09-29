@@ -288,7 +288,7 @@ export default function App() {
 
   useEffect(() => {
     registrarEvento(path.startsWith("/guias/") ? "guia_vista" : "pagina_vista");
-    if (path === "/prealerta") registrarEvento("prealerta_inicio");
+    if (path === "/prealerta" || path.startsWith("/prealerta/")) registrarEvento("prealerta_inicio");
 
     const registrarWhatsapp = (event) => {
       if (event.target.closest('a[href*="wa.me"]')) registrarEvento("whatsapp_click");
@@ -302,8 +302,9 @@ export default function App() {
     };
   }, [path]);
 
-  if (path === "/prealerta") {
-    return <PrealertaPage />;
+  if (path === "/prealerta" || path.startsWith("/prealerta/")) {
+    const identificadorRecomendacion = path.split("/").filter(Boolean)[1] || "";
+    return <PrealertaPage identificadorRecomendacion={identificadorRecomendacion} />;
   }
 
   if (path === "/rastreo") {
@@ -1212,7 +1213,7 @@ function FormSectionTitle({ icon, tone = "coral", children }) {
   );
 }
 
-function PrealertaPage() {
+function PrealertaPage({ identificadorRecomendacion = "" }) {
   const [tipoCliente, setTipoCliente] = useState("nuevo");
   const [codigoCliente, setCodigoCliente] = useState("");
   const [nombre, setNombre] = useState("");
@@ -1222,6 +1223,40 @@ function PrealertaPage() {
   const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const [socioRecomendacion, setSocioRecomendacion] = useState(null);
+  const [cargandoRecomendacion, setCargandoRecomendacion] = useState(Boolean(identificadorRecomendacion));
+  const [recomendacionInvalida, setRecomendacionInvalida] = useState(false);
+
+  useEffect(() => {
+    let activo = true;
+    const identificador = String(identificadorRecomendacion || "").trim().toLowerCase();
+    if (!identificador) {
+      setCargandoRecomendacion(false);
+      setSocioRecomendacion(null);
+      setRecomendacionInvalida(false);
+      return () => { activo = false; };
+    }
+
+    setCargandoRecomendacion(true);
+    supabase
+      .from("socios_recomendacion_publicos")
+      .select("id,nombre,identificador")
+      .eq("identificador", identificador)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (!activo) return;
+        if (error || !data) {
+          setSocioRecomendacion(null);
+          setRecomendacionInvalida(true);
+          return;
+        }
+        setSocioRecomendacion(data);
+        setRecomendacionInvalida(false);
+      })
+      .finally(() => activo && setCargandoRecomendacion(false));
+
+    return () => { activo = false; };
+  }, [identificadorRecomendacion]);
 
   const cambiarTracking = (index, campo, valor) => {
     const copia = [...trackings];
@@ -1264,6 +1299,9 @@ function PrealertaPage() {
         tracking: t.codigo.trim(),
         nota: String(t.nota || "").trim().slice(0, 160),
         estado: "Prealertado",
+        socio_recomendacion_id: socioRecomendacion?.id || null,
+        recomendacion_identificador: socioRecomendacion?.identificador || null,
+        recomendacion_origen: socioRecomendacion ? "enlace" : null,
         fecha: new Date().toISOString()
       }));
 
@@ -1278,7 +1316,7 @@ function PrealertaPage() {
       }
 
       setMensaje("✅ Prealerta recibida. Gracias por registrar tu paquete. Revisaremos la información y te contactaremos por WhatsApp.");
-      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length });
+      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length, recomendacion: socioRecomendacion?.identificador || null });
 
       setTipoCliente("nuevo");
       setCodigoCliente("");
@@ -1297,6 +1335,11 @@ function PrealertaPage() {
 
   return (
     <div className="page formPage">
+      <Seo
+        title={socioRecomendacion ? `Prealerta con ${socioRecomendacion.nombre} | OEX Nicaragua` : "Prealertar tracking | OEX Nicaragua"}
+        description="Registra tus datos y el número de seguimiento antes de que el paquete llegue a Miami."
+        path={identificadorRecomendacion ? `/prealerta/${identificadorRecomendacion}` : "/prealerta"}
+      />
       <nav className="topNav simpleNav">
         <a className="brand" href="/">
           <img src={logo} className="brandLogo" alt="OEX" />
@@ -1310,6 +1353,26 @@ function PrealertaPage() {
       </nav>
 
       <main className="prealertaWrap">
+        {cargandoRecomendacion && <div className="recomendacionLoading">Validando enlace de recomendación…</div>}
+
+        {!cargandoRecomendacion && socioRecomendacion && (
+          <section className="recomendacionCard" aria-label="Socio OEX que realizó la recomendación">
+            <div className="recomendacionAvatar" aria-hidden="true">
+              {socioRecomendacion.nombre.split(" ").slice(0, 2).map((parte) => parte[0]).join("").toUpperCase()}
+            </div>
+            <div>
+              <span>Recomendación OEX</span>
+              <h2>Estás realizando tu prealerta con {socioRecomendacion.nombre.split(" ")[0]}</h2>
+              <p>Tu paquete será gestionado directamente por OEX.</p>
+            </div>
+            <b>{socioRecomendacion.identificador.toUpperCase()}</b>
+          </section>
+        )}
+
+        {!cargandoRecomendacion && recomendacionInvalida && (
+          <div className="recomendacionAviso">Este enlace de recomendación ya no está disponible. Puedes realizar tu prealerta normalmente.</div>
+        )}
+
         <section className="prealertaIntro">
           <div className="miniBadge">Prealerta</div>
           <h1>Registra tu paquete</h1>

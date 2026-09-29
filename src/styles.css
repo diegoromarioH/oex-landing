@@ -1219,6 +1219,54 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
 
 
 /* Prealerta layout fix v2 */
+.recomendacionCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 22px;
+  padding: 16px 18px;
+  border: 1px solid #ffd2bd;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff8f3 0%, #ffffff 72%);
+  box-shadow: 0 10px 28px rgba(242, 94, 45, .09);
+}
+
+.recomendacionAvatar {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: .03em;
+}
+
+.recomendacionCard span {
+  display: block;
+  color: var(--coral);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.recomendacionCard h2 { margin: 3px 0 2px; color: var(--navy); font-size: clamp(16px, 2.5vw, 20px); }
+.recomendacionCard p { margin: 0; color: var(--muted); font-size: 13px; }
+.recomendacionCard > b { padding: 7px 10px; border-radius: 999px; background: #fff0e8; color: var(--coral); font-size: 12px; }
+.recomendacionLoading, .recomendacionAviso { margin: 0 0 18px; padding: 12px 14px; border-radius: 12px; font-size: 13px; font-weight: 700; }
+.recomendacionLoading { background: #f3f6fa; color: var(--muted); }
+.recomendacionAviso { border: 1px solid #f1d5a5; background: #fff9ec; color: #8a5a05; }
+
+@media (max-width: 640px) {
+  .recomendacionCard { grid-template-columns: auto minmax(0, 1fr); padding: 14px; }
+  .recomendacionCard > b { grid-column: 1 / -1; justify-self: start; }
+  .recomendacionAvatar { width: 48px; height: 48px; font-size: 15px; }
+}
+
 .prealertaIntro .prealertSteps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
