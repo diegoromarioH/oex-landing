@@ -2004,3 +2004,29 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
 @media (prefers-reduced-motion: reduce) {
   .topNav a, .topNav button, .heroActions a { transition-duration: .01ms !important; }
 }
+
+/* Recursos para socios */
+.sociosWrap { padding-bottom: 70px; }
+.sociosIngreso { max-width: 560px; margin: 70px auto; background: #fff; color: #102b4e; border-radius: 24px; padding: 36px; box-shadow: 0 14px 44px #102b4e15; }
+.sociosIngreso h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; }
+.sociosIngreso p { color: #56667c; line-height: 1.65; }
+.sociosIngreso form { display: grid; gap: 12px; margin: 26px 0; }
+.sociosIngreso label { font-weight: 700; }
+.sociosIngreso input,.sociosEnlace input { padding: 15px; border: 1px solid #c9d4e1; border-radius: 12px; font: inherit; color: #102b4e; background: #fff; min-width: 0; }
+.sociosIngreso button { border: 0; font: inherit; cursor: pointer; justify-content: center; }
+.sociosIngreso button:disabled { opacity: .6; cursor: wait; }
+.sociosIngreso .sociosError { color: #a82525; }
+.sociosBienvenida { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 45px 0; }
+.sociosIdentidad { display: flex; align-items: center; gap: 18px; }
+.sociosIdentidad img,.sociosIniciales { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.sociosIniciales { display: grid; place-items: center; background: #ff6517; color: white; font-size: 24px; font-weight: 800; }
+.sociosIdentidad h1 { margin: 10px 0; font-size: 36px; }
+.sociosEnlace { background: #fff; color: #102b4e; padding: 26px; border-radius: 18px; margin: 26px 0 40px; border: 1px solid #d8e2ef; }
+.sociosEnlace > div { display: flex; gap: 12px; flex-wrap: wrap; }
+.sociosEnlace input { flex: 1; }
+.sociosEnlace button { border: 0; cursor: pointer; font: inherit; }
+.sociosTexto { line-height: 1.8; }
+.sociosBanners { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.sociosBanners .guideCard img { width: 100%; height: 240px; object-fit: contain; background: #102b4e; border-radius: 12px; }
+.sociosBanners .guideCard h3 { margin-top: 20px; }
+@media(max-width: 700px) { .sociosIngreso { padding: 24px; margin: 30px auto; } .sociosBienvenida { align-items: flex-start; flex-direction: column; } .sociosIdentidad h1 { font-size: 28px; } .sociosBanners { grid-template-columns: 1fr; } .sociosEnlace > div { flex-direction: column; } }
