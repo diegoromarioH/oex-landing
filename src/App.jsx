@@ -1234,6 +1234,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
   const [socioRecomendacion, setSocioRecomendacion] = useState(null);
   const [cargandoRecomendacion, setCargandoRecomendacion] = useState(Boolean(identificadorRecomendacion));
   const [recomendacionInvalida, setRecomendacionInvalida] = useState(false);
+  const [fotoFallida, setFotoFallida] = useState(false);
 
   useEffect(() => {
     let activo = true;
@@ -1246,19 +1247,28 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
     }
 
     setCargandoRecomendacion(true);
+    setFotoFallida(false);
     supabase
       .from("socios_recomendacion_publicos")
-      .select("id,nombre,identificador")
+      .select("id,nombre,identificador,foto_path")
       .eq("identificador", identificador)
       .maybeSingle()
-      .then(({ data, error }) => {
+      .then(async ({ data, error }) => {
         if (!activo) return;
         if (error || !data) {
           setSocioRecomendacion(null);
           setRecomendacionInvalida(true);
           return;
         }
-        setSocioRecomendacion(data);
+        let fotoUrl = null;
+        if (data.foto_path) {
+          try {
+            const { data: foto } = await supabase.storage.from("socios-oex").createSignedUrl(data.foto_path, 3600);
+            fotoUrl = foto?.signedUrl || null;
+          } catch { /* Conserva las iniciales si la foto no está disponible. */ }
+        }
+        if (!activo) return;
+        setSocioRecomendacion({ ...data, fotoUrl });
         setRecomendacionInvalida(false);
       })
       .finally(() => activo && setCargandoRecomendacion(false));
@@ -1389,7 +1399,9 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
         {!cargandoRecomendacion && socioRecomendacion && (
           <section className="recomendacionCard" aria-label="Socio OEX que realizó la recomendación">
             <div className="recomendacionAvatar" aria-hidden="true">
-              {socioRecomendacion.nombre.split(" ").slice(0, 2).map((parte) => parte[0]).join("").toUpperCase()}
+              {socioRecomendacion.fotoUrl && !fotoFallida ? (
+                <img src={socioRecomendacion.fotoUrl} alt="" onError={() => setFotoFallida(true)} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+              ) : socioRecomendacion.nombre.split(" ").slice(0, 2).map((parte) => parte[0]).join("").toUpperCase()}
             </div>
             <div>
               <span>Recomendación OEX</span>
