@@ -1223,6 +1223,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
     : "/";
   const [tipoCliente, setTipoCliente] = useState("nuevo");
   const [codigoCliente, setCodigoCliente] = useState("");
+  const [codigoSocio, setCodigoSocio] = useState("");
   const [nombre, setNombre] = useState("");
   const [whatsapp, setWhatsapp] = useState("+505 ");
   const [trackings, setTrackings] = useState([crearTrackingVacio()]);
@@ -1292,9 +1293,31 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
     if (trackingIncompleto) return setMensaje("Indica el remitente o plataforma donde compraste cada tracking.");
 
     if (!aceptaPoliticas) return setMensaje("Debes aceptar las políticas del servicio.");
+    if (cargandoRecomendacion) return setMensaje("Espera un momento mientras validamos el enlace de recomendación.");
 
     try {
       setEnviando(true);
+      let recomendacionAplicada = socioRecomendacion;
+      let origenRecomendacion = socioRecomendacion ? "enlace" : null;
+      const codigoIngresado = codigoSocio.trim().toLowerCase();
+
+      if (codigoIngresado && !socioRecomendacion) {
+        if (!/^[a-z0-9_-]+$/.test(codigoIngresado)) {
+          setMensaje("Revisa el código de socio. Solo puede contener letras, números, guiones y guion bajo.");
+          return;
+        }
+        const { data, error } = await supabase
+          .from("socios_recomendacion_publicos")
+          .select("id,nombre,identificador")
+          .eq("identificador", codigoIngresado)
+          .maybeSingle();
+        if (error || !data) {
+          setMensaje("No encontramos ese código de socio activo. Revísalo o deja el campo vacío.");
+          return;
+        }
+        recomendacionAplicada = data;
+        origenRecomendacion = "manual";
+      }
 
       const registros = trackingsCompletos.map((t) => ({
         cliente: tipoCliente === "nuevo" ? nombre.trim() : null,
@@ -1306,9 +1329,9 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
         tracking: t.codigo.trim(),
         nota: String(t.nota || "").trim().slice(0, 160),
         estado: "Prealertado",
-        socio_recomendacion_id: socioRecomendacion?.id || null,
-        recomendacion_identificador: socioRecomendacion?.identificador || null,
-        recomendacion_origen: socioRecomendacion ? "enlace" : null,
+        socio_recomendacion_id: recomendacionAplicada?.id || null,
+        recomendacion_identificador: recomendacionAplicada?.identificador || null,
+        recomendacion_origen: origenRecomendacion,
         fecha: new Date().toISOString()
       }));
 
@@ -1323,10 +1346,11 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
       }
 
       setMensaje("✅ Prealerta recibida. Gracias por registrar tu paquete. Revisaremos la información y te contactaremos por WhatsApp.");
-      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length, recomendacion: socioRecomendacion?.identificador || null });
+      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length, recomendacion: recomendacionAplicada?.identificador || null });
 
       setTipoCliente("nuevo");
       setCodigoCliente("");
+      setCodigoSocio("");
       setNombre("");
       setWhatsapp("+505 ");
       setTrackings([crearTrackingVacio()]);
@@ -1460,6 +1484,21 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
             </label>
           </div>
 
+          {!socioRecomendacion && (
+            <label>
+              Código de socio (opcional)
+              <input
+                value={codigoSocio}
+                onChange={(e) => setCodigoSocio(e.target.value)}
+                placeholder="Ej. ruben1"
+                autoCapitalize="none"
+                autoComplete="off"
+                maxLength={64}
+              />
+              <small className="helpText">Si alguien de OEX te recomendó, escribe aquí su código.</small>
+            </label>
+          )}
+
           <FormSectionTitle icon={IconBox} tone="green">Tus trackings</FormSectionTitle>
 
           <div className="trackingCards">
@@ -1560,7 +1599,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
             </div>
           )}
 
-          <button className="submitButton" disabled={enviando}>
+          <button className="submitButton" disabled={enviando || cargandoRecomendacion}>
             {enviando ? "Enviando..." : <><IconBox size={17} /> Enviar prealerta</>}
           </button>
         </form>
