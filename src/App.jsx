@@ -357,6 +357,10 @@ function useWebConfig() {
 }
 
 function LandingPage() {
+  const recomendacion = new URLSearchParams(window.location.search).get("recomendacion") || "";
+  const prealertaHref = /^[a-z0-9_-]+$/i.test(recomendacion)
+    ? `/prealerta/${recomendacion.toLowerCase()}`
+    : "/prealerta";
   const config = useWebConfig();
   const operativa = useOperativaPublica();
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -419,12 +423,12 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           <a onClick={() => setMenuAbierto(false)} href="/guias">Guías</a>
           <a onClick={() => setMenuAbierto(false)} href="/politicas">Políticas</a>
           <a onClick={() => setMenuAbierto(false)} href="#contacto">Contacto</a>
-          <a onClick={() => setMenuAbierto(false)} href="/prealerta" className="mobilePrealerta"><IconBox size={16} /> Prealertar</a>
+          <a onClick={() => setMenuAbierto(false)} href={prealertaHref} className="mobilePrealerta"><IconBox size={16} /> Prealertar</a>
         </div>
 
         <div className="navActions">
           <a className="direccionNav" href="#direccion"><IconPin size={16} /> Dirección OEX</a>
-          <a className="prealertNav" href="/prealerta"><IconBox size={16} /> Prealertar</a>
+          <a className="prealertNav" href={prealertaHref}><IconBox size={16} /> Prealertar</a>
           <a className="whatsappNav" href={whatsappUrl} target="_blank" rel="noreferrer">
             <IconWhatsapp size={16} /> WhatsApp
           </a>
@@ -492,7 +496,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
                 </div>
               </div>
 
-              <a href="/prealerta" className="panelCta">Registrar mi tracking <IconArrowRight size={16} /></a>
+              <a href={prealertaHref} className="panelCta">Registrar mi tracking <IconArrowRight size={16} /></a>
             </div>
           </div>
         </div>
@@ -510,7 +514,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
                 <MiniStep number="2" icon={<IconBox size={24} />} title="Envía a nuestra dirección" text="Usa tu dirección personalizada OEX MAR o OEX AEREO + tu nombre." />
                 <MiniStep number="3" icon={<IconTruck size={24} />} title="Recibe en Nicaragua" text="Nos encargamos del traslado y te avisamos por WhatsApp cuando esté listo para retirar." />
               </div>
-              <a href="/prealerta" className="orangeButton">Solicitar más información <IconArrowRight size={16} /></a>
+              <a href={prealertaHref} className="orangeButton">Solicitar más información <IconArrowRight size={16} /></a>
             </div>
 
             <div className="darkPanel">
@@ -1214,6 +1218,9 @@ function FormSectionTitle({ icon, tone = "coral", children }) {
 }
 
 function PrealertaPage({ identificadorRecomendacion = "" }) {
+  const inicioHref = /^[a-z0-9_-]+$/i.test(identificadorRecomendacion)
+    ? `/?recomendacion=${identificadorRecomendacion.toLowerCase()}`
+    : "/";
   const [tipoCliente, setTipoCliente] = useState("nuevo");
   const [codigoCliente, setCodigoCliente] = useState("");
   const [nombre, setNombre] = useState("");
@@ -1341,7 +1348,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
         path={identificadorRecomendacion ? `/prealerta/${identificadorRecomendacion}` : "/prealerta"}
       />
       <nav className="topNav simpleNav">
-        <a className="brand" href="/">
+        <a className="brand" href={inicioHref}>
           <img src={logo} className="brandLogo" alt="OEX" />
           <div>
             <strong>OEX</strong>
@@ -1349,7 +1356,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
           </div>
         </a>
 
-        <a href="/" className="navButton">← Inicio</a>
+        <a href={inicioHref} className="navButton">← Inicio</a>
       </nav>
 
       <main className="prealertaWrap">
