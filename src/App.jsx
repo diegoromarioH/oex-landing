@@ -875,8 +875,9 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 // dibuja (pasa esto si se usa "Managua"/"Tránsito OEX" en vez de
 // "Nicaragua"/"Bodega OEX").
 const PIPELINE_COMUN = ["Miami", "Tránsito NI", "Nicaragua", "Bodega OEX"];
-const PIPELINE_MANAGUA = [...PIPELINE_COMUN, "Tránsito Managua", "Punto UNI", "Jardines de Veracruz", "Entregado"];
+const PIPELINE_MANAGUA = [...PIPELINE_COMUN, "Tránsito Managua", "Punto de entrega", "Entregado"];
 const PIPELINE_OMETEPE = [...PIPELINE_COMUN, "Tránsito Ometepe", "Ometepe", "Entregado"];
+const estadoPublico = (estado) => ["Punto UNI", "Jardines de Veracruz"].includes(estado) ? "Punto de entrega" : estado;
 const estadosPorDestino = (destino) => (destino === "Managua" ? PIPELINE_MANAGUA : PIPELINE_OMETEPE);
 
 // Ícono por parada — igual que en el pipeline del CRM: "Tránsito NI" usa
@@ -954,12 +955,16 @@ function EstimacionLlegada({ estado, destino, tipoEnvio, fechaRegistro, historia
 // igual que antes, solo sin fechas debajo de cada punto.
 function PipelineTimeline({ estado, destino, tipoEnvio, historial }) {
   const pasos = estadosPorDestino(destino);
-  const idxActual = pasos.indexOf(estado);
+  const idxActual = pasos.indexOf(estadoPublico(estado));
   if (idxActual === -1) return null;
 
   const fechaPorPaso = {};
   (historial || []).forEach((h) => {
-    if (h && h.estado) fechaPorPaso[h.estado] = h.fecha;
+    if (h && h.estado) {
+      const paso = estadoPublico(h.estado);
+      // La etapa unificada conserva la primera fecha de llegada al punto.
+      if (!fechaPorPaso[paso] || new Date(h.fecha) < new Date(fechaPorPaso[paso])) fechaPorPaso[paso] = h.fecha;
+    }
   });
 
   return (
@@ -1121,7 +1126,7 @@ function TrackingLookup({ standalone = false }) {
             </div>
             <div className="trackingResultRow">
               <span>Estado</span>
-              <b className="trackingStatusPill">{resultado.estado}</b>
+              <b className="trackingStatusPill">{estadoPublico(resultado.estado)}</b>
             </div>
             <div className="trackingResultRow">
               <span>Destino</span>
@@ -1166,7 +1171,7 @@ function TrackingLookup({ standalone = false }) {
                         <b>{r.tracking}</b>
                         <span>{r.destino} · {r.tipo_envio}</span>
                       </div>
-                      <b className="trackingStatusPill">{r.estado}</b>
+                      <b className="trackingStatusPill">{estadoPublico(r.estado)}</b>
                       <IconArrowRight size={16} className={`trackingResultChevron ${expandido ? "trackingResultChevronOpen" : ""}`} />
                     </button>
                     {expandido && (
