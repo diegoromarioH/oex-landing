@@ -238,3 +238,102 @@
   .landingActionGrid.revealIn .landingAction { animation: none; }
   .landingRouteLine::after { left: calc(100% - 8px); }
 }
+
+/* Herramientas de la portada: dos columnas de una misma superficie. */
+.landingPage {
+  --landing-orange: #ffad72;
+  --landing-orange-ink: #321b10;
+}
+.landingPage .prealertNav,
+.landingPage .navLinks a.mobilePrealerta,
+.landingPage .copyAllButton {
+  background: var(--landing-orange);
+  color: var(--landing-orange-ink);
+}
+.landingPage .copyAllButton:hover { background: #ffc094; }
+.landingPage .landingActionPrimary {
+  border-color: #a87556;
+  background: linear-gradient(145deg, #342935, #1b253c);
+  box-shadow: inset 0 1px #ffad7252, 0 8px 28px #27172855;
+}
+.landingPage .landingActionPrimary > svg:first-child,
+.landingPage .addressModeBadge,
+.landingPage .estimateWindow strong { color: var(--landing-orange); }
+
+.landingPage :is(.addressGridV2, .calculatorGrid) {
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--landing-edge);
+  border-radius: 18px;
+  background: var(--landing-panel);
+}
+.landingPage :is(.addressGridV2, .calculatorGrid) > :is(.card, .calculatorResult) {
+  min-width: 0;
+  padding: clamp(16px, 2.7vw, 29px);
+  border: 0;
+  border-radius: 0;
+}
+.landingPage :is(.addressGridV2, .calculatorGrid) > :is(.addressCard, .calculatorResult) {
+  background: linear-gradient(145deg, #172640, #111e32);
+  border-top: 1px solid var(--landing-edge);
+}
+.landingPage :is(.addressForm, .calculatorCard) h3 { margin-bottom: 15px; font-size: 1.1rem; }
+.landingPage .addressCardHeader { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+.landingPage .addressCardHeader h3 { font-size: 1.1rem; }
+.landingPage .addressModeBadge { margin: 0; background: #2e2531; border-color: #8b634f; }
+.landingPage .addressRows { display: grid; gap: 1px; border-radius: 12px; background: var(--landing-edge); }
+.landingPage .copyLine { gap: 6px; min-width: 0; border: 0; padding: 8px 10px; background: #101e32; }
+.landingPage .copyLine > div { min-width: 0; }
+.landingPage .copyLine b { margin-top: 1px; font-size: .86rem; overflow-wrap: anywhere; }
+.landingPage .copyLine button { min-width: 57px; min-height: 36px; padding: 5px 7px; border-radius: 8px; font-size: .73rem; }
+.landingPage .copyLine button:hover { color: var(--landing-orange); }
+.landingPage .copyAllButton { margin-top: 12px; border-radius: 11px; }
+
+.landingPage .calculatorFields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.landingPage .calculatorFields label { min-width: 0; }
+.landingPage .calculatorFields select { padding-inline: clamp(5px, 1.5vw, 13px); }
+.landingPage .calculatorNote { color: var(--landing-copy); margin: 3px 0 0; font-size: .83rem; }
+.landingPage .calculatorResult h3 { margin: 0 0 9px; font-size: 1.1rem; }
+.landingPage .estimateWindow { display: grid; gap: 2px; }
+.landingPage .estimateWindow strong { font: 750 clamp(2rem, 4vw, 2.75rem)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.landingPage .estimateWindow small,
+.landingPage .dateBox small,
+.landingPage .dateBox p { color: var(--landing-copy); }
+.landingPage .dateBox { background: #0b182c; border: 1px solid var(--landing-edge); margin: 12px 0 0; padding: 11px; gap: 2px; }
+.landingPage .dateBox p { margin: 0; font-size: .87rem; }
+.landingPage .dateBox strong { color: var(--landing-ink); }
+
+.landing-update { animation: landing-update .3s var(--ease) both; }
+@keyframes landing-update {
+  from { opacity: .6; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.landing-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (min-width: 580px) {
+  .landingPage .addressRows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .landingPage .copyLineWide { grid-column: 1 / -1; }
+}
+
+@media (min-width: 900px) {
+  .landingPage .addressGridV2 { grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); }
+  .landingPage .calculatorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .landingPage :is(.addressGridV2, .calculatorGrid) > :is(.addressCard, .calculatorResult) {
+    border-top: 0;
+    border-left: 1px solid var(--landing-edge);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-update { animation: none; }
+}

@@ -541,6 +541,8 @@ function LandingPage() {
   const [nombreDireccion, setNombreDireccion] = useState("");
   const [tipoDireccion, setTipoDireccion] = useState("MAR");
   const [copiado, setCopiado] = useState("");
+  const tiempoCopiado = useRef(null);
+  useEffect(() => () => clearTimeout(tiempoCopiado.current), []);
 
   const nombreEjemplo = nombreDireccion.trim() || "Juan Pérez";
   const whatsappUrl = enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.inicio);
@@ -550,8 +552,9 @@ function LandingPage() {
   const copiar = async (label, value) => {
     try {
       await navigator.clipboard.writeText(value);
+      clearTimeout(tiempoCopiado.current);
       setCopiado(label);
-      setTimeout(() => setCopiado(""), 1800);
+      tiempoCopiado.current = setTimeout(() => setCopiado(""), 1800);
     } catch {
       alert("No se pudo copiar. Puedes seleccionarlo manualmente.");
     }
@@ -659,6 +662,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
           <Reveal className="addressGrid addressGridV2">
             <div className="addressForm card">
+              <h3>Personalizá tu casillero</h3>
               <label>
                 Nombre y apellido del cliente
                 <input
@@ -677,31 +681,35 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
               </label>
 
               <div className="notice">
-                Copia estos datos exactamente como aparecen para que podamos identificar correctamente tu paquete.
+                Usá el nombre y el prefijo OEx tal como aparecen en la dirección. Así podemos identificar tu paquete.
               </div>
             </div>
 
             <div className="addressCard card">
-              <div className="addressModeBadge">
-                {tipoDireccion === "MAR" ? <Ship size={15} strokeWidth={1.8} /> : <Plane size={15} strokeWidth={1.8} />}
-                {tipoDireccion === "MAR" ? "Envío Marítimo" : "Envío Aéreo"}
+              <div className="addressCardHeader">
+                <h3>Datos para copiar</h3>
+                <div className="addressModeBadge landing-update" key={tipoDireccion}>
+                  {tipoDireccion === "MAR" ? <Ship size={15} aria-hidden="true" /> : <Plane size={15} aria-hidden="true" />}
+                  {tipoDireccion === "MAR" ? "Marítimo" : "Aéreo"}
+                </div>
               </div>
 
               <div className="addressRows">
-                <CopyLine label="First Name (Nombre)" value={firstNameOex} onCopy={copiar} />
-                <CopyLine label="Last Name (Apellido)" value={lastNameOex} onCopy={copiar} />
-                <CopyLine label="Address (Dirección)" value={MIAMI_ADDRESS.address} onCopy={copiar} />
-                <CopyLine label="City (Ciudad)" value={MIAMI_ADDRESS.city} onCopy={copiar} />
-                <CopyLine label="State (Estado)" value={MIAMI_ADDRESS.state} onCopy={copiar} />
-                <CopyLine label="ZIP Code (Código Postal)" value={MIAMI_ADDRESS.zip} onCopy={copiar} />
-                <CopyLine label="Phone Number (Teléfono)" value={MIAMI_ADDRESS.phone} onCopy={copiar} />
+                <CopyLine label="First Name (Nombre)" value={firstNameOex} onCopy={copiar} copiado={copiado} actualizar={tipoDireccion} />
+                <CopyLine label="Last Name (Apellido)" value={lastNameOex} onCopy={copiar} copiado={copiado} />
+                <CopyLine label="Address (Dirección)" value={MIAMI_ADDRESS.address} onCopy={copiar} copiado={copiado} ancho />
+                <CopyLine label="City (Ciudad)" value={MIAMI_ADDRESS.city} onCopy={copiar} copiado={copiado} />
+                <CopyLine label="State (Estado)" value={MIAMI_ADDRESS.state} onCopy={copiar} copiado={copiado} />
+                <CopyLine label="ZIP Code (Código Postal)" value={MIAMI_ADDRESS.zip} onCopy={copiar} copiado={copiado} />
+                <CopyLine label="Phone Number (Teléfono)" value={MIAMI_ADDRESS.phone} onCopy={copiar} copiado={copiado} />
               </div>
 
-              <button className="copyAllButton" onClick={copiarDireccionCompleta}>
-                <IconBox size={17} /> Copiar todos los datos
+              <button type="button" className="copyAllButton" onClick={copiarDireccionCompleta}>
+                {copiado === "Dirección completa"
+                  ? <><CheckLucide size={17} aria-hidden="true" /> Dirección copiada</>
+                  : <><IconBox size={17} /> Copiar todos los datos</>}
               </button>
-
-              {copiado && <div className="copied">{copiado} copiado</div>}
+              <span className="landing-visually-hidden" role="status">{copiado && `${copiado}: copiado`}</span>
             </div>
           </Reveal>
         </section>
@@ -1132,17 +1140,29 @@ function DeliveryCalculator({ tiemposEntrega, feriados }) {
   return (
     <div className="calculatorGrid">
       <div className="calculatorCard card">
-        <label>Fecha en que recibimos tu paquete en bodega Miami<input type="date" value={fechaBodega} onChange={(e) => setFechaBodega(e.target.value)} /></label>
-        <label>Destino<select value={destino} onChange={(e) => setDestino(e.target.value)}><option value="Managua">Managua</option><option value="Ometepe">Ometepe</option></select></label>
-        <label>Tipo de envío<select value={tipoEnvio} onChange={(e) => setTipoEnvio(e.target.value)}><option value="Aéreo">Aéreo</option><option value="Marítimo">Marítimo</option></select></label>
-        <div className="notice">Fecha estimada usando el plazo máximo configurado. No se cuentan sábados, domingos ni feriados de Nicaragua.</div>
+        <h3>Datos del paquete</h3>
+        <label>
+          Fecha de recepción en Miami
+          <input type="date" value={fechaBodega} onChange={(e) => setFechaBodega(e.target.value)} />
+        </label>
+        <div className="calculatorFields">
+          <label>Destino<select value={destino} onChange={(e) => setDestino(e.target.value)}><option value="Managua">Managua</option><option value="Ometepe">Ometepe</option></select></label>
+          <label>Tipo de envío<select value={tipoEnvio} onChange={(e) => setTipoEnvio(e.target.value)}><option value="Aéreo">Aéreo</option><option value="Marítimo">Marítimo</option></select></label>
+        </div>
+        <p className="calculatorNote">El cálculo usa el plazo máximo y excluye fines de semana y feriados de Nicaragua.</p>
       </div>
-      <div className="calculatorResult">
-        <span>Resultado estimado</span><h3>{tipoEnvio} · {destino}</h3>
-        {!fechaBodega ? <p>Selecciona la fecha en que recibimos tu paquete.</p> : <>
-          <p className="estimateRange">Plazo estimado: {rango[0]} a {rango[1]} días hábiles</p>
-          <div className="dateBox"><small>Fecha estimada de entrega:</small><strong>{formatearFecha(fechaMax)}</strong></div>
-        </>}
+      <div className="calculatorResult" aria-live="polite" aria-atomic="true">
+        <h3>{tipoEnvio} · {destino}</h3>
+        <div className="landing-update estimateWindow" key={`${destino}-${tipoEnvio}-${rango.join("-")}`}>
+          <span>Plazo habitual</span>
+          <div><strong>{rango[0]}–{rango[1]}</strong> <small>días hábiles</small></div>
+        </div>
+        <div className="dateBox landing-update" key={fechaMax ? fechaMax.getTime() : "sin-fecha"}>
+          <small>Fecha estimada de entrega</small>
+          {fechaMax
+            ? <strong>{formatearFecha(fechaMax)}</strong>
+            : <p>Elegí la fecha de recepción para calcularla.</p>}
+        </div>
       </div>
     </div>
   );
@@ -1157,14 +1177,16 @@ function Faq({ question, answer }) {
   );
 }
 
-function CopyLine({ label, value, onCopy }) {
+function CopyLine({ label, value, onCopy, copiado, actualizar, ancho }) {
   return (
-    <div className="copyLine">
+    <div className={`copyLine${ancho ? " copyLineWide" : ""}`}>
       <div>
         <span>{label}</span>
-        <b>{value}</b>
+        <b className={actualizar ? "landing-update" : undefined} key={actualizar}>{value}</b>
       </div>
-      <button type="button" onClick={() => onCopy(label, value)}>Copiar</button>
+      <button type="button" aria-label={`Copiar ${label}`} onClick={() => onCopy(label, value)}>
+        {copiado === label ? <CheckLucide size={16} aria-hidden="true" /> : "Copiar"}
+      </button>
     </div>
   );
 }
