@@ -626,7 +626,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
           <Reveal className="addressGrid addressGridV2">
             <div className="addressForm card">
-              <h3>Personalizá tu casillero</h3>
+              <h3><IconPin size={20} /> Personalizá tu casillero</h3>
               <label>
                 Nombre y apellido del cliente
                 <input
@@ -651,7 +651,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
             <div className="addressCard card">
               <div className="addressCardHeader">
-                <h3>Datos para copiar</h3>
+                <h3><IconBox size={20} /> Datos para copiar</h3>
                 <div className="addressModeBadge landing-update" key={tipoDireccion}>
                   {tipoDireccion === "MAR" ? <Ship size={15} aria-hidden="true" /> : <Plane size={15} aria-hidden="true" />}
                   {tipoDireccion === "MAR" ? "Marítimo" : "Aéreo"}
