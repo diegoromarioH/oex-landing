@@ -70,17 +70,8 @@ const IconPin = (p) => (
 const IconBox = (p) => (
   <Icon {...p}><path d="M21 8l-9-4-9 4 9 4 9-4z" /><path d="M3 8v8l9 4 9-4V8" /><path d="M12 12v8" /></Icon>
 );
-const IconTruck = (p) => (
-  <Icon {...p}><path d="M3 7h11v9H3z" /><path d="M14 10h4l3 3v3h-7z" /><circle cx="7" cy="18" r="1.6" /><circle cx="17.5" cy="18" r="1.6" /></Icon>
-);
-const IconCart = (p) => (
-  <Icon {...p}><circle cx="9" cy="20" r="1.3" /><circle cx="18" cy="20" r="1.3" /><path d="M3 4h2l2.4 12.2a1.6 1.6 0 0 0 1.6 1.3h8a1.6 1.6 0 0 0 1.6-1.3L20.5 8H6" /></Icon>
-);
 const IconBag = (p) => (
   <Icon {...p}><path d="M6 8h12l1 12H5L6 8z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></Icon>
-);
-const IconChat = (p) => (
-  <Icon {...p}><path d="M4 5h16v11H8l-4 4V5z" /></Icon>
 );
 const IconSearch = (p) => (
   <Icon {...p}><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.4-3.4" /></Icon>
@@ -585,11 +576,8 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
     <div className="page landingPage">
       <nav className="topNav">
         <a className="brand" href="/">
-          <img src={logo} className="brandLogo" alt="OEX - OMETEPE EXPRESS" />
-          <div>
-            <strong>OEX </strong>
-            <span>Envíos de USA a Nicaragua</span>
-          </div>
+          <strong className="landingWordmark">O<span>Ex</span></strong>
+          <span className="landingBrandName">Ometepe Express</span>
         </a>
 
         <button
@@ -604,7 +592,6 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         </button>
 
         <div id="landing-navigation" className={`navLinks ${menuAbierto ? "navLinksOpen" : ""}`}>
-          <a onClick={() => setMenuAbierto(false)} href="#inicio">Inicio</a>
           <a onClick={() => setMenuAbierto(false)} href="/rastreo">Rastrear paquete</a>
           <a onClick={() => setMenuAbierto(false)} href="#tarifas">Tarifas</a>
           <a onClick={() => setMenuAbierto(false)} href="/guias">Guías</a>
@@ -614,7 +601,6 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         </div>
 
         <div className="navActions">
-          <a className="direccionNav" href="#direccion"><IconPin size={16} /> Dirección OEX</a>
           <a className="prealertNav" href={prealertaHref}><IconBox size={16} /> Prealertar</a>
           <a className="whatsappNav" href={whatsappUrl} target="_blank" rel="noreferrer">
             <IconWhatsapp size={16} /> WhatsApp
@@ -622,112 +608,43 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         </div>
       </nav>
 
-      <header id="inicio" className="heroNew">
-        <div className="heroContent">
-          <div className="heroCopy">
-            <div className="miniBadge"><IconPin size={15} /> Miami a Managua y Ometepe</div>
-            <h1>Compra en Estados Unidos. <span>Recibe en Nicaragua.</span></h1>
-            <p className="heroDescription">
-              Usa tu dirección gratis en Miami para comprar en tus tiendas favoritas.
-              OEx lleva tus paquetes a Managua u Ometepe.
-            </p>
-
-            <div className="heroActions">
-              <a href="#direccion" className="primaryCta">Obtener mi dirección <IconArrowRight size={18} /></a>
-              <a href="/rastreo" className="secondaryCta"><IconSearch size={17} /> Rastrear paquete</a>
-            </div>
-
-            <div className="heroBenefits">
-              <Benefit icon={<IconPin size={17} />} title="Dirección gratuita" />
-              <Benefit icon={<IconTruck size={17} />} title="Envíos aéreos y marítimos" />
-              <Benefit icon={<IconBag size={17} />} title="Compra asistida" />
-            </div>
-          </div>
-
-          <div className="heroVisual">
-            <picture className="heroPhoto">
-              <source media="(max-width: 600px)" srcSet="/oex-casillero-640.webp" />
-              <img src="/oex-casillero.webp" alt="Paquetes listos para su envío" width="960" height="1200" fetchPriority="high" />
-            </picture>
-            <div className="routeCard">
-              <div className="routeCardTop">
-                <span className="routeCardTag">Tránsito estimado en días hábiles</span>
-                <h2>Miami <IconArrowRight size={19} /> Nicaragua</h2>
-              </div>
-              <div className="routeOptions">
-                {[[ "Aéreo", Plane ], [ "Marítimo", Ship ]].map(([tipo, Icono]) => (
-                  <div className="routeOption" key={tipo}>
-                    <div className="routeOptionIcon"><Icono size={18} aria-hidden="true" /></div>
-                    <div>
-                      <b>{tipo}</b>
-                      <p>Managua {rangoPorDestino("Managua", tipo)} · Ometepe {rangoPorDestino("Ometepe", tipo)}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <a href={prealertaHref} className="panelCta">Registrar mi tracking <IconArrowRight size={16} /></a>
-            </div>
-          </div>
+      <header id="inicio" className="landingIntro">
+        <div className="landingIntroInner">
+          <p className="landingRoute">Miami <IconArrowRight size={15} /> Managua y Ometepe</p>
+          <h1>Comprá en Estados Unidos.<br /> <span>Recibí en Nicaragua.</span></h1>
+          <p>Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
         </div>
       </header>
 
       <main>
-        <TrackingTeaser />
-
-        <section id="como-funciona" className="section compactSection">
-          <div className="sectionTitle">
-            <h2>Así llega tu compra a Nicaragua</h2>
-          </div>
-          <Reveal className="threePanelGrid">
-            <div className="whitePanel">
-              <SectionMiniTitle title="¿Cómo funciona?" />
-              <div className="stepsGraphic">
-                <MiniStep number="1" icon={<IconCart size={24} />} title="Compra online" text="Amazon, SHEIN, Temu, Walmart o cualquier tienda." />
-                <MiniStep number="2" icon={<IconBox size={24} />} title="Envía a nuestra dirección" text="Usa tu dirección personalizada OEX MAR o OEX AEREO + tu nombre." />
-                <MiniStep number="3" icon={<IconTruck size={24} />} title="Recibe en Nicaragua" text="Nos encargamos del traslado y te avisamos por WhatsApp cuando esté listo para retirar." />
-              </div>
-              <a href={prealertaHref} className="orangeButton">Prealertar mi compra <IconArrowRight size={16} /></a>
-            </div>
-
-            <div className="darkPanel">
-              <h3>¿Por qué elegir OEX?</h3>
-              <WhyItem icon={<IconBag size={20} />} title="Compras asistidas" text="Te ayudamos a comprar si no tienes tarjeta o es tu primera vez." />
-              <WhyItem icon={<IconBox size={20} />} title="Rastreo en tiempo real" text="Puedes seguir el estado de tu paquete en todo momento a través de web de manera fácil y rápida." />
-              <WhyItem icon={<IconChat size={20} />} title="Atención personalizada" text="Soporte directo por WhatsApp, todos los días." />
-              <WhyItem icon={<IconPin size={20} />} title="Presencia local" text="Atención en Ometepe y logística en Managua." />
-              <a href={enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.compra)} target="_blank" rel="noreferrer" className="assistedWhatsApp">
-                <IconWhatsapp size={17} /> Cotizar compra asistida
-              </a>
-            </div>
+        <section id="como-funciona" className="section landingStart" aria-label="Servicios de OEx">
+          <Reveal className="landingActionGrid">
+            <a className="landingAction landingActionPrimary" href="#direccion">
+              <IconPin size={21} />
+              <div><h2>Obtener mi dirección</h2><p>Personalizá y copiá los datos de tu casillero en Miami.</p></div>
+              <IconArrowRight size={18} />
+            </a>
+            <a className="landingAction" href={prealertaHref}>
+              <IconBox size={21} />
+              <div><h2>Prealertar un paquete</h2><p>Registrá el tracking que te envió la tienda.</p></div>
+              <IconArrowRight size={18} />
+            </a>
+            <a className="landingAction" href="/rastreo">
+              <IconSearch size={21} />
+              <div><h2>Rastrear mi paquete</h2><p>Consultá el estado con tu tracking o código de cliente.</p></div>
+              <IconArrowRight size={18} />
+            </a>
           </Reveal>
-        </section>
 
-        <section id="tiendas" className="section storeBand">
-          <div className="sectionTitle">
-            <span>Tiendas populares</span>
-            <h2>Compra en tus tiendas favoritas</h2>
-          </div>
-
-          <Reveal className="storeGrid">
-            {STORES.map((store) => (
-              <div className="storeLogo" key={store.name}>
-                <img
-                  src={`/stores/${store.file}`}
-                  alt={store.name}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    e.currentTarget.nextElementSibling.style.display = "block";
-                  }}
-                />
-                <span className="storeTextFallback">{store.name}</span>
-              </div>
-            ))}
-
-            <div className="storeLogo moreStores">
-              ¡Y muchas más!
+          <aside id="tiendas" className="landingHelp">
+            <div>
+              <h2>¿Querés que compremos por vos?</h2>
+              <p>Compra asistida en SHEIN, Amazon y Temu para compras menores a US$200.</p>
             </div>
-          </Reveal>
+            <a className="landingTextLink assistedWhatsApp" href={enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.compra)} target="_blank" rel="noreferrer">
+              <IconWhatsapp size={18} /> Cotizar compra asistida
+            </a>
+          </aside>
         </section>
 
         <section id="direccion" className="section addressSection">
@@ -787,25 +704,13 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
         <section id="tarifas" className="section ratesSection">
           <div className="sectionTitle">
-            <span>Tarifas</span>
-            <h2>Nuestras tarifas estándar</h2>
+            <h2>Tarifas y tiempos de envío</h2>
             <p>Precio por libra según destino y tipo de envío. Para compras especiales, escríbenos por WhatsApp.</p>
           </div>
 
           <Reveal>
             <RatesTable whatsapp={config.whatsapp} tarifas={operativa.tarifas} tiemposEntrega={operativa.tiemposEntrega} />
           </Reveal>
-        </section>
-
-        <section className="section policyTeaser">
-          <div className="policyTeaserBox">
-            <div>
-              <span>Compra informada</span>
-              <h2>Revisa nuestras políticas antes de comprar</h2>
-              <p>Queremos que tengas claridad sobre tallas, daños, responsabilidad de compras, tiempos estimados y retiro de paquetes.</p>
-            </div>
-            <a href="/politicas" className="secondaryCta">Ver políticas de servicio</a>
-          </div>
         </section>
 
         <section id="fecha" className="section dateSection">
@@ -822,8 +727,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
         <section id="preguntas" className="section faqSection">
           <div className="sectionTitle">
-            <span>Preguntas frecuentes</span>
-            <h2>Resuelve tus dudas antes de comprar</h2>
+            <h2>Preguntas frecuentes</h2>
           </div>
 
           <Reveal className="faqGrid">
@@ -833,13 +737,16 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
             <Faq question="¿Cómo registro mi tracking?" answer="Ingresa a la sección Prealertar, escribe tus datos y agrega uno o varios tracking numbers." />
             <Faq question="¿Necesito tarjeta de crédito?" answer="No. Puedes transferirnos el monto confirmado y OEX compra por ti únicamente en SHEIN, Amazon o Temu, para compras menores a US$200. Una vez realizada la compra no hay reversión. El envío de OEX se paga aparte." />
             <Faq question="¿El precio de la tienda incluye el envío de OEX?" answer="No. El monto de la compra en la tienda y el servicio de envío de OEX son separados. El envío de OEX se cobra aparte según el peso, destino, modalidad y condiciones aplicables." />
-            <a className="guideReadLink" href="/guias/preguntas-frecuentes-compras-online-compra-asistida">Ver todas las preguntas sobre compras en línea <IconArrowRight size={17} /></a>
             <Faq question="¿Cómo elijo bien mi talla?" answer="Revisa siempre la guía de tallas de la tienda y compara tus medidas en centímetros. No te guíes solo por S, M, L o XL, porque cada tienda puede manejar medidas diferentes." />
             <Faq question="¿Qué pasa si el producto viene en otra talla o diferente?" answer="Si fue compra asistida y verificamos que el error fue nuestro, te damos respaldo 100%. Si fue una compra hecha por ti mismo, la responsabilidad por talla, color, modelo o elección del producto la asumes tú." />
             <Faq question="¿Qué pasa si el producto viene dañado?" answer="Se revisa el caso para determinar si el daño ocurrió durante el envío o si la tienda entregó el producto así. Te orientamos con la evidencia disponible, pero la respuesta final puede depender de la tienda o courier." />
             <Faq question="¿Qué pasa si la tienda pierde mi paquete?" answer="Te orientamos con la información disponible, pero la responsabilidad inicial del despacho depende de la tienda o courier." />
             <Faq question="¿Qué es el tracking y dónde puedo encontrarlo?" answer="El tracking o número de seguimiento es el código que permite consultar el estado y recorrido de tu paquete. Si realizaste la compra por tu cuenta, puedes encontrarlo en el correo de confirmación o envío que te proporciona la tienda, o directamente en tu cuenta de la tienda. Si no lo encuentras, podemos orientarte sobre dónde buscarlo."/>
           </Reveal>
+          <div className="landingHelpLinks">
+            <a className="landingTextLink" href="/guias/preguntas-frecuentes-compras-online-compra-asistida">Más preguntas sobre compras en línea <IconArrowRight size={16} /></a>
+            <a className="landingTextLink" href="/politicas">Políticas de servicio <IconArrowRight size={16} /></a>
+          </div>
         </section>
 
         <section id="contacto" className="section finalCtaNew">
@@ -853,7 +760,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         </section>
       </main>
 
-      <Footer />
+      <Footer whatsapp={config.whatsapp} wordmark />
       <FloatingWhatsApp whatsapp={config.whatsapp} mensaje={mensajesWhatsApp.inicio} />
     </div>
   );
@@ -986,25 +893,6 @@ function PipelineTimeline({ estado, destino, tipoEnvio, historial }) {
   );
 }
 
-
-// Banner corto en la landing que invita a ir a la página de rastreo
-// dedicada (/rastreo), en vez de tener el buscador completo embebido aquí.
-function TrackingTeaser() {
-  return (
-    <section className="section trackingSection">
-      <Reveal className="trackingBox trackingTeaser card">
-        <div className="trackingBoxCopy">
-          <span className="trackingEyebrow">Rastreo</span>
-          <h2>¿Dónde va tu paquete?</h2>
-          <p>Consulta tu tracking individual o ingresa con tu código de cliente y mira el estado de todos tus envíos activos.</p>
-        </div>
-        <a href="/rastreo" className="primaryCta trackingTeaserCta">
-          <IconSearch size={17} /> Rastrear mi paquete
-        </a>
-      </Reveal>
-    </section>
-  );
-}
 
 function TrackingLookup({ standalone = false }) {
   const [modo, setModo] = useState("tracking"); // "tracking" | "cliente"
@@ -1256,42 +1144,6 @@ function DeliveryCalculator({ tiemposEntrega, feriados }) {
   );
 }
 
-function Benefit({ icon, title }) {
-  return (
-    <div className="benefit">
-      <span>{icon}</span>
-      <b>{title}</b>
-    </div>
-  );
-}
-
-function SectionMiniTitle({ title }) {
-  return <h3 className="panelTitle">{title}</h3>;
-}
-
-function MiniStep({ number, icon, title, text }) {
-  return (
-    <div className="miniStep">
-      <span className="stepNumber">{number}</span>
-      <div className="miniIcon">{icon}</div>
-      <b>{title}</b>
-      <p>{text}</p>
-    </div>
-  );
-}
-
-function WhyItem({ icon, title, text }) {
-  return (
-    <div className="whyItem">
-      <span>{icon}</span>
-      <div>
-        <b>{title}</b>
-        <p>{text}</p>
-      </div>
-    </div>
-  );
-}
-
 function Faq({ question, answer }) {
   return (
     <details className="faqItem">
@@ -1327,17 +1179,17 @@ function FloatingWhatsApp({ whatsapp, mensaje }) {
   );
 }
 
-function Footer() {
+function Footer({ wordmark = false, whatsapp = WHATSAPP_OEX } = {}) {
   return (
     <footer className="footer">
       <div>
-        <img src={logo} className="footerLogo" alt="Ometepe Express" />
+        {wordmark ? <b className="landingWordmark">O<span>Ex</span></b> : <img src={logo} className="footerLogo" alt="Ometepe Express" />}
         <p>Tu mejor opción para compras en Estados Unidos con  envíos a Managua y Ometepe .</p>
       </div>
 
       <div>
         <b>Contacto</b>
-        <p>WhatsApp: 505 57067044</p>
+        <p><a href={enlaceWhatsApp(whatsapp, mensajesWhatsApp.inicio)} target="_blank" rel="noreferrer">WhatsApp</a></p>
         <p>Ometepe · Managua</p>
         <div className="footerSocials">
           <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noreferrer"><IconFacebook size={15} /> Facebook</a>
