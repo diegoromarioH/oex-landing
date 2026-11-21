@@ -63,7 +63,7 @@ export default function SociosPage({ Nav, Footer, Seo, useWebConfig }) {
   };
   return <div className="page guidesPage sociosPage">
     <Seo title="Recursos para Socios OEX" description="Banners, guías y recursos del Programa de Recomendaciones OEX." path="/socios" />
-    <Nav subtitle="Socios OEX" />
+    <Nav whatsapp={config.whatsapp} />
     <main className="guidesWrap sociosWrap">
       {!socio ? <section className="sociosIngreso">
         <div className="miniBadge">Socios OEX</div><h1>Todo para recomendar OEX</h1>

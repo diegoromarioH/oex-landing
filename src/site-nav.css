@@ -1,0 +1,42 @@
+/* La navegación compartida mantiene su posición y estilos entre páginas. */
+.page:has(> .siteNav) { padding-top: 0; }
+.topNav.siteNav {
+  position: sticky;
+  top: 0;
+  min-height: var(--nav-h);
+  padding-inline: max(clamp(16px, 4vw, 44px), calc((100% - 1120px) / 2));
+  color: #142743;
+  background: #fffffff5;
+  border-bottom: 1px solid #b8c9df;
+  box-shadow: 0 8px 25px #213b6112;
+}
+.siteNav .brand { flex-shrink: 0; }
+.siteBrandMark,
+.topNav.siteNav .brand .siteBrandMark {
+  display: inline-block;
+  width: 78px;
+  height: 38px;
+  flex: 0 0 auto;
+  background: #b93f23;
+  mask: url("./assets/logo.png") center / 83px 83px no-repeat;
+}
+.footer .siteBrandMark { background: #fff; }
+.siteNav .brand .siteBrandName { color: #455973; }
+.topNav.siteNav .navLinks a { color: #263e5d; }
+.topNav.siteNav .navLinks a:hover,
+.siteNav .navLinks a[aria-current="page"]:not(.mobilePrealerta) { color: #142743; background: #edf4fd; }
+.siteNav .navLinks a[aria-current="page"]:not(.mobilePrealerta) { box-shadow: inset 0 -2px #ba4226; }
+.siteNav .menuToggle { color: #142743; background: #fff; border-color: #b8c9df; }
+.siteNav .prealertNav,
+.siteNav .navLinks a.mobilePrealerta { background: #b93f23; color: #fff; }
+.siteNav .prealertNav:hover,
+.siteNav .navLinks a.mobilePrealerta:hover { background: #9a321b; color: #fff; }
+.siteNav .whatsappNav { background: #edf5ff; border: 1px solid #cdd9e8; color: #142743; box-shadow: none; }
+.siteNav .whatsappNav:hover { background: #deebfb; }
+.siteNav .navLinks .siteMobileWhatsapp { display: none; }
+
+@media (max-width: 1180px) {
+  .topNav.siteNav .navLinks { background: #fff; border-color: #b8c9df; }
+  .siteNav .navLinks .siteMobileWhatsapp,
+  .siteNav .navLinks a.mobilePrealerta { display: flex; }
+}

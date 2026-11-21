@@ -479,7 +479,7 @@ export default function App() {
     return <PrealertaPage identificadorRecomendacion={identificadorRecomendacion} />;
   }
 
-  if (path === "/socios") return <Suspense fallback={<div className="recomendacionLoading">Cargando recursos…</div>}><SociosPage Nav={GuiasNav} Footer={Footer} Seo={Seo} useWebConfig={useWebConfig} /></Suspense>;
+  if (path === "/socios") return <Suspense fallback={<div className="recomendacionLoading">Cargando recursos…</div>}><SociosPage Nav={SiteNav} Footer={Footer} Seo={Seo} useWebConfig={useWebConfig} /></Suspense>;
 
   if (path === "/rastreo") {
     return <RastreoPage />;
@@ -537,7 +537,6 @@ function LandingPage() {
     : "/prealerta";
   const config = useWebConfig();
   const operativa = useOperativaPublica();
-  const [menuAbierto, setMenuAbierto] = useState(false);
   const [nombreDireccion, setNombreDireccion] = useState("");
   const [tipoDireccion, setTipoDireccion] = useState("MAR");
   const [copiado, setCopiado] = useState("");
@@ -545,7 +544,6 @@ function LandingPage() {
   useEffect(() => () => clearTimeout(tiempoCopiado.current), []);
 
   const nombreEjemplo = nombreDireccion.trim() || "Juan Pérez";
-  const whatsappUrl = enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.inicio);
   const firstNameOex = tipoDireccion === "MAR" ? "OEX MAR" : "OEX AEREO";
   const lastNameOex = nombreEjemplo;
 
@@ -577,39 +575,8 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
   return (
     <div className="page landingPage">
-      <nav className="topNav">
-        <a className="brand" href="/">
-          <LandingLogo />
-          <span className="landingBrandName">Ometepe Express</span>
-        </a>
-
-        <button
-          className="menuToggle"
-          type="button"
-          onClick={() => setMenuAbierto(!menuAbierto)}
-          aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={menuAbierto}
-          aria-controls="landing-navigation"
-        >
-          {menuAbierto ? <IconClose size={20} /> : <IconMenu size={20} />}
-        </button>
-
-        <div id="landing-navigation" className={`navLinks ${menuAbierto ? "navLinksOpen" : ""}`}>
-          <a onClick={() => setMenuAbierto(false)} href="/rastreo">Rastrear paquete</a>
-          <a onClick={() => setMenuAbierto(false)} href="#tarifas">Tarifas</a>
-          <a onClick={() => setMenuAbierto(false)} href="/guias">Guías</a>
-          <a onClick={() => setMenuAbierto(false)} href="/politicas">Políticas</a>
-          <a onClick={() => setMenuAbierto(false)} href="#contacto">Contacto</a>
-          <a onClick={() => setMenuAbierto(false)} href={prealertaHref} className="mobilePrealerta"><IconBox size={16} /> Prealertar</a>
-        </div>
-
-        <div className="navActions">
-          <a className="prealertNav" href={prealertaHref}><IconBox size={16} /> Prealertar</a>
-          <a className="whatsappNav" href={whatsappUrl} target="_blank" rel="noreferrer">
-            <IconWhatsapp size={16} /> WhatsApp
-          </a>
-        </div>
-      </nav>
+      <SiteNav whatsapp={config.whatsapp} inicioHref={prealertaHref === "/prealerta" ? "/" : `/?recomendacion=${recomendacion.toLowerCase()}`} prealertaHref={prealertaHref} />
+      <ShoppingAnnouncement config={config} />
 
       <header id="inicio" className="landingIntro">
         <div className="landingIntroInner">
@@ -1205,15 +1172,82 @@ function FloatingWhatsApp({ whatsapp, mensaje }) {
   );
 }
 
-function LandingLogo() {
-  return <span className="landingLogo"><img src={logo} alt="OEx" width="88" height="88" /></span>;
+function OexBrandMark() {
+  return <span className="siteBrandMark" role="img" aria-label="OEx" />;
+}
+
+function SiteNav({ whatsapp, inicioHref = "/", prealertaHref = "/prealerta" }) {
+  const [abierto, setAbierto] = useState(false);
+  const toggle = useRef(null);
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const whatsappHref = enlaceWhatsApp(whatsapp, mensajesWhatsApp.inicio);
+  const enlaces = [
+    { texto: "Dirección en Miami", href: `${inicioHref}#direccion` },
+    { texto: "Rastreo", href: "/rastreo", activo: path === "/rastreo" },
+    { texto: "Tarifas", href: `${inicioHref}#tarifas` },
+    { texto: "Guías", href: "/guias", activo: path === "/guias" || path.startsWith("/guias/") },
+    { texto: "Políticas", href: "/politicas", activo: path === "/politicas" }
+  ];
+
+  const cerrarConEscape = (evento) => {
+    if (evento.key === "Escape" && abierto) {
+      setAbierto(false);
+      toggle.current?.focus();
+    }
+  };
+
+  return (
+    <nav className="topNav siteNav" aria-label="Navegación principal" onKeyDown={cerrarConEscape}>
+      <a className="brand" href={inicioHref} aria-label="Ometepe Express, inicio">
+        <OexBrandMark />
+        <span className="siteBrandName">Ometepe Express</span>
+      </a>
+      <button ref={toggle} className="menuToggle" type="button" aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={abierto} aria-controls="site-navigation" onClick={() => setAbierto((valor) => !valor)}>
+        {abierto ? <IconClose size={20} /> : <IconMenu size={20} />}
+      </button>
+      <div id="site-navigation" className={`navLinks ${abierto ? "navLinksOpen" : ""}`}>
+        {enlaces.map(({ texto, href, activo }) => (
+          <a key={texto} href={href} aria-current={activo ? "page" : undefined} onClick={() => setAbierto(false)}>{texto}</a>
+        ))}
+        <a href={prealertaHref} aria-current={path.startsWith("/prealerta") ? "page" : undefined} className="mobilePrealerta" onClick={() => setAbierto(false)}>Prealertar</a>
+        <a href={whatsappHref} target="_blank" rel="noreferrer" className="siteMobileWhatsapp"><IconWhatsapp size={16} /> WhatsApp</a>
+      </div>
+      <div className="navActions">
+        <a className="prealertNav" href={prealertaHref} aria-current={path.startsWith("/prealerta") ? "page" : undefined}><IconBox size={16} /> Prealertar</a>
+        <a className="whatsappNav" href={whatsappHref} target="_blank" rel="noreferrer"><IconWhatsapp size={16} /> WhatsApp</a>
+      </div>
+    </nav>
+  );
+}
+
+function ShoppingAnnouncement({ config }) {
+  const hoy = new Date().toLocaleDateString("en-CA", { timeZone: "America/Managua" });
+  const temporada = hoy >= "2026-11-20" && hoy <= "2026-11-30";
+  const titulo = config.anuncio_titulo?.trim() || (temporada ? "Black Friday y Cyber Monday" : "Planeá tus compras en línea");
+  const detalle = config.anuncio_texto?.trim() || (config.anuncio_titulo?.trim()
+    ? ""
+    : temporada ? "27 y 30 de noviembre" : "Consultá tarifas y tiempos antes de comprar.");
+  const enlace = config.anuncio_enlace?.trim();
+  const enlaceValido = enlace && (/^\/(?!\/|\\)/.test(enlace) || /^https:\/\//i.test(enlace));
+  const destino = enlaceValido ? enlace : "#tarifas";
+
+  return (
+    <aside className="shoppingAnnouncement" aria-label="Anuncios de OEx">
+      <div className="shoppingAnnouncementInner">
+        <span aria-hidden="true" className="shoppingAnnouncementIcon">🛍️</span>
+        <p><strong>{titulo}</strong>{detalle && <span>{detalle}</span>}</p>
+        <a href={destino}>{config.anuncio_cta?.trim() || (enlaceValido ? "Ver anuncio" : "Ver tarifas")} <IconArrowRight size={16} /></a>
+      </div>
+    </aside>
+  );
 }
 
 function Footer({ landing = false, whatsapp = WHATSAPP_OEX } = {}) {
   return (
     <footer className="footer">
       <div>
-        {landing ? <LandingLogo /> : <img src={logo} className="footerLogo" alt="Ometepe Express" />}
+        {landing ? <OexBrandMark /> : <img src={logo} className="footerLogo" alt="Ometepe Express" />}
         <p>Tu mejor opción para compras en Estados Unidos con  envíos a Managua y Ometepe .</p>
       </div>
 
@@ -1438,17 +1472,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
         description="Registra tus datos y el número de seguimiento antes de que el paquete llegue a Miami."
         path={identificadorRecomendacion ? `/prealerta/${identificadorRecomendacion}` : "/prealerta"}
       />
-      <nav className="topNav simpleNav">
-        <a className="brand" href={inicioHref}>
-          <img src={logo} className="brandLogo" alt="OEX" />
-          <div>
-            <strong>OEX</strong>
-            <span>Prealerta de paquetes</span>
-          </div>
-        </a>
-
-        <a href={inicioHref} className="navButton">← Inicio</a>
-      </nav>
+      <SiteNav whatsapp={whatsappSoporte} inicioHref={inicioHref} prealertaHref={/^[a-z0-9_-]+$/i.test(identificadorRecomendacion) ? `/prealerta/${identificadorRecomendacion.toLowerCase()}` : "/prealerta"} />
 
       <main className="prealertaWrap">
         {cargandoRecomendacion && <div className="recomendacionLoading">Validando enlace de recomendación…</div>}
@@ -1737,17 +1761,7 @@ function RastreoPage() {
   const { whatsapp } = useWebConfig();
   return (
     <div className="page formPage">
-      <nav className="topNav simpleNav">
-        <a className="brand" href="/">
-          <img src={logo} className="brandLogo" alt="OEX" />
-          <div>
-            <strong>OEX</strong>
-            <span>Rastreo de paquetes</span>
-          </div>
-        </a>
-
-        <a href="/" className="navButton">← Inicio</a>
-      </nav>
+      <SiteNav whatsapp={whatsapp} />
 
       <main className="prealertaWrap">
         <div className="trackingQuickActions">
@@ -1769,17 +1783,7 @@ function PoliticasPage() {
   const { whatsapp } = useWebConfig();
   return (
     <div className="page policyPage">
-      <nav className="topNav simpleNav">
-        <a className="brand" href="/">
-          <img src={logo} className="brandLogo" alt="OEX" />
-          <div>
-            <strong>OEX | Ometepe Express</strong>
-            <span>Políticas de servicio</span>
-          </div>
-        </a>
-
-        <a href="/" className="navButton">Volver al inicio</a>
-      </nav>
+      <SiteNav whatsapp={whatsapp} />
 
       <main className="policyWrap">
         <section className="policyHero">
@@ -1824,24 +1828,6 @@ function PolicyBlock({ title, text }) {
   );
 }
 
-function GuiasNav({ subtitle = "Guías y consejos" }) {
-  return (
-    <nav className="topNav simpleNav guideNav">
-      <a className="brand" href="/">
-        <img src={logo} className="brandLogo" alt="OEX" />
-        <div>
-          <strong>OEX</strong>
-          <span>{subtitle}</span>
-        </div>
-      </a>
-      <div className="guideNavActions">
-        <a href="/guias" className="navButton navButtonSoft">Todas las guías</a>
-        <a href="/" className="navButton">Inicio</a>
-      </div>
-    </nav>
-  );
-}
-
 function GuiaCover({ guia }) {
   const compras = guia.category === "Compras en línea";
   return <div className={"guiaCover " + (compras ? "guiaCoverCompras" : "")} aria-hidden="true">
@@ -1863,7 +1849,7 @@ function GuiasPage() {
         description="Guías de OEX sobre envíos a Nicaragua, compras en SHEIN, tracking, prealertas y modalidades aéreas o marítimas."
         path="/guias"
       />
-      <GuiasNav />
+      <SiteNav whatsapp={whatsapp} />
 
       <main className="guidesWrap">
         <header className="guidesHero">
@@ -1909,7 +1895,7 @@ function GuiaArticlePage({ guia }) {
   return (
     <div className="page guideArticlePage">
       <Seo title={`${guia.title} | OEX Nicaragua`} description={guia.description} path={`/guias/${guia.slug}`} />
-      <GuiasNav subtitle={guia.category} />
+      <SiteNav whatsapp={whatsapp} />
 
       <main className="guideArticleWrap">
         <nav className="guideBreadcrumb" aria-label="Ruta de navegación">

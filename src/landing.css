@@ -18,44 +18,6 @@
   color-scheme: light;
 }
 
-.landingPage .topNav {
-  padding-inline: max(var(--landing-gutter), calc((100% - var(--container)) / 2));
-  background: #fffffff5;
-  border-bottom-color: var(--landing-edge);
-}
-
-.landingPage .landingLogo {
-  display: grid;
-  position: relative;
-  overflow: hidden;
-  place-items: center;
-  width: 88px;
-  height: 44px;
-  flex: 0 0 88px;
-  border: 1px solid #d2e6f6;
-  border-radius: 10px;
-  background: #f4f8ff;
-}
-
-.landingLogo img {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 78px;
-  height: 78px;
-  max-width: none;
-  transform: translate(-50%, -50%);
-}
-
-.landingPage .brand .landingBrandName,
-.landingPage .navLinks a { color: var(--landing-copy); }
-
-.landingPage .navLinks { background: var(--landing-panel); border-color: var(--landing-edge); }
-.landingPage .navLinks a:hover { color: var(--landing-ink); background: var(--landing-hover); }
-.landingPage .menuToggle { background: var(--landing-panel); border-color: var(--landing-edge); color: var(--landing-ink); }
-.landingPage .prealertNav,
-.landingPage .navLinks a.mobilePrealerta { background: var(--landing-coral); color: #fff; }
-.landingPage .whatsappNav { background: #edf5ff; border: 1px solid var(--landing-edge); color: var(--landing-ink); box-shadow: none; }
-
 .landingIntro {
   position: relative;
   isolation: isolate;
@@ -217,15 +179,6 @@
 .landingPage .floatingWhatsApp { width: 48px; height: 48px; box-shadow: 0 6px 18px #0005; }
 .landingPage .floatingWhatsApp::before { content: none; }
 
-@media (min-width: 900px) {
-  .landingPage .navLinks { background: transparent; }
-}
-
-@media (max-width: 899px) {
-  .landingPage .navLinks:not(.navLinksOpen) { display: none; }
-  .landingPage .navLinksOpen { display: flex; }
-}
-
 @media (max-width: 740px) {
   .landingActionGrid { grid-template-columns: 1fr; gap: 8px; }
   .landingAction { align-items: center; padding: 12px; }
@@ -246,8 +199,6 @@
   --landing-orange: #bd3c1e;
   --landing-orange-ink: #fff;
 }
-.landingPage .prealertNav,
-.landingPage .navLinks a.mobilePrealerta,
 .landingPage .copyAllButton {
   background: var(--landing-orange);
   color: var(--landing-orange-ink);
@@ -385,4 +336,83 @@
   .landingReaction { animation: none; }
   .landingAction:is(:hover, :active, :focus-visible),
   .landingAction:is(:hover, :focus-visible) .landingActionEmoji { transform: none; }
+}
+
+.shoppingAnnouncement {
+  position: relative;
+  width: min(calc(100% - 2 * var(--landing-gutter)), calc(var(--container) - 2 * var(--landing-gutter)));
+  margin: 14px auto 0;
+  overflow: hidden;
+  color: #142743;
+  border: 1px solid #e4ad8e;
+  border-radius: 14px;
+  background: linear-gradient(108deg, #ffe4ce, #fff4eb 57%, #e8f2fd);
+  box-shadow: 0 4px 0 #d6845033, 0 10px 22px #783d2114;
+  animation: landing-arrival .42s var(--ease) both;
+}
+.shoppingAnnouncementInner { display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shoppingAnnouncementIcon { display: grid; flex: 0 0 36px; height: 36px; place-items: center; border-radius: 9px; background: #fff8f0; }
+.shoppingAnnouncement p { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; flex: 1; margin: 0; }
+.shoppingAnnouncement p span { color: #5b463d; font-size: .87rem; }
+.shoppingAnnouncement a { display: inline-flex; flex-shrink: 0; align-items: center; gap: 6px; min-height: 40px; color: #862e1a; font-weight: 700; text-underline-offset: 4px; }
+.shoppingAnnouncement a:hover svg { translate: 3px; }
+.shoppingAnnouncement a svg { transition: translate .2s var(--ease); }
+
+/* Canto de color, borde y sombra separan físicamente las superficies. */
+.landingAction {
+  position: relative;
+  border-color: #b9cce4;
+  box-shadow: 0 3px 0 #a4bddb50, 0 9px 22px #21467014;
+}
+.landingAction::before {
+  content: "";
+  position: absolute;
+  inset: 12px auto 12px 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: #5488bc;
+}
+.landingActionPrimary { border-color: #dfa784; box-shadow: 0 3px 0 #d79a715c, 0 9px 22px #9f48171c; }
+.landingActionPrimary::before { background: #bf532e; }
+.landingAction:nth-child(3) { border-color: #9fc9bd; }
+.landingAction:nth-child(3)::before { background: #318c7e; }
+.landingAction:hover,
+.landingAction:focus-visible { transform: translateY(-4px); box-shadow: 0 6px 0 #aac3db45, 0 16px 30px #244c7529; }
+.landingAction:active { transform: translateY(1px); }
+
+.landingPage .landingHelp { border-bottom: 0; position: relative; }
+.landingPage .landingHelp::after,
+.landingPage :is(.ratesSection, .faqSection)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ca643e, #f5c8aa 30%, #b2cbe8 68%, #edf3fb);
+  box-shadow: 0 4px 9px #1c466a2e;
+}
+.landingPage :is(.ratesSection, .faqSection) { position: relative; }
+.landingPage :is(.ratesSection, .faqSection)::before { inset: 0 var(--landing-gutter) auto; height: 3px; }
+.landingPage .faqSection { padding-top: clamp(28px, 4vw, 44px); }
+
+.landingPage :is(.addressGridV2, .calculatorGrid, .ratesTableWrap) {
+  border-color: #aebfd6;
+  box-shadow: 0 4px 0 #c0d0e549, 0 14px 29px #203e6217;
+}
+.landingPage :is(.rateCard, .faqItem) { box-shadow: 0 4px 13px #1c426315; }
+.landingPage .faqItem { border-color: #b6c8e0; }
+.landingPage .faqItem:is(:hover, [open]) { border-color: #748fb3; box-shadow: 0 6px 16px #21467021; }
+.landingPage .faqItem[open] { background: #f5f9ff; }
+
+@media (max-width: 560px) {
+  .shoppingAnnouncementInner { flex-wrap: wrap; gap: 6px 9px; padding: 9px 11px; }
+  .shoppingAnnouncement p { min-width: 140px; }
+  .shoppingAnnouncement a { min-height: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shoppingAnnouncement { animation: none; }
+  .landingAction:is(:hover, :focus-visible, :active), .shoppingAnnouncement a:hover svg { transform: none; translate: none; }
 }

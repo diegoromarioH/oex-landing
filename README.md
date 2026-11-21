@@ -69,8 +69,7 @@ En `index.html`, reemplaza `G-XXXXXXXXXX` por tu ID y descomenta el bloque.
 
 ## Notas
 
-- No hay códigos de descuento ni barra de promociones — si en el futuro se
-  quieren reactivar, habría que recrear las tablas correspondientes.
+- La barra de la portada muestra fechas de compras o avisos. Para cambiar el aviso, se pueden agregar claves activas en `configuracion_web`: `anuncio_titulo`, `anuncio_texto`, `anuncio_enlace` (ruta interna o enlace HTTPS) y `anuncio_cta`. El aviso de Black Friday y Cyber Monday de 2026 se retira al terminar noviembre si no hay un aviso configurado.
 - El bucket de Storage `prealertas` no se elimina automáticamente al migrar
   (por si tiene archivos históricos); si ya no lo necesitas, bórralo
   manualmente desde Supabase → Storage.
