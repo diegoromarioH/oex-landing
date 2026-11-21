@@ -20,6 +20,10 @@
 
 .landingIntro {
   padding: clamp(32px, 5vw, 70px) var(--landing-gutter) clamp(25px, 5vw, 62px);
+  background:
+    radial-gradient(ellipse at 9% 13%, #fff0e5 0%, transparent 55%),
+    radial-gradient(ellipse at 93% 8%, #e4e8ff 0%, transparent 56%),
+    linear-gradient(150deg, #f8faff, #fff 85%);
 }
 
 .landingIntroInner {
@@ -229,16 +233,111 @@
   to { transform: scale(1); opacity: 1; }
 }
 .shoppingAnnouncement {
-  width: min(calc(100% - 2 * var(--landing-gutter)), calc(var(--container) - 2 * var(--landing-gutter)));
-  margin: 0 auto;
-  border-bottom: 1px solid var(--landing-edge);
-  background: #fff;
+  color: #fff;
+  background: linear-gradient(100deg, #942f22, #823049 55%, #3e3677);
 }
-.shoppingAnnouncementInner { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; padding: 9px 0; }
-.shoppingAnnouncementIcon { display: grid; place-items: center; width: 25px; height: 25px; flex-shrink: 0; color: var(--landing-coral); }
-.shoppingAnnouncement p { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; flex: 1 1 180px; margin: 0; font-size: .86rem; }
-.shoppingAnnouncement p span { color: var(--landing-copy); font-size: .83rem; }
-.shoppingAnnouncement a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; color: var(--landing-coral); font-size: .85rem; font-weight: 700; text-underline-offset: 4px; }
+.shoppingAnnouncementInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 13px);
+  width: min(calc(100% - 20px), var(--container));
+  margin: 0 auto;
+  padding-block: 5px;
+}
+.shoppingAnnouncementViewport {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  container-type: inline-size;
+}
+.shoppingAnnouncementMotion {
+  display: flex;
+  width: max-content;
+  animation: announcement-scroll 23s linear infinite;
+}
+.shoppingAnnouncementBatch {
+  display: flex;
+  justify-content: space-around;
+  flex: 0 0 auto;
+  min-width: 100cqw;
+}
+.shoppingAnnouncementItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: clamp(18px, 4vw, 60px);
+  white-space: nowrap;
+  font-size: .82rem;
+}
+.shoppingAnnouncementItem > span { color: #ffe7e1; }
+.shoppingAnnouncementItem svg { flex: 0 0 auto; color: #ffc5a6; }
+.shoppingAnnouncementViewport:hover .shoppingAnnouncementMotion { animation-play-state: paused; }
+@keyframes announcement-scroll {
+  to { transform: translateX(-50%); }
+}
+
+.shoppingAnnouncementMessage {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+}
+.shoppingAnnouncement[data-pausado="true"] .shoppingAnnouncementMotion { display: none; }
+.shoppingAnnouncement[data-pausado="true"] .shoppingAnnouncementMessage {
+  position: static;
+  inline-size: auto;
+  block-size: auto;
+  clip-path: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  padding: 5px 0;
+  font-size: .82rem;
+}
+.shoppingAnnouncementMessage > span { margin-inline-start: 8px; color: #ffe7e1; }
+.shoppingAnnouncement a,
+.shoppingAnnouncementToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  gap: 5px;
+  color: #fff;
+}
+.shoppingAnnouncement a { padding: 2px 5px; white-space: nowrap; font-size: .81rem; font-weight: 700; text-underline-offset: 4px; }
+.shoppingAnnouncementToggle {
+  min-width: 34px;
+  padding: 0;
+  background: #fff2;
+  border: 1px solid #ffffff78;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.shoppingAnnouncementToggle:hover { background: #fff4; }
+.shoppingAnnouncement :is(a, button):focus-visible { outline-color: #fff; }
+
+@media (max-width: 400px) {
+  .shoppingAnnouncement a { white-space: normal; max-width: 92px; line-height: 1.2; }
+  .shoppingAnnouncement a svg { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shoppingAnnouncementMotion, .shoppingAnnouncementToggle { display: none; }
+  .shoppingAnnouncementInner { grid-template-columns: minmax(0, 1fr) auto; }
+  .shoppingAnnouncement .shoppingAnnouncementMessage {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    clip-path: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding: 5px 0;
+    font-size: .82rem;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .landingIntroInner, .landingReaction { animation: none; }
@@ -281,10 +380,10 @@
   margin: 0;
   padding: clamp(15px, 3vw, 25px);
   gap: 12px;
-  border: 1px solid #ddc8bb;
-  border-top: 3px solid var(--landing-orange);
-  border-radius: 12px;
-  background: #fdf9f6;
+  border: 1px solid #dfd7e2;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fff, #fff5eb 125%);
+  box-shadow: 0 16px 44px #42375e1b;
 }
 .trackingSectionLanding .trackingBoxCopy { text-align: left; }
 .trackingSectionLanding .trackingBoxCopy h2 { margin: 0; font-size: clamp(1.28rem, 2vw, 1.6rem); letter-spacing: -.035em; }
@@ -308,7 +407,7 @@
   border-radius: 8px;
 }
 .trackingSectionLanding .trackingForm .primaryCta {
-  background: var(--landing-orange);
+  background: linear-gradient(115deg, #a8341d, #b23b2a);
   box-shadow: none;
   border-radius: 8px;
   padding: 10px 13px;
@@ -348,4 +447,27 @@
 @media (prefers-reduced-motion: reduce) {
   .landingRouteFlow::after { animation: none; left: calc(100% - 6px); }
   .trackingSectionLanding :is(.trackingResult, .trackingResultsList, .trackingError) { animation: none; }
+}
+
+.landingSecondaryActions a {
+  padding: 5px 9px;
+  border: 1px solid #c7d1e2;
+  border-radius: 8px;
+  background: #ffffffc7;
+  text-decoration: none;
+}
+.landingSecondaryActions a:hover { background: #fff; border-color: #b65037; }
+.landingSecondaryActions a > svg:last-child { transition: translate .2s var(--ease); }
+.landingSecondaryActions a:is(:hover, :focus-visible) > svg:last-child { translate: 3px; }
+.landingPage .finalCtaNew { background: linear-gradient(115deg, #edf0ff, #fff1e5); }
+
+@media (prefers-reduced-motion: reduce) {
+  .landingSecondaryActions a:is(:hover, :focus-visible) > svg:last-child { translate: none; }
+}
+
+@media (min-width: 900px) {
+  .landingIntroInner { grid-template-rows: auto 1fr; }
+  .landingIntro h1 { font-size: clamp(42px, 4.5vw, 58px); }
+  .landingIntroDescription { max-width: 41ch; }
+  .trackingSectionLanding { align-self: center; }
 }
