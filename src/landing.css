@@ -6,24 +6,36 @@
   --landing-paper: #f9fafc;
   --landing-accent: #bb3a25;
   --landing-night: #101e34;
+  --landing-ice: #8cecff;
   background: var(--landing-paper);
 }
 
 .landingPage .topNav {
   padding-inline: max(var(--landing-gutter), calc((100% - var(--container)) / 2));
-  background: rgba(12, 25, 44, .96);
+  background: rgba(7, 15, 31, .94);
+  border-bottom-color: #79deff2b;
 }
 
 .landingPage .heroNew {
   padding: clamp(24px, 4.5vw, 60px) var(--landing-gutter) clamp(40px, 5vw, 72px);
   isolation: isolate;
-  background: radial-gradient(ellipse at 93% 82%, #f6d9ce 0, transparent 43%),
-    radial-gradient(ellipse at 68% 0%, #e6ecfa 0, transparent 53%),
-    linear-gradient(135deg, #fff, #f8f9fc 60%, #f9ece7);
-  color: var(--landing-night);
+  background:
+    radial-gradient(ellipse at 78% 30%, #143a63 0, transparent 53%),
+    radial-gradient(ellipse at 100% 100%, #413366 0, transparent 42%),
+    linear-gradient(125deg, #081123, #111f39 70%, #182139);
+  color: #f4f8ff;
 }
 
-.landingPage .heroNew::after { content: none; }
+.landingPage .heroNew::after {
+  inset: 0;
+  height: auto;
+  z-index: -1;
+  background-image:
+    linear-gradient(#81b9f314 1px, transparent 1px),
+    linear-gradient(90deg, #81b9f314 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: linear-gradient(105deg, transparent 15%, #000);
+}
 
 .landingPage .heroContent {
   width: 100%;
@@ -44,9 +56,9 @@
 }
 
 .landingPage .heroCopy .miniBadge {
-  background: #fff7f3;
-  border-color: #f1d6cd;
-  color: #8c2f20;
+  background: #0d2943;
+  border-color: #45738e;
+  color: #bcf2ff;
   padding: 8px 12px;
   margin-bottom: 14px;
 }
@@ -54,7 +66,7 @@
 .landingPage .heroCopy .miniBadge::before { content: none; }
 
 .landingPage .heroCopy h1 {
-  color: var(--landing-night);
+  color: #f5f8ff;
   font-size: clamp(34px, 5vw, 72px);
   letter-spacing: -.068em;
   line-height: 1.02;
@@ -64,14 +76,14 @@
 
 .landingPage .heroCopy h1 span {
   display: block;
-  color: var(--landing-accent);
-  background: linear-gradient(100deg, #ab2f1e 8%, #ce5036 80%);
+  color: var(--landing-ice);
+  background: linear-gradient(100deg, #91edff 8%, #b7b9ff 85%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .landingPage .heroDescription {
-  color: #465873;
+  color: #c2d1e8;
   max-width: 48ch;
   margin: 19px 0 24px;
   line-height: 1.6;
@@ -87,14 +99,15 @@
 
 .landingPage .heroActions .primaryCta,
 .landingPage .orangeButton {
-  background: linear-gradient(135deg, #bd3e2a, #9e2f20);
-  box-shadow: 0 10px 24px #9e2f2028;
+  background: linear-gradient(135deg, #ffb091, #fb856e);
+  color: #361916;
+  box-shadow: 0 8px 26px #ff866e38;
 }
 
 .landingPage .heroActions .secondaryCta {
-  border: 1px solid #d2dbea;
-  color: var(--landing-night);
-  background: #fff;
+  border: 1px solid #6b90b8;
+  color: #edf6ff;
+  background: #152e4c;
 }
 
 .landingPage .heroBenefits {
@@ -110,14 +123,14 @@
   padding: 0;
   gap: 6px;
   font-size: .8rem;
-  color: #43536b;
+  color: #d7e4f7;
 }
 
 .landingPage .benefit span {
   width: 28px;
   height: 28px;
-  color: #aa3623;
-  background: #fdece6;
+  color: var(--landing-ice);
+  background: #1c3656;
 }
 
 .landingPage .heroVisual {
@@ -129,7 +142,8 @@
   isolation: isolate;
   border-radius: clamp(20px, 3vw, 34px);
   background: linear-gradient(155deg, #263b56, #101b2d);
-  box-shadow: 0 24px 54px #151f3630;
+  border: 1px solid #83c8f657;
+  box-shadow: 0 24px 54px #0207106e, 0 0 45px #7399ff38;
 }
 
 .heroPhoto,
@@ -155,19 +169,20 @@
   justify-self: end;
   padding: clamp(14px, 2.2vw, 22px);
   border-radius: 18px;
-  border: 1px solid #fff9;
-  background: #ffffffed;
+  border: 1px solid #a0c2e46b;
+  background: #0c1c33eb;
+  color: #f0f6ff;
   backdrop-filter: blur(12px);
   box-shadow: 0 14px 34px #131f3440;
 }
 
-.landingPage .routeCardTag { color: #7c3b31; font-size: .67rem; }
+.landingPage .routeCardTag { color: #a6dcf5; font-size: .67rem; }
 .landingPage .routeCardTop h2 {
   display: flex;
   align-items: center;
   gap: 8px;
   margin: 0 0 9px;
-  color: var(--landing-night);
+  color: #f3f8ff;
   font-size: clamp(19px, 3vw, 24px);
 }
 
@@ -176,18 +191,19 @@
   grid-template-columns: 32px 1fr;
   gap: 8px;
   padding: 5px 7px;
-  background: #f1f5fc;
-  border: 1px solid #e5ebf4;
+  background: #18304c;
+  border: 1px solid #304c69;
 }
 .landingPage .routeOptionIcon {
   width: 32px;
   height: 32px;
   border-radius: 9px;
-  background: #e1e9f7;
-  color: #243f62;
+  background: #204362;
+  color: var(--landing-ice);
 }
-.landingPage .routeOption p { color: #495a70; }
-.landingPage .panelCta { padding: 8px 12px; min-height: 42px; font-size: .84rem; }
+.landingPage .routeOption b { color: #edf5ff; }
+.landingPage .routeOption p { color: #c4d4ea; }
+.landingPage .panelCta { padding: 8px 12px; min-height: 42px; font-size: .84rem; background: #9de5fc; color: #09283c; }
 
 .landingPage .section {
   padding: var(--landing-space) var(--landing-gutter);
@@ -270,3 +286,21 @@
   .landingPage .storeLogo { padding: 8px; height: 62px; }
   .landingPage .storeLogo img { width: 100%; }
 }
+
+.landingPage .panelCta:hover { background: #c6f1ff; color: #09283c; }
+.landingPage .heroActions .primaryCta:hover,
+.landingPage .orangeButton:hover { box-shadow: 0 10px 32px #ff866e66; }
+.landingPage .assistedWhatsApp {
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #6b90b8;
+  border-radius: 12px;
+  color: #dbf4ff;
+  text-decoration: none;
+  font-weight: 650;
+}
+.landingPage .assistedWhatsApp:hover { background: #ffffff1a; }

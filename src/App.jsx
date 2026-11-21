@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import logo from "./assets/logo.png";
 import { supabase } from "./supabase";
 import { registrarEvento } from "./analytics";
+import { enlaceWhatsApp, mensajesWhatsApp, WHATSAPP_OEX } from "./whatsapp";
 import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen } from "lucide-react";
 
 const SociosPage = lazy(() => import("./SociosPage"));
@@ -512,7 +513,7 @@ export default function App() {
 
 function useWebConfig() {
   const [config, setConfig] = useState({
-    whatsapp: "50557067044"
+    whatsapp: WHATSAPP_OEX
   });
 
   useEffect(() => {
@@ -551,7 +552,7 @@ function LandingPage() {
   const [copiado, setCopiado] = useState("");
 
   const nombreEjemplo = nombreDireccion.trim() || "Juan Pérez";
-  const whatsappUrl = `https://wa.me/${config.whatsapp || "50557067044"}`;
+  const whatsappUrl = enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.inicio);
   const firstNameOex = tipoDireccion === "MAR" ? "OEX MAR" : "OEX AEREO";
   const lastNameOex = nombreEjemplo;
 
@@ -694,6 +695,9 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
               <WhyItem icon={<IconBox size={20} />} title="Rastreo en tiempo real" text="Puedes seguir el estado de tu paquete en todo momento a través de web de manera fácil y rápida." />
               <WhyItem icon={<IconChat size={20} />} title="Atención personalizada" text="Soporte directo por WhatsApp, todos los días." />
               <WhyItem icon={<IconPin size={20} />} title="Presencia local" text="Atención en Ometepe y logística en Managua." />
+              <a href={enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.compra)} target="_blank" rel="noreferrer" className="assistedWhatsApp">
+                <IconWhatsapp size={17} /> Cotizar compra asistida
+              </a>
             </div>
           </Reveal>
         </section>
@@ -789,7 +793,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
 
           <Reveal>
-            <RatesTable whatsapp={config.whatsapp || "50557067044"} tarifas={operativa.tarifas} tiemposEntrega={operativa.tiemposEntrega} />
+            <RatesTable whatsapp={config.whatsapp} tarifas={operativa.tarifas} tiemposEntrega={operativa.tiemposEntrega} />
           </Reveal>
         </section>
 
@@ -843,14 +847,14 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
             <h2>¿Listo para comprar en Estados Unidos?</h2>
             <p>Estamos aquí para ayudarte en todo el proceso.</p>
           </div>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer" className="greenCta">
-            <IconWhatsapp size={17} /> Escríbenos por WhatsApp
+          <a href={enlaceWhatsApp(config.whatsapp, mensajesWhatsApp.cotizacion)} target="_blank" rel="noreferrer" className="greenCta">
+            <IconWhatsapp size={17} /> Cotizar mi envío
           </a>
         </section>
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp whatsapp={config.whatsapp} mensaje={mensajesWhatsApp.inicio} />
     </div>
   );
 }
@@ -1219,7 +1223,7 @@ function RatesTable({ whatsapp, tarifas = TARIFAS_FALLBACK, tiemposEntrega = RAN
         })}
       </div>
       <div className="notice">Sin redondeos de peso. El costo final se calcula con el peso real recibido en Managua.</div>
-      <a className="blueButton" href={`https://wa.me/${whatsapp}?text=Hola,%20quiero%20cotizar%20un%20env%C3%ADo%20con%20OEX`} target="_blank" rel="noreferrer">
+      <a className="blueButton" href={enlaceWhatsApp(whatsapp, mensajesWhatsApp.cotizacion)} target="_blank" rel="noreferrer">
         <IconWhatsapp size={17} /> Cotizar por WhatsApp
       </a>
     </div>
@@ -1309,11 +1313,11 @@ function CopyLine({ label, value, onCopy }) {
   );
 }
 
-function FloatingWhatsApp() {
+function FloatingWhatsApp({ whatsapp, mensaje }) {
   return (
     <a
       className="floatingWhatsApp"
-      href="https://wa.me/50557067044?text=Hola,%20necesito%20ayuda%20con%20Ometepe%20Express"
+      href={enlaceWhatsApp(whatsapp, mensaje)}
       target="_blank"
       rel="noreferrer"
       aria-label="Escríbenos por WhatsApp"
@@ -1388,6 +1392,7 @@ function FormSectionTitle({ icon, tone = "coral", children }) {
 }
 
 function PrealertaPage({ identificadorRecomendacion = "" }) {
+  const { whatsapp: whatsappSoporte } = useWebConfig();
   const inicioHref = /^[a-z0-9_-]+$/i.test(identificadorRecomendacion)
     ? `/?recomendacion=${identificadorRecomendacion.toLowerCase()}`
     : "/";
@@ -1775,7 +1780,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
             <div className="successCard">
               <h3>Tu prealerta fue registrada</h3>
               <p>Ahora nuestro equipo podrá identificar tu paquete cuando llegue a Miami.</p>
-              <a href="https://wa.me/50557067044" target="_blank" rel="noreferrer">
+              <a href={enlaceWhatsApp(whatsappSoporte, mensajesWhatsApp.prealertaRegistrada)} target="_blank" rel="noreferrer">
                 Consultar por WhatsApp
               </a>
             </div>
@@ -1788,7 +1793,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp whatsapp={whatsappSoporte} mensaje={mensajesWhatsApp.prealerta} />
     </div>
   );
 }
@@ -1847,6 +1852,7 @@ function InstallAppButton() {
 }
 
 function RastreoPage() {
+  const { whatsapp } = useWebConfig();
   return (
     <div className="page formPage">
       <nav className="topNav simpleNav">
@@ -1872,12 +1878,13 @@ function RastreoPage() {
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp whatsapp={whatsapp} mensaje={mensajesWhatsApp.rastreo} />
     </div>
   );
 }
 
 function PoliticasPage() {
+  const { whatsapp } = useWebConfig();
   return (
     <div className="page policyPage">
       <nav className="topNav simpleNav">
@@ -1916,12 +1923,12 @@ function PoliticasPage() {
         <div className="policyFinal">
           <h2>¿Tienes dudas antes de comprar?</h2>
           <p>Escríbenos y te ayudamos a entender el proceso antes de realizar tu pedido.</p>
-          <a href="https://wa.me/50557067044" target="_blank" rel="noreferrer" className="greenCta"><IconWhatsapp size={17} /> Consultar por WhatsApp</a>
+          <a href={enlaceWhatsApp(whatsapp, mensajesWhatsApp.politicas)} target="_blank" rel="noreferrer" className="greenCta"><IconWhatsapp size={17} /> Consultar por WhatsApp</a>
         </div>
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp whatsapp={whatsapp} mensaje={mensajesWhatsApp.politicas} />
     </div>
   );
 }
@@ -1964,6 +1971,7 @@ function GuiaCover({ guia }) {
 const fechaGuia = guia => new Date((guia.updatedAt || (guia.slug === "preguntas-frecuentes-compras-online-compra-asistida" ? "2026-09-29" : "2026-09-06")) + "T12:00:00-06:00").toLocaleDateString("es-NI", {day:"numeric",month:"long",year:"numeric",timeZone:"America/Managua"});
 
 function GuiasPage() {
+  const { whatsapp } = useWebConfig();
   const [categoria, setCategoria] = useState("Todas");
   const categorias = ["Todas", ...new Set(GUIAS.map(g => g.category))];
   return (
@@ -2004,17 +2012,18 @@ function GuiasPage() {
             <h2>Te ayudamos antes de comprar</h2>
             <p>Escríbenos por WhatsApp y revisamos contigo el proceso o la modalidad de envío.</p>
           </div>
-          <a href="https://wa.me/50557067044" target="_blank" rel="noreferrer" className="greenCta"><IconWhatsapp size={17} /> Consultar por WhatsApp</a>
+          <a href={enlaceWhatsApp(whatsapp, mensajesWhatsApp.guias)} target="_blank" rel="noreferrer" className="greenCta"><IconWhatsapp size={17} /> Consultar por WhatsApp</a>
         </aside>
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp whatsapp={whatsapp} mensaje={mensajesWhatsApp.guias} />
     </div>
   );
 }
 
 function GuiaArticlePage({ guia }) {
+  const { whatsapp } = useWebConfig();
   return (
     <div className="page guideArticlePage">
       <Seo title={`${guia.title} | OEX Nicaragua`} description={guia.description} path={`/guias/${guia.slug}`} />
@@ -2071,7 +2080,7 @@ function GuiaArticlePage({ guia }) {
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp whatsapp={whatsapp} mensaje={`Hola, OEx. Leí la guía «${guia.title}» y quisiera hacer una consulta.\n\nMi pregunta:`} />
     </div>
   );
 }
