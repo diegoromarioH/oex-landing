@@ -143,7 +143,7 @@
   background: var(--landing-orange);
   color: var(--landing-orange-ink);
 }
-.landingPage .copyAllButton:hover { background: #9c3018; }
+.landingPage .copyAllButton:hover { background: var(--brand-orange-hover); }
 .landingPage .addressModeBadge,
 .landingPage .estimateWindow strong { color: var(--landing-orange); }
 
@@ -407,13 +407,13 @@
   border-radius: 8px;
 }
 .trackingSectionLanding .trackingForm .primaryCta {
-  background: linear-gradient(115deg, #a8341d, #b23b2a);
+  background: linear-gradient(115deg, var(--brand-orange-hover), var(--brand-orange-strong));
   box-shadow: none;
   border-radius: 8px;
   padding: 10px 13px;
   min-height: 48px;
 }
-.trackingSectionLanding .trackingForm .primaryCta:hover:not(:disabled) { background: #9c3018; }
+.trackingSectionLanding .trackingForm .primaryCta:hover:not(:disabled) { background: var(--brand-orange-hover); }
 .trackingSectionLanding .trackingResultRow b { overflow-wrap: anywhere; min-width: 0; }
 .trackingSectionLanding :is(.trackingResult, .trackingResultsList, .trackingError) {
   margin: 0;
@@ -628,7 +628,7 @@
   align-items: center;
   gap: 8px;
 }
-.landingPage .addressSection h3 svg { flex-shrink: 0; color: #bd3c1e; }
+.landingPage .addressSection h3 svg { flex-shrink: 0; color: var(--brand-orange-strong); }
 .landingPage .addressSection .addressForm :is(h3, label) { color: #f3f8ff; }
 .landingPage .addressSection .addressForm h3 svg { color: #ff9367; }
 .landingPage .addressSection .addressForm :is(input, select) {
@@ -643,31 +643,31 @@
 }
 .landingPage .addressSection .copyLineWide {
   background: #fff3e9;
-  box-shadow: inset 3px 0 #f96a38;
+  box-shadow: inset 3px 0 var(--brand-orange);
 }
 .landingPage .addressSection .copyLineWide b { font-size: .94rem; }
 .landingPage .addressSection .copyLine button { background: #e7f0fd; }
 .landingPage .addressSection .copyAllButton {
-  background: linear-gradient(112deg, #a8351e, var(--brand-orange-strong));
+  background: linear-gradient(112deg, var(--brand-orange-hover), var(--brand-orange-strong));
   box-shadow: 0 6px 15px #b63c2838;
 }
-.landingPage .addressSection .copyAllButton:hover { background: #a3321b; }
+.landingPage .addressSection .copyAllButton:hover { background: var(--brand-orange-hover); }
 
-/* Fecha estimada contrasta con la franja azul del casillero. */
+/* La calculadora mantiene el texto oscuro sobre una franja luminosa. */
 .landingPage .dateSection {
   max-width: none;
   padding-top: var(--landing-space);
   background:
-    radial-gradient(ellipse at 92% 0%, #ffbb87 0%, transparent 56%),
-    linear-gradient(115deg, var(--brand-orange), #ff925d);
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--brand-orange) 27%, white), transparent 56%),
+    linear-gradient(115deg, #cfe5ff, #e7f0ff 57%, #fff6ef);
 }
-.landingPage .dateSection .sectionTitle :is(span, h2, p) { color: #142743; }
+.landingPage .dateSection .sectionTitle span { color: var(--brand-orange-strong); }
 .landingPage .dateSection .calculatorGrid {
   max-width: calc(var(--container) - 2 * var(--landing-gutter));
   margin: 0 auto;
-  border-color: #efb494;
-  box-shadow: 0 15px 34px #792b1c29;
+  border-color: #b8cfea;
+  box-shadow: 0 15px 34px #24477a28;
 }
 .landingPage .dateSection .calculatorGrid > .calculatorResult {
-  background: linear-gradient(145deg, #fffaf6, #ffeadb);
+  background: linear-gradient(145deg, #fff, #edf4ff);
 }

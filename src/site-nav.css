@@ -31,7 +31,7 @@
 .siteNav .prealertNav,
 .siteNav .navLinks a.mobilePrealerta { background: var(--brand-orange-strong); color: #fff; }
 .siteNav .prealertNav:hover,
-.siteNav .navLinks a.mobilePrealerta:hover { background: #9a321b; color: #fff; }
+.siteNav .navLinks a.mobilePrealerta:hover { background: var(--brand-orange-hover); color: #fff; }
 .siteNav .whatsappNav { border-radius: 8px; background: #fff; border: 1px solid #cdd9e8; color: #142743; box-shadow: none; }
 .siteNav .whatsappNav:hover { background: #deebfb; }
 .siteNav .navLinks .siteMobileWhatsapp { display: none; }
