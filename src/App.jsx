@@ -582,11 +582,13 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         <div className="landingIntroInner">
           <p className="landingRoute">
             <span>Miami</span>
-            <span className="landingRouteLine" aria-hidden="true" />
+            <IconArrowRight size={15} />
             <span>Managua y Ometepe</span>
           </p>
-          <h1>Comprá en Estados Unidos.<br /> <span>Recibí en Nicaragua.</span></h1>
-          <p>Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
+          <div className="landingIntroContent">
+            <h1>Comprá en Estados Unidos. <span>Recibí en Nicaragua.</span></h1>
+            <p>Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
+          </div>
         </div>
       </header>
 
@@ -594,17 +596,17 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         <section id="como-funciona" className="section landingStart" aria-label="Servicios de OEx">
           <Reveal className="landingActionGrid">
             <a className="landingAction landingActionPrimary" href="#direccion">
-              <span className="landingActionEmoji" aria-hidden="true">📍</span>
+              <IconPin size={21} />
               <div><h2>Obtener mi dirección</h2><p>Personalizá y copiá los datos de tu casillero en Miami.</p></div>
               <IconArrowRight size={18} />
             </a>
             <a className="landingAction" href={prealertaHref}>
-              <span className="landingActionEmoji" aria-hidden="true">📦</span>
+              <IconBox size={21} />
               <div><h2>Prealertar un paquete</h2><p>Registrá el tracking que te envió la tienda.</p></div>
               <IconArrowRight size={18} />
             </a>
             <a className="landingAction" href="/rastreo">
-              <span className="landingActionEmoji" aria-hidden="true">🔎</span>
+              <IconSearch size={21} />
               <div><h2>Rastrear mi paquete</h2><p>Consultá el estado con tu tracking o código de cliente.</p></div>
               <IconArrowRight size={18} />
             </a>
@@ -1235,7 +1237,7 @@ function ShoppingAnnouncement({ config }) {
   return (
     <aside className="shoppingAnnouncement" aria-label="Anuncios de OEx">
       <div className="shoppingAnnouncementInner">
-        <span aria-hidden="true" className="shoppingAnnouncementIcon">🛍️</span>
+        <span aria-hidden="true" className="shoppingAnnouncementIcon"><IconBag size={17} /></span>
         <p><strong>{titulo}</strong>{detalle && <span>{detalle}</span>}</p>
         <a href={destino}>{config.anuncio_cta?.trim() || (enlaceValido ? "Ver anuncio" : "Ver tarifas")} <IconArrowRight size={16} /></a>
       </div>
