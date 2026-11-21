@@ -1,0 +1,272 @@
+/* Inicio de OEx. Las páginas de rastreo y formularios comparten styles.css. */
+.landingPage {
+  --container: 1240px;
+  --landing-gutter: clamp(18px, 4vw, 58px);
+  --landing-space: clamp(44px, 6vw, 84px);
+  --landing-paper: #f9fafc;
+  --landing-accent: #bb3a25;
+  --landing-night: #101e34;
+  background: var(--landing-paper);
+}
+
+.landingPage .topNav {
+  padding-inline: max(var(--landing-gutter), calc((100% - var(--container)) / 2));
+  background: rgba(12, 25, 44, .96);
+}
+
+.landingPage .heroNew {
+  padding: clamp(24px, 4.5vw, 60px) var(--landing-gutter) clamp(40px, 5vw, 72px);
+  isolation: isolate;
+  background: radial-gradient(ellipse at 93% 82%, #f6d9ce 0, transparent 43%),
+    radial-gradient(ellipse at 68% 0%, #e6ecfa 0, transparent 53%),
+    linear-gradient(135deg, #fff, #f8f9fc 60%, #f9ece7);
+  color: var(--landing-night);
+}
+
+.landingPage .heroNew::after { content: none; }
+
+.landingPage .heroContent {
+  width: 100%;
+  max-width: var(--container);
+  gap: clamp(28px, 5vw, 76px);
+}
+
+.landingPage .heroCopy,
+.landingPage .heroVisual {
+  animation: landing-arrival .64s var(--ease) both;
+}
+
+.landingPage .heroVisual { animation-delay: .12s; }
+
+@keyframes landing-arrival {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.landingPage .heroCopy .miniBadge {
+  background: #fff7f3;
+  border-color: #f1d6cd;
+  color: #8c2f20;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+}
+
+.landingPage .heroCopy .miniBadge::before { content: none; }
+
+.landingPage .heroCopy h1 {
+  color: var(--landing-night);
+  font-size: clamp(34px, 5vw, 72px);
+  letter-spacing: -.068em;
+  line-height: 1.02;
+  font-weight: 800;
+  text-wrap: initial;
+}
+
+.landingPage .heroCopy h1 span {
+  display: block;
+  color: var(--landing-accent);
+  background: linear-gradient(100deg, #ab2f1e 8%, #ce5036 80%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.landingPage .heroDescription {
+  color: #465873;
+  max-width: 48ch;
+  margin: 19px 0 24px;
+  line-height: 1.6;
+}
+
+.landingPage .heroActions a,
+.landingPage .orangeButton,
+.landingPage .panelCta {
+  border-radius: 13px;
+  min-height: 47px;
+  transition: transform .24s var(--ease), box-shadow .24s var(--ease), background-color .24s var(--ease);
+}
+
+.landingPage .heroActions .primaryCta,
+.landingPage .orangeButton {
+  background: linear-gradient(135deg, #bd3e2a, #9e2f20);
+  box-shadow: 0 10px 24px #9e2f2028;
+}
+
+.landingPage .heroActions .secondaryCta {
+  border: 1px solid #d2dbea;
+  color: var(--landing-night);
+  background: #fff;
+}
+
+.landingPage .heroBenefits {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 25px 0 0;
+  gap: 8px 14px;
+}
+
+.landingPage .benefit {
+  background: none;
+  border: 0;
+  padding: 0;
+  gap: 6px;
+  font-size: .8rem;
+  color: #43536b;
+}
+
+.landingPage .benefit span {
+  width: 28px;
+  height: 28px;
+  color: #aa3623;
+  background: #fdece6;
+}
+
+.landingPage .heroVisual {
+  display: grid;
+  place-items: end stretch;
+  min-height: clamp(400px, 40vw, 530px);
+  padding: clamp(12px, 3vw, 26px);
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: clamp(20px, 3vw, 34px);
+  background: linear-gradient(155deg, #263b56, #101b2d);
+  box-shadow: 0 24px 54px #151f3630;
+}
+
+.heroPhoto,
+.heroPhoto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.heroPhoto img { object-fit: cover; object-position: center 82%; }
+.heroPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, #101b2d90);
+}
+
+.landingPage .routeCard {
+  width: 100%;
+  max-width: 365px;
+  justify-self: end;
+  padding: clamp(14px, 2.2vw, 22px);
+  border-radius: 18px;
+  border: 1px solid #fff9;
+  background: #ffffffed;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 34px #131f3440;
+}
+
+.landingPage .routeCardTag { color: #7c3b31; font-size: .67rem; }
+.landingPage .routeCardTop h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 9px;
+  color: var(--landing-night);
+  font-size: clamp(19px, 3vw, 24px);
+}
+
+.landingPage .routeOptions { gap: 4px; margin-bottom: 10px; }
+.landingPage .routeOption {
+  grid-template-columns: 32px 1fr;
+  gap: 8px;
+  padding: 5px 7px;
+  background: #f1f5fc;
+  border: 1px solid #e5ebf4;
+}
+.landingPage .routeOptionIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #e1e9f7;
+  color: #243f62;
+}
+.landingPage .routeOption p { color: #495a70; }
+.landingPage .panelCta { padding: 8px 12px; min-height: 42px; font-size: .84rem; }
+
+.landingPage .section {
+  padding: var(--landing-space) var(--landing-gutter);
+  scroll-margin-top: var(--nav-h);
+}
+.landingPage .sectionTitle { margin-bottom: clamp(20px, 3vw, 36px); }
+.landingPage .sectionTitle h2 { color: var(--landing-night); letter-spacing: -.045em; text-wrap: balance; }
+.landingPage .sectionTitle > span { color: var(--landing-accent); }
+.landingPage .trackingSection { padding-block: clamp(16px, 3vw, 32px) 0; margin-top: 0; }
+.landingPage .trackingTeaser {
+  margin: 0;
+  padding: clamp(18px, 3vw, 29px);
+  border-radius: 20px;
+  background: linear-gradient(120deg, #eef3fd, #fbf6f4);
+  border: 1px solid #e4ebf6;
+  color: var(--landing-night);
+  text-align: left;
+  justify-items: start;
+}
+.landingPage .trackingTeaser p { color: #4a5b75; }
+.landingPage .trackingTeaserCta {
+  justify-self: start;
+  border-radius: 12px;
+  background: var(--landing-night);
+  box-shadow: none;
+}
+.landingPage .trackingEyebrow { color: var(--landing-accent); }
+.landingPage .threePanelGrid { max-width: none; gap: 16px; }
+.landingPage .whitePanel,
+.landingPage .darkPanel,
+.landingPage .ratesTableWrap,
+.landingPage .addressForm,
+.landingPage .addressCard {
+  border-radius: 24px;
+  box-shadow: 0 12px 36px #182b4810;
+}
+.landingPage .darkPanel { background: linear-gradient(145deg, #263e60, #111e33 75%); }
+.landingPage .darkPanel .whyItem { margin-block: 10px; }
+.landingPage .storeBand {
+  padding-block: 28px;
+  background: linear-gradient(120deg, #eef2f9, #f6f0ed);
+}
+.landingPage .storeGrid { gap: 8px; }
+.landingPage .storeLogo { border-radius: 14px; }
+.landingPage .rateCard { transition: box-shadow .22s var(--ease), transform .22s var(--ease); }
+.landingPage .rateCard:hover { box-shadow: var(--shadow-sm); transform: translateY(-3px); }
+.landingPage .ratesSection { background: transparent; }
+.landingPage .policyTeaser { padding-block: 0; }
+.landingPage .policyTeaserBox,
+.landingPage .finalCtaNew {
+  background: linear-gradient(124deg, #162b48 8%, #222c47 63%, #62352f);
+}
+.landingPage .finalCtaNew {
+  width: calc(100% - 2 * var(--landing-gutter));
+  max-width: calc(var(--container) - 2 * var(--landing-gutter));
+  margin-bottom: clamp(28px, 6vw, 66px);
+  padding: clamp(20px, 4vw, 46px);
+  border-radius: 24px;
+}
+.landingPage .finalCtaNew a { max-width: 100%; white-space: normal; }
+
+@media (min-width: 900px) {
+  .landingPage .heroContent { grid-template-columns: 1.14fr 1fr; }
+  .landingPage .trackingTeaser { grid-template-columns: 1fr auto; align-items: center; }
+  .landingPage .threePanelGrid { grid-template-columns: 1.2fr 1fr; }
+}
+@media (max-width: 899px) {
+  .landingPage .heroCopy,
+  .landingPage .heroVisual { width: min(100%, 620px); margin-inline: auto; }
+  .landingPage .heroVisual { min-height: clamp(320px, 62vw, 440px); }
+}
+@media (max-width: 600px) {
+  .landingPage .heroCopy h1 { font-size: clamp(34px, 9.3vw, 53px); }
+  .landingPage .heroActions { display: flex; }
+  .landingPage .heroActions a { width: auto; flex: 1 1 135px; padding: 10px; font-size: .84rem; }
+  .landingPage .heroVisual { min-height: 365px; }
+  .landingPage .heroDescription { margin: 14px 0 18px; }
+  .landingPage .heroBenefits { margin-top: 16px; gap: 5px 10px; }
+  .landingPage .storeGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .landingPage .storeLogo { padding: 8px; height: 62px; }
+  .landingPage .storeLogo img { width: 100%; }
+}

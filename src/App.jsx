@@ -577,8 +577,11 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
     await copiar("Dirección completa", texto);
   };
 
+  const rangoPorDestino = (destino, tipo) =>
+    (operativa.tiemposEntrega?.[destino]?.[tipo] || RANGOS_FALLBACK[destino][tipo]).join("–");
+
   return (
-    <div className="page">
+    <div className="page landingPage">
       <nav className="topNav">
         <a className="brand" href="/">
           <img src={logo} className="brandLogo" alt="OEX - OMETEPE EXPRESS" />
@@ -594,11 +597,12 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           onClick={() => setMenuAbierto(!menuAbierto)}
           aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={menuAbierto}
+          aria-controls="landing-navigation"
         >
           {menuAbierto ? <IconClose size={20} /> : <IconMenu size={20} />}
         </button>
 
-        <div className={`navLinks ${menuAbierto ? "navLinksOpen" : ""}`}>
+        <div id="landing-navigation" className={`navLinks ${menuAbierto ? "navLinksOpen" : ""}`}>
           <a onClick={() => setMenuAbierto(false)} href="#inicio">Inicio</a>
           <a onClick={() => setMenuAbierto(false)} href="/rastreo">Rastrear paquete</a>
           <a onClick={() => setMenuAbierto(false)} href="#tarifas">Tarifas</a>
@@ -620,64 +624,46 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
       <header id="inicio" className="heroNew">
         <div className="heroContent">
           <div className="heroCopy">
-            <div className="miniBadge">Miami, USA → Managua y , Nicaragua</div>
-            <h1>
-              Compra en <span>Estados Unidos</span>,<br />
-              recibe en <span>Nicaragua</span>
-            </h1>
+            <div className="miniBadge"><IconPin size={15} /> Miami a Managua y Ometepe</div>
+            <h1>Compra en Estados Unidos. <span>Recibe en Nicaragua.</span></h1>
             <p className="heroDescription">
-              Te damos una dirección en Miami, tú compras como siempre y nosotros
-              nos encargamos de traer tu paquete hasta tu puerta.
+              Usa tu dirección gratis en Miami para comprar en tus tiendas favoritas.
+              OEx lleva tus paquetes a Managua u Ometepe.
             </p>
 
-            <div className="heroBenefits">
-              <Benefit icon={<IconPin size={18} />} title="Dirección gratis en Miami" />
-              <Benefit icon={<IconTruck size={18} />} title="Entrega en Ometepe y Managua" />
-              <Benefit icon={<IconBag size={18} />} title="Compra asistida, sin tarjeta" />
-            </div>
-
             <div className="heroActions">
-              <a href="#direccion" className="primaryCta"><IconPin size={17} /> Obtener dirección OEX</a>
-              <a href={`${whatsappUrl}?text=Hola,%20quiero%20cotizar%20un%20envío%20con%20OEX`} target="_blank" rel="noreferrer" className="secondaryCta"><IconWhatsapp size={17} /> Cotizar por WhatsApp</a>
+              <a href="#direccion" className="primaryCta">Obtener mi dirección <IconArrowRight size={18} /></a>
+              <a href="/rastreo" className="secondaryCta"><IconSearch size={17} /> Rastrear paquete</a>
             </div>
 
-            <SocialLinks />
+            <div className="heroBenefits">
+              <Benefit icon={<IconPin size={17} />} title="Dirección gratuita" />
+              <Benefit icon={<IconTruck size={17} />} title="Envíos aéreos y marítimos" />
+              <Benefit icon={<IconBag size={17} />} title="Compra asistida" />
+            </div>
           </div>
 
           <div className="heroVisual">
+            <picture className="heroPhoto">
+              <source media="(max-width: 600px)" srcSet="/oex-casillero-640.webp" />
+              <img src="/oex-casillero.webp" alt="Paquetes listos para su envío" width="960" height="1200" fetchPriority="high" />
+            </picture>
             <div className="routeCard">
               <div className="routeCardTop">
-                <span className="routeCardTag">Tiempo de tránsito</span>
-                <h3>Miami → Nicaragua</h3>
+                <span className="routeCardTag">Tránsito estimado en días hábiles</span>
+                <h2>Miami <IconArrowRight size={19} /> Nicaragua</h2>
               </div>
-
-              <div className="routeLine">
-                <span className="routeDot routeDotStart" />
-                <span className="routeDash" />
-                <span className="routeDot routeDotEnd" />
-              </div>
-              <div className="routeCities">
-                <span>Miami</span>
-                <span>Managua · Ometepe </span>
-              </div>
-
               <div className="routeOptions">
-                <div className="routeOption">
-                  <div className="routeOptionIcon"><Plane size={18} strokeWidth={1.8} /></div>
-                  <div>
-                    <b>Aéreo</b>
-                    <p>Managua 3–5 · Ometepe 4–6</p>
+                {[[ "Aéreo", Plane ], [ "Marítimo", Ship ]].map(([tipo, Icono]) => (
+                  <div className="routeOption" key={tipo}>
+                    <div className="routeOptionIcon"><Icono size={18} aria-hidden="true" /></div>
+                    <div>
+                      <b>{tipo}</b>
+                      <p>Managua {rangoPorDestino("Managua", tipo)} · Ometepe {rangoPorDestino("Ometepe", tipo)}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="routeOption">
-                  <div className="routeOptionIcon"><Ship size={18} strokeWidth={1.8} /></div>
-                  <div>
-                    <b>Marítimo</b>
-                    <p>Managua 16–19 · Ometepe 17–20</p>
-                  </div>
-                </div>
+                ))}
               </div>
-
               <a href={prealertaHref} className="panelCta">Registrar mi tracking <IconArrowRight size={16} /></a>
             </div>
           </div>
@@ -688,6 +674,9 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         <TrackingTeaser />
 
         <section id="como-funciona" className="section compactSection">
+          <div className="sectionTitle">
+            <h2>Así llega tu compra a Nicaragua</h2>
+          </div>
           <Reveal className="threePanelGrid">
             <div className="whitePanel">
               <SectionMiniTitle title="¿Cómo funciona?" />
@@ -696,7 +685,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
                 <MiniStep number="2" icon={<IconBox size={24} />} title="Envía a nuestra dirección" text="Usa tu dirección personalizada OEX MAR o OEX AEREO + tu nombre." />
                 <MiniStep number="3" icon={<IconTruck size={24} />} title="Recibe en Nicaragua" text="Nos encargamos del traslado y te avisamos por WhatsApp cuando esté listo para retirar." />
               </div>
-              <a href={prealertaHref} className="orangeButton">Solicitar más información <IconArrowRight size={16} /></a>
+              <a href={prealertaHref} className="orangeButton">Prealertar mi compra <IconArrowRight size={16} /></a>
             </div>
 
             <div className="darkPanel">
@@ -721,6 +710,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
                 <img
                   src={`/stores/${store.file}`}
                   alt={store.name}
+                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                     e.currentTarget.nextElementSibling.style.display = "block";
@@ -738,8 +728,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
         <section id="direccion" className="section addressSection">
           <div className="sectionTitle addressIntroTitle">
-            <span>Dirección en Miami</span>
-            <h2>¿Primera vez comprando con nosotros?</h2>
+            <h2>Obtén tu dirección en Miami</h2>
             <p>Genera tu dirección OEX y cópiala en segundos.</p>
           </div>
 
@@ -834,7 +823,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
 
           <Reveal className="faqGrid">
-            <Faq question="¿Cuánto tarda en llegar mi paquete?" answer="Desde que recibimos en Miami: Managua tarda de 5 a 7 días hábiles por vía aérea o de 16 a 19 por vía marítima; Ometepe tarda de 5 a 7 días hábiles por vía aérea o de 18 a 20 por vía marítima." />
+            <Faq question="¿Cuánto tarda en llegar mi paquete?" answer={`Desde que recibimos tu paquete en Miami, el tránsito estimado en días hábiles es de ${rangoPorDestino("Managua", "Aéreo")} por vía aérea y ${rangoPorDestino("Managua", "Marítimo")} por vía marítima para Managua. Para Ometepe es de ${rangoPorDestino("Ometepe", "Aéreo")} por vía aérea y ${rangoPorDestino("Ometepe", "Marítimo")} por vía marítima.`} />
             <Faq question="¿Entregan en toda Nicaragua?" answer="Trabajamos Ometepe y Managua. Otros destinos pueden coordinarse por WhatsApp." />
             <Faq question="¿Compran por mí en las tiendas?" answer="Sí. OEX ofrece compra asistida únicamente en SHEIN, Amazon y Temu para compras menores a US$200. Nos envías los enlaces o el carrito, confirmamos el monto, nos transfieres y realizamos la compra por ti. Una compra de US$200 o más no entra en este servicio. Una vez hecha la compra no hay reversión. El envío de OEX se cobra aparte." />
             <Faq question="¿Cómo registro mi tracking?" answer="Ingresa a la sección Prealertar, escribe tus datos y agrega uno o varios tracking numbers." />
@@ -854,7 +843,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
             <h2>¿Listo para comprar en Estados Unidos?</h2>
             <p>Estamos aquí para ayudarte en todo el proceso.</p>
           </div>
-          <a href="https://wa.me/50557067044" target="_blank" rel="noreferrer" className="greenCta">
+          <a href={whatsappUrl} target="_blank" rel="noreferrer" className="greenCta">
             <IconWhatsapp size={17} /> Escríbenos por WhatsApp
           </a>
         </section>
@@ -1316,15 +1305,6 @@ function CopyLine({ label, value, onCopy }) {
         <b>{value}</b>
       </div>
       <button type="button" onClick={() => onCopy(label, value)}>Copiar</button>
-    </div>
-  );
-}
-
-function SocialLinks() {
-  return (
-    <div className="socialLinks">
-      <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noreferrer"><IconFacebook size={15} /> Facebook</a>
-      <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer"><IconInstagram size={15} /> Instagram</a>
     </div>
   );
 }
