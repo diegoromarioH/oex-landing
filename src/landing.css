@@ -671,3 +671,14 @@
 .landingPage .dateSection .calculatorGrid > .calculatorResult {
   background: linear-gradient(145deg, #fff, #edf4ff);
 }
+
+.addressCopyHint { margin: 10px 0 0; color: var(--landing-copy); font-size: .85rem; }
+.landingPage .addressSection :is(.copyAllButton, .copyLine button):disabled {
+  background: #e5ebf4;
+  color: #52617a;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+.trackingError p { margin: 0; }
+.trackingError .landingTextLink { color: var(--brand-orange-strong); }
