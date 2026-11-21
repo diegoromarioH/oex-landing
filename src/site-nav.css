@@ -8,7 +8,7 @@
   color: #142743;
   background: #fffffff5;
   border-bottom: 1px solid #b8c9df;
-  box-shadow: 0 8px 25px #213b6112;
+  box-shadow: none;
 }
 .siteNav .brand { flex-shrink: 0; }
 .siteBrandMark,
@@ -27,11 +27,12 @@
 .siteNav .navLinks a[aria-current="page"]:not(.mobilePrealerta) { color: #142743; background: #edf4fd; }
 .siteNav .navLinks a[aria-current="page"]:not(.mobilePrealerta) { box-shadow: inset 0 -2px #ba4226; }
 .siteNav .menuToggle { color: #142743; background: #fff; border-color: #b8c9df; }
+.siteNav .prealertNav { border-radius: 8px; }
 .siteNav .prealertNav,
 .siteNav .navLinks a.mobilePrealerta { background: #b93f23; color: #fff; }
 .siteNav .prealertNav:hover,
 .siteNav .navLinks a.mobilePrealerta:hover { background: #9a321b; color: #fff; }
-.siteNav .whatsappNav { background: #edf5ff; border: 1px solid #cdd9e8; color: #142743; box-shadow: none; }
+.siteNav .whatsappNav { border-radius: 8px; background: #fff; border: 1px solid #cdd9e8; color: #142743; box-shadow: none; }
 .siteNav .whatsappNav:hover { background: #deebfb; }
 .siteNav .navLinks .siteMobileWhatsapp { display: none; }
 
