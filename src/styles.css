@@ -15,6 +15,8 @@
   --coral: #f95434;
   --coral-deep: #de4a22;
   --orange: #f95434;
+  --brand-orange: #ff6b35;
+  --brand-orange-strong: #b8341c;
   --orange-deep: #de4a22;
   --mist: #f2f5fa;
   --white: #ffffff;
@@ -831,15 +833,15 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
   min-height: 44px;
   padding: 11px 16px;
   border-radius: 12px;
-  background: #ff6b35;
-  color: #ffffff;
+  background: var(--brand-orange);
+  color: #142743;
   font-weight: 750;
   text-decoration: none;
   box-shadow: 0 8px 22px rgba(255, 107, 53, 0.2);
 }
 
 .prealertQuickButton:hover {
-  background: #e95b28;
+  background: #ff8251;
   transform: translateY(-1px);
 }
 
