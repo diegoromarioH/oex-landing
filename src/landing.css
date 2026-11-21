@@ -565,19 +565,90 @@
   .landingStoreTile:hover { transform: none; }
 }
 
-/* Dirección ocupa una franja completa con contenido alineado a la portada. */
+/* Franja de casillero: dos superficies sobre un fondo azul profundo. */
 .landingPage .addressSection {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
   max-width: none;
   margin-top: clamp(20px, 4vw, 42px);
   background:
-    radial-gradient(ellipse at 86% 6%, #285f9d 0%, transparent 58%),
-    linear-gradient(116deg, #0b2449, #184b83 72%, #245d97);
+    radial-gradient(ellipse at 76% -10%, #2a65a9 0%, transparent 55%),
+    radial-gradient(ellipse at 5% 100%, #1d467c 0%, transparent 52%),
+    linear-gradient(120deg, #101c34, #0c244a 65%, #192d52);
+}
+.landingPage .addressSection::before,
+.landingPage .addressSection::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.landingPage .addressSection::before {
+  inset: 0;
+  background: radial-gradient(circle, #a0d0ff42 1px, transparent 1.5px) 0 0 / 20px 20px;
+  mask-image: linear-gradient(115deg, #000, transparent 81%);
+}
+.landingPage .addressSection::after {
+  width: clamp(210px, 45vw, 640px);
+  aspect-ratio: 1;
+  right: -14%;
+  top: -34%;
+  border: 1px solid #b2d4fa4a;
+  outline: 26px solid #9ec7ff13;
+  border-radius: 42%;
+  rotate: 26deg;
 }
 .landingPage .addressSection .sectionTitle h2 { color: #fff; }
 .landingPage .addressSection .sectionTitle p { color: #e0edff; }
 .landingPage .addressSection .addressGridV2 {
   max-width: calc(var(--container) - 2 * var(--landing-gutter));
   margin: 0 auto;
-  border-color: #b1cdef;
-  box-shadow: 0 16px 38px #051e4a55;
+  gap: clamp(12px, 2.3vw, 22px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
+.landingPage .addressSection .addressGridV2 > .card {
+  border: 1px solid #b1cdef;
+  border-radius: 17px;
+  box-shadow: 0 13px 32px #04163049;
+}
+.landingPage .addressSection .addressGridV2 > .addressForm {
+  background: linear-gradient(155deg, #14243d, #1c385c);
+  border-color: #52769e;
+}
+.landingPage .addressSection .addressGridV2 > .addressCard {
+  background: linear-gradient(145deg, #fff 32%, #edf4ff);
+}
+.landingPage .addressSection h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.landingPage .addressSection h3 svg { flex-shrink: 0; color: #bd3c1e; }
+.landingPage .addressSection .addressForm :is(h3, label) { color: #f3f8ff; }
+.landingPage .addressSection .addressForm h3 svg { color: #ff9367; }
+.landingPage .addressSection .addressForm :is(input, select) {
+  background: #f8fbff;
+  color: #15243b;
+  border-color: #9ab3d2;
+}
+.landingPage .addressSection .addressForm .notice {
+  background: #29476c;
+  color: #edf5ff;
+  border-color: #6a88ad;
+}
+.landingPage .addressSection .copyLineWide {
+  background: #fff3e9;
+  box-shadow: inset 3px 0 #f96a38;
+}
+.landingPage .addressSection .copyLineWide b { font-size: .94rem; }
+.landingPage .addressSection .copyLine button { background: #e7f0fd; }
+.landingPage .addressSection .copyAllButton {
+  background: linear-gradient(112deg, #a8351e, #bd3c1e);
+  box-shadow: 0 6px 15px #b63c2838;
+}
+.landingPage .addressSection .copyAllButton:hover { background: #a3321b; }
