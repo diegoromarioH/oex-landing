@@ -576,7 +576,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
     <div className="page landingPage">
       <nav className="topNav">
         <a className="brand" href="/">
-          <strong className="landingWordmark">O<span>Ex</span></strong>
+          <LandingLogo />
           <span className="landingBrandName">Ometepe Express</span>
         </a>
 
@@ -610,7 +610,11 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
       <header id="inicio" className="landingIntro">
         <div className="landingIntroInner">
-          <p className="landingRoute">Miami <IconArrowRight size={15} /> Managua y Ometepe</p>
+          <p className="landingRoute">
+            <span>Miami</span>
+            <span className="landingRouteLine" aria-hidden="true" />
+            <span>Managua y Ometepe</span>
+          </p>
           <h1>Comprá en Estados Unidos.<br /> <span>Recibí en Nicaragua.</span></h1>
           <p>Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
         </div>
@@ -760,7 +764,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         </section>
       </main>
 
-      <Footer whatsapp={config.whatsapp} wordmark />
+      <Footer whatsapp={config.whatsapp} landing />
       <FloatingWhatsApp whatsapp={config.whatsapp} mensaje={mensajesWhatsApp.inicio} />
     </div>
   );
@@ -1179,11 +1183,15 @@ function FloatingWhatsApp({ whatsapp, mensaje }) {
   );
 }
 
-function Footer({ wordmark = false, whatsapp = WHATSAPP_OEX } = {}) {
+function LandingLogo() {
+  return <span className="landingLogo"><img src={logo} alt="OEx" width="88" height="88" /></span>;
+}
+
+function Footer({ landing = false, whatsapp = WHATSAPP_OEX } = {}) {
   return (
     <footer className="footer">
       <div>
-        {wordmark ? <b className="landingWordmark">O<span>Ex</span></b> : <img src={logo} className="footerLogo" alt="Ometepe Express" />}
+        {landing ? <LandingLogo /> : <img src={logo} className="footerLogo" alt="Ometepe Express" />}
         <p>Tu mejor opción para compras en Estados Unidos con  envíos a Managua y Ometepe .</p>
       </div>
 
