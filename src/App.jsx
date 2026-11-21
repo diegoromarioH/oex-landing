@@ -627,17 +627,17 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
         <section id="como-funciona" className="section landingStart" aria-label="Servicios de OEx">
           <Reveal className="landingActionGrid">
             <a className="landingAction landingActionPrimary" href="#direccion">
-              <IconPin size={21} />
+              <span className="landingActionEmoji" aria-hidden="true">📍</span>
               <div><h2>Obtener mi dirección</h2><p>Personalizá y copiá los datos de tu casillero en Miami.</p></div>
               <IconArrowRight size={18} />
             </a>
             <a className="landingAction" href={prealertaHref}>
-              <IconBox size={21} />
+              <span className="landingActionEmoji" aria-hidden="true">📦</span>
               <div><h2>Prealertar un paquete</h2><p>Registrá el tracking que te envió la tienda.</p></div>
               <IconArrowRight size={18} />
             </a>
             <a className="landingAction" href="/rastreo">
-              <IconSearch size={21} />
+              <span className="landingActionEmoji" aria-hidden="true">🔎</span>
               <div><h2>Rastrear mi paquete</h2><p>Consultá el estado con tu tracking o código de cliente.</p></div>
               <IconArrowRight size={18} />
             </a>
@@ -706,7 +706,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
 
               <button type="button" className="copyAllButton" onClick={copiarDireccionCompleta}>
                 {copiado === "Dirección completa"
-                  ? <><CheckLucide size={17} aria-hidden="true" /> Dirección copiada</>
+                  ? <><span className="landingReaction" aria-hidden="true">✓</span> Dirección copiada</>
                   : <><IconBox size={17} /> Copiar todos los datos</>}
               </button>
               <span className="landing-visually-hidden" role="status">{copiado && `${copiado}: copiado`}</span>
@@ -1160,7 +1160,7 @@ function DeliveryCalculator({ tiemposEntrega, feriados }) {
         <div className="dateBox landing-update" key={fechaMax ? fechaMax.getTime() : "sin-fecha"}>
           <small>Fecha estimada de entrega</small>
           {fechaMax
-            ? <strong>{formatearFecha(fechaMax)}</strong>
+            ? <strong><span className="landingReaction" aria-hidden="true">📅 </span>{formatearFecha(fechaMax)}</strong>
             : <p>Elegí la fecha de recepción para calcularla.</p>}
         </div>
       </div>

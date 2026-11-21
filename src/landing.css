@@ -1,26 +1,26 @@
-/* OEx: portada nocturna y elementos interactivos de alto contraste. */
+/* OEx: fondo claro y acentos de marca en los elementos interactivos. */
 .landingPage {
   --container: 1120px;
   --landing-gutter: clamp(18px, 4.5vw, 44px);
   --landing-space: clamp(38px, 6vw, 78px);
-  --landing-bg: #091222;
-  --landing-panel: #111f34;
-  --landing-ink: #f3f7ff;
-  --landing-copy: #becde2;
-  --landing-accent: #a0efff;
-  --landing-coral: #ffab94;
-  --landing-edge: #344e6e;
-  --landing-hover: #1d3450;
+  --landing-bg: #ffffff;
+  --landing-panel: #ffffff;
+  --landing-ink: #142743;
+  --landing-copy: #455973;
+  --landing-accent: #175b9a;
+  --landing-coral: #a33620;
+  --landing-edge: #cdd9e8;
+  --landing-hover: #edf5ff;
   --line: var(--landing-edge);
   --muted: var(--landing-copy);
   background: var(--landing-bg);
   color: var(--landing-ink);
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 .landingPage .topNav {
   padding-inline: max(var(--landing-gutter), calc((100% - var(--container)) / 2));
-  background: #091222f2;
+  background: #fffffff5;
   border-bottom-color: var(--landing-edge);
 }
 
@@ -53,8 +53,8 @@
 .landingPage .navLinks a:hover { color: var(--landing-ink); background: var(--landing-hover); }
 .landingPage .menuToggle { background: var(--landing-panel); border-color: var(--landing-edge); color: var(--landing-ink); }
 .landingPage .prealertNav,
-.landingPage .navLinks a.mobilePrealerta { background: var(--landing-coral); color: #321b1a; }
-.landingPage .whatsappNav { background: #12263d; border: 1px solid var(--landing-edge); color: var(--landing-ink); box-shadow: none; }
+.landingPage .navLinks a.mobilePrealerta { background: var(--landing-coral); color: #fff; }
+.landingPage .whatsappNav { background: #edf5ff; border: 1px solid var(--landing-edge); color: var(--landing-ink); box-shadow: none; }
 
 .landingIntro {
   position: relative;
@@ -62,9 +62,9 @@
   overflow: hidden;
   padding: clamp(34px, 6vw, 80px) var(--landing-gutter) clamp(28px, 5vw, 64px);
   background:
-    radial-gradient(ellipse at 24% 5%, #164765 0, transparent 56%),
-    radial-gradient(ellipse at 91% 35%, #292c62 0, transparent 51%),
-    linear-gradient(145deg, #101b30, var(--landing-bg) 85%);
+    radial-gradient(ellipse at 24% 5%, #d6ebff 0, transparent 56%),
+    radial-gradient(ellipse at 91% 35%, #ffe2c9 0, transparent 51%),
+    linear-gradient(145deg, #f8fbff, var(--landing-bg) 85%);
 }
 
 .landingIntro::before {
@@ -73,8 +73,8 @@
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(#8cc8f219 1px, transparent 1px),
-    linear-gradient(90deg, #8cc8f219 1px, transparent 1px);
+    linear-gradient(#456c981b 1px, transparent 1px),
+    linear-gradient(90deg, #456c981b 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: linear-gradient(#000, transparent 92%);
 }
@@ -86,7 +86,7 @@
   width: clamp(32px, 8vw, 100px);
   height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, #3c7292, #716bac);
+  background: linear-gradient(90deg, #6483ad, #bf5d35);
   position: relative;
 }
 
@@ -97,8 +97,8 @@
   height: 8px;
   inset: -3px auto auto 0;
   border-radius: 50%;
-  background: var(--landing-accent);
-  box-shadow: 0 0 13px #81eaee;
+  background: #be4826;
+  box-shadow: 0 0 12px #ffaf80;
   animation: oex-route 3.4s cubic-bezier(.37, 0, .45, 1) 2 forwards;
 }
 
@@ -130,19 +130,18 @@
   padding: clamp(13px, 2vw, 21px);
   border: 1px solid var(--landing-edge);
   border-radius: 15px;
-  background: linear-gradient(145deg, #17273f, var(--landing-panel));
+  background: linear-gradient(145deg, #fff, var(--landing-panel));
   color: var(--landing-ink);
   text-decoration: none;
 }
 
 .landingActionPrimary {
-  border-color: #5884a1;
-  background: linear-gradient(145deg, #123851, #1b2848);
-  box-shadow: inset 0 1px #9aeeff4d, 0 8px 28px #0e52893d;
+  border-color: #b5c9e1;
+  background: linear-gradient(145deg, #eef6ff, #fff);
+  box-shadow: 0 8px 24px #19446e15;
 }
-.landingAction:hover { border-color: var(--landing-accent); transform: translateY(-3px); box-shadow: 0 10px 28px #0005; }
+.landingAction:hover { border-color: var(--landing-accent); transform: translateY(-3px); box-shadow: 0 10px 28px #244c751f; }
 .landingAction:focus-visible { outline-color: var(--landing-accent); }
-.landingAction > svg:first-child { color: var(--landing-accent); }
 .landingAction h2 { font-size: clamp(.96rem, 1.6vw, 1.12rem); letter-spacing: -.025em; }
 .landingAction p { margin: 6px 0 0; font-size: .84rem; color: var(--landing-copy); }
 .landingAction > svg:last-child { align-self: center; transition: transform .24s var(--ease); }
@@ -185,14 +184,14 @@
 }
 .landingPage :is(.addressForm label, .calculatorCard label, .copyLine b, .rateDestino, .ratePrice strong, .faqItem summary) { color: var(--landing-ink); }
 .landingPage :is(.ratesSection, .addressSection) { background: transparent; }
-.landingPage .rateCard { background: #0b182c; border-color: var(--landing-edge); box-shadow: none; }
+.landingPage .rateCard { background: #f4f8fd; border-color: var(--landing-edge); box-shadow: none; }
 .landingPage .rateCard:hover { border-color: var(--landing-accent); }
-.landingPage :is(input, select, .notice, .copied) { background: #0b182c; color: var(--landing-ink); border-color: var(--landing-edge); }
-.landingPage input::placeholder { color: #9db1cf; }
+.landingPage :is(input, select, .notice, .copied) { background: #f4f8fd; color: var(--landing-ink); border-color: var(--landing-edge); }
+.landingPage input::placeholder { color: #5a6c83; }
 .landingPage .copyLine button { background: var(--landing-hover); color: var(--landing-ink); }
 .landingPage .copyAllButton,
-.landingPage .blueButton { background: var(--landing-accent); color: #09273b; box-shadow: none; }
-.landingPage .addressModeBadge { color: var(--landing-accent); background: #102c44; border-color: #426581; }
+.landingPage .blueButton { background: var(--landing-accent); color: #fff; box-shadow: none; }
+.landingPage .addressModeBadge { color: var(--landing-accent); background: #fff2e7; border-color: #f0c9ae; }
 .landingPage .calculatorResult span,
 .landingPage .faqItem summary::after { color: var(--landing-accent); }
 .landingPage .dateSection { padding-top: 0; }
@@ -204,14 +203,17 @@
   padding: clamp(18px, 4vw, 36px);
   border-radius: 16px;
   border: 1px solid var(--landing-edge);
-  background: linear-gradient(120deg, #152b47, #202241);
+  background: linear-gradient(120deg, #e9f4ff, #fff1e7);
 }
+.landingPage .finalCtaNew { color: var(--landing-ink); }
 .landingPage .finalCtaNew p { color: var(--landing-copy); }
 .landingPage .finalCtaNew a { white-space: normal; max-width: 100%; }
 .landingPage .finalCtaNew .greenCta,
 .landingPage .floatingWhatsApp { background: #096544; color: #fff; }
 .landingPage .footer { border-top: 1px solid var(--landing-edge); }
-.landingPage .footer a { color: var(--landing-coral); }
+.landingPage .footer { background: #142743; }
+.landingPage .footer p { color: #d1deee; }
+.landingPage .footer a { color: #ffb393; }
 .landingPage .floatingWhatsApp { width: 48px; height: 48px; box-shadow: 0 6px 18px #0005; }
 .landingPage .floatingWhatsApp::before { content: none; }
 
@@ -241,8 +243,8 @@
 
 /* Herramientas de la portada: dos columnas de una misma superficie. */
 .landingPage {
-  --landing-orange: #ffad72;
-  --landing-orange-ink: #321b10;
+  --landing-orange: #bd3c1e;
+  --landing-orange-ink: #fff;
 }
 .landingPage .prealertNav,
 .landingPage .navLinks a.mobilePrealerta,
@@ -250,13 +252,12 @@
   background: var(--landing-orange);
   color: var(--landing-orange-ink);
 }
-.landingPage .copyAllButton:hover { background: #ffc094; }
+.landingPage .copyAllButton:hover { background: #9c3018; }
 .landingPage .landingActionPrimary {
-  border-color: #a87556;
-  background: linear-gradient(145deg, #342935, #1b253c);
-  box-shadow: inset 0 1px #ffad7252, 0 8px 28px #27172855;
+  border-color: #e8b896;
+  background: linear-gradient(145deg, #fff1e5, #fff);
+  box-shadow: 0 8px 24px #a64a1c18;
 }
-.landingPage .landingActionPrimary > svg:first-child,
 .landingPage .addressModeBadge,
 .landingPage .estimateWindow strong { color: var(--landing-orange); }
 
@@ -275,15 +276,15 @@
   border-radius: 0;
 }
 .landingPage :is(.addressGridV2, .calculatorGrid) > :is(.addressCard, .calculatorResult) {
-  background: linear-gradient(145deg, #172640, #111e32);
+  background: linear-gradient(145deg, #f1f7ff, #fff);
   border-top: 1px solid var(--landing-edge);
 }
 .landingPage :is(.addressForm, .calculatorCard) h3 { margin-bottom: 15px; font-size: 1.1rem; }
 .landingPage .addressCardHeader { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
 .landingPage .addressCardHeader h3 { font-size: 1.1rem; }
-.landingPage .addressModeBadge { margin: 0; background: #2e2531; border-color: #8b634f; }
+.landingPage .addressModeBadge { margin: 0; background: #fff2e7; border-color: #e9bda0; }
 .landingPage .addressRows { display: grid; gap: 1px; border-radius: 12px; background: var(--landing-edge); }
-.landingPage .copyLine { gap: 6px; min-width: 0; border: 0; padding: 8px 10px; background: #101e32; }
+.landingPage .copyLine { gap: 6px; min-width: 0; border: 0; padding: 8px 10px; background: #fff; }
 .landingPage .copyLine > div { min-width: 0; }
 .landingPage .copyLine b { margin-top: 1px; font-size: .86rem; overflow-wrap: anywhere; }
 .landingPage .copyLine button { min-width: 57px; min-height: 36px; padding: 5px 7px; border-radius: 8px; font-size: .73rem; }
@@ -300,7 +301,7 @@
 .landingPage .estimateWindow small,
 .landingPage .dateBox small,
 .landingPage .dateBox p { color: var(--landing-copy); }
-.landingPage .dateBox { background: #0b182c; border: 1px solid var(--landing-edge); margin: 12px 0 0; padding: 11px; gap: 2px; }
+.landingPage .dateBox { background: #f4f8fd; border: 1px solid var(--landing-edge); margin: 12px 0 0; padding: 11px; gap: 2px; }
 .landingPage .dateBox p { margin: 0; font-size: .87rem; }
 .landingPage .dateBox strong { color: var(--landing-ink); }
 
@@ -336,4 +337,52 @@
 
 @media (prefers-reduced-motion: reduce) {
   .landing-update { animation: none; }
+}
+
+.landingPage .calculatorResult { color: var(--landing-ink); }
+.landingPage .rateCard:nth-child(-n+2) { background: #f0f7ff; }
+.landingPage .rateCard:nth-child(n+3) { background: #fff7ee; }
+
+.landingIntro::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: clamp(230px, 38vw, 560px);
+  aspect-ratio: 1;
+  border: 1px solid #e6935f40;
+  outline: 26px solid #f3ad7b19;
+  border-radius: 35%;
+  right: -15%;
+  top: -65%;
+  rotate: 26deg;
+  pointer-events: none;
+}
+.landingActionEmoji {
+  min-width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #e5f1ff;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform .25s var(--ease);
+}
+.landingActionPrimary .landingActionEmoji { background: #ffe6cf; }
+.landingAction:nth-child(2) .landingActionEmoji { background: #e4efff; }
+.landingAction:nth-child(3) .landingActionEmoji { background: #dff3ef; }
+.landingAction:is(:hover, :focus-visible) .landingActionEmoji { transform: translateY(-2px) rotate(-8deg) scale(1.08); }
+.landingAction:active { transform: scale(.985); }
+.landingActionGrid .landingAction:nth-child(2) { background: linear-gradient(145deg, #edf5ff, #fff); }
+.landingActionGrid .landingAction:nth-child(3) { background: linear-gradient(145deg, #eaf8f4, #fff); }
+.landingReaction { display: inline-block; animation: landing-reaction .33s var(--ease) both; }
+@keyframes landing-reaction {
+  from { transform: scale(.75) rotate(-9deg); opacity: .55; }
+  65% { transform: scale(1.12) rotate(4deg); }
+  to { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landingReaction { animation: none; }
+  .landingAction:is(:hover, :active, :focus-visible),
+  .landingAction:is(:hover, :focus-visible) .landingActionEmoji { transform: none; }
 }
