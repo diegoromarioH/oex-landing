@@ -2061,3 +2061,23 @@ input.inputInvalido { border-color: #e0575f; background: #fef6f6; }
 .guiaRelacionadas a { color:#163f75; text-underline-offset:3px; }
 .guiaRelacionadas li { margin:12px 0; }
 @media(max-width:600px) { .guiaCover { min-height:200px; padding:20px; } .guideArticle > .guiaCover { min-height:220px; } .guiaCategorias button { padding:10px 12px; } }
+
+.privacyBanner {
+  position: fixed;
+  z-index: 110;
+  inset: auto auto 12px 12px;
+  width: min(620px, calc(100% - 24px));
+  background: #fff;
+  border: 1px solid #cad8ea;
+  border-radius: 14px;
+  box-shadow: 0 12px 34px #11233d35;
+  color: #142743;
+  padding: 14px 16px;
+}
+.privacyBanner h2 { font-size: 1rem; margin: 0 0 4px; }
+.privacyBanner p, .prealertPrivacyNotice { font-size: .87rem; margin: 0; color: #40536e; }
+.privacyBannerActions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.privacyBannerActions button { border: 1px solid #9eb0c7; border-radius: 8px; background: #fff; color: #142743; min-height: 42px; padding: 5px 12px; font-weight: 700; cursor: pointer; }
+.privacyBannerActions button:hover { background: #edf4fd; }
+.privacyFooterButton { border: 0; padding: 0; background: transparent; color: #ffb393; text-align: left; text-decoration: underline; cursor: pointer; }
+.prealertPrivacyNotice { padding: 10px 12px; background: #eef4fc; border-radius: 8px; }

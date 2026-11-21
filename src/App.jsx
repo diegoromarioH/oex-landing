@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import logo from "./assets/logo.png";
 import { supabase } from "./supabase";
 import { registrarEvento } from "./analytics";
+import { PreferenciasAnalitica, AbrirPreferenciasAnalitica } from "./PreferenciasAnalitica";
 import { enlaceWhatsApp, mensajesWhatsApp, WHATSAPP_OEX } from "./whatsapp";
 import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen, Pause, Play } from "lucide-react";
 
@@ -453,6 +454,10 @@ function Seo({ title, description, path }) {
 }
 
 export default function App() {
+  return <><ContenidoSitio /><PreferenciasAnalitica /></>;
+}
+
+function ContenidoSitio() {
   // Hostinger sirve las páginas SEO como directorios y puede añadir una
   // barra final (/prealerta/). Normalizamos ambas variantes para que React
   // siempre abra la pantalla correcta.
@@ -487,6 +492,10 @@ export default function App() {
 
   if (path === "/politicas") {
     return <PoliticasPage />;
+  }
+
+  if (path === "/privacidad") {
+    return <PrivacidadPage />;
   }
 
   if (path === "/guias" || path === "/guias/") {
@@ -1316,6 +1325,8 @@ function Footer({ landing = false, whatsapp = WHATSAPP_OEX } = {}) {
         <b>OEX |  Managua - Ometepe </b>
         <p>Compras y paquetería USA a Nicaragua</p>
         <p><a href="/politicas">Políticas de servicio</a></p>
+        <p><a href="/privacidad">Aviso de privacidad</a></p>
+        <p><AbrirPreferenciasAnalitica /></p>
         <p><a href="/guias">Guías para comprar y recibir</a></p>
         <p><a href="/socios">Recursos para socios</a></p>
         <p>Ometepe Express 2026</p>
@@ -1506,7 +1517,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
       }
 
       setMensaje("✅ Prealerta recibida. Gracias por registrar tu paquete. Revisaremos la información y te contactaremos por WhatsApp.");
-      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length, recomendacion: recomendacionAplicada?.identificador || null });
+      registrarEvento("prealerta_enviada", { cantidad_trackings: registros.length });
 
       setTipoCliente("nuevo");
       setCodigoCliente("");
@@ -1739,6 +1750,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
 
           <FormSectionTitle icon={IconCheck} tone="coral">Confirmación</FormSectionTitle>
 
+          <p className="prealertPrivacyNotice">Usamos tus datos y el tracking para identificar y gestionar tu paquete y contactarte sobre tu envío. El correo es opcional. Consultá el <a href="/privacidad" target="_blank" rel="noreferrer">aviso de privacidad</a> antes de enviar.</p>
           <label className="check">
             <input
               type="checkbox"
@@ -1869,8 +1881,8 @@ function PoliticasPage() {
           <PolicyBlock title="Peso final y cobro" text="El costo final se calcula con el peso real recibido en Managua. El peso mostrado por la tienda o etiquetas de proveedores logísticos puede variar." />
           <PolicyBlock title="Artículos restringidos" text="No transportamos productos ilegales,  explosivos, vapes y accesorios de vapeo, medicamentos controlados, cámaras ocultas, armas, dinero en efectivo, sustancias peligrosas o artículos prohibidos por aduana. El envío de estos artículos puede ocasionar retención o decomiso. OEX no es responsable por pérdidas derivadas por incumplimiento." />
           <PolicyBlock title="Pagos y entrega" text="Todo saldo pendiente debe cancelarse antes de la entrega del paquete. Puede solicitarse referencia bancaria o comprobante de pago." />
-          <PolicyBlock title="Reclamos" text="Cualquier reclamo debe notificarse lo antes posible después de recibir el paquete, idealmente dentro de las primeras 16 horas." />
-          <PolicyBlock title="Privacidad" text="Los datos proporcionados en formularios, prealertas o mensajes se utilizan únicamente para gestionar compras, envíos y seguimiento operativo." />
+          <PolicyBlock title="Reclamos" text="Si encontrás daños, faltantes o un error, escribinos por WhatsApp con el tracking, una descripción y la evidencia que tengas. Recomendamos avisar pronto y conservar el empaque y los comprobantes para facilitar la revisión. Esta recomendación no limita los derechos o plazos que reconozca la ley." />
+          <article className="policyBlock"><h2>Privacidad</h2><p>Consultá cómo usamos tus datos y cómo hacer una solicitud en el <a href="/privacidad">aviso de privacidad</a>.</p></article>
           <PolicyBlock title="Comunicaciones por WhatsApp" text="Al proporcionar su número de teléfono, el cliente autoriza a OEX a contactarle mediante WhatsApp para comunicaciones relacionadas con la prestación del servicio, incluyendo confirmaciones, actualizaciones sobre sus envíos, recepción de paquetes, coordinación de entregas o retiros, pagos, incidencias y otras gestiones necesarias para completar el servicio solicitado." />
         </section>
 
@@ -1883,6 +1895,38 @@ function PoliticasPage() {
 
       <Footer />
       <FloatingWhatsApp whatsapp={whatsapp} mensaje={mensajesWhatsApp.politicas} />
+    </div>
+  );
+}
+
+function PrivacidadPage() {
+  const config = useWebConfig();
+  const contacto = enlaceWhatsApp(config.whatsapp, "Hola, OEx. Quisiera hacer una consulta sobre mis datos personales.");
+  return (
+    <div className="page policyPage">
+      <Seo title="Aviso de privacidad | OEx" description="Cómo usamos los datos de prealerta y tus opciones de privacidad." path="/privacidad" />
+      <SiteNav whatsapp={config.whatsapp} />
+      <main className="policyWrap">
+        <header className="policyHero">
+          <h1>Aviso de privacidad de OEx</h1>
+          <p>Este aviso explica qué datos usa Ometepe Express al gestionar envíos y operar oexni.com.</p>
+        </header>
+        <section className="policyGridFull">
+          <PolicyBlock title="Datos de la prealerta" text="Recibimos tu nombre o código de cliente, WhatsApp, tracking, tienda o remitente, destino y modalidad. Podés agregar una nota y, si sos cliente nuevo, un correo electrónico. El correo es opcional y podés enviar la prealerta sin completarlo." />
+          <PolicyBlock title="Para qué los usamos" text="Los usamos para identificar tu paquete, gestionar el envío, coordinar el retiro, actualizar tu ficha y responder consultas o reclamos. Los datos de contacto sirven para comunicaciones relacionadas con tu servicio." />
+          <PolicyBlock title="Proveedores que intervienen" text="Usamos Supabase para almacenar la información operativa. Si elegís abrir WhatsApp, el chat se realiza en ese servicio. El procesamiento técnico puede involucrar infraestructura fuera de Nicaragua." />
+          <PolicyBlock title="Almacenamiento y analítica" text="Tu navegador guarda la preferencia de analítica y puede guardar archivos de la aplicación de rastreo para facilitar su uso. El sitio solicita fuentes tipográficas a Google Fonts. Si aceptás la analítica, OEx guarda un identificador y registra eventos de uso, el tipo de dispositivo y el sitio de procedencia cuando está disponible. Podés cambiar tu elección desde el pie de página." />
+          <PolicyBlock title="Conservación" text="Conservamos los datos para gestionar el servicio y atender obligaciones o reclamos aplicables. Podés consultar qué datos conservamos en tu caso y solicitar su eliminación cuando corresponda." />
+          <article className="policyBlock">
+            <h2>Tus datos y cómo contactarnos</h2>
+            {config.privacidad_responsable && <p>Responsable: {config.privacidad_responsable}</p>}
+            {config.privacidad_domicilio && <p>Domicilio: {config.privacidad_domicilio}</p>}
+            {config.privacidad_correo && <p>Correo de contacto: {config.privacidad_correo}</p>}
+            <p>Podés solicitar acceso, corrección, actualización o eliminación de tus datos, o ejercer los demás derechos aplicables. Escribinos por <a href={contacto} target="_blank" rel="noreferrer">WhatsApp de OEx para consultas de privacidad</a>. Podemos pedirte información para verificar que sos titular de los datos.</p>
+          </article>
+        </section>
+      </main>
+      <Footer whatsapp={config.whatsapp} />
     </div>
   );
 }

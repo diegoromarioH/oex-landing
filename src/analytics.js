@@ -1,5 +1,27 @@
 import { supabase } from "./supabase";
 
+const CLAVE_PREFERENCIA = "oex_analitica_v1";
+const CLAVE_SESION = "oex_web_session_id";
+let preferenciaTemporal = null;
+
+export function leerPreferenciaAnalitica() {
+  try {
+    return localStorage.getItem(CLAVE_PREFERENCIA) || preferenciaTemporal;
+  } catch {
+    return preferenciaTemporal;
+  }
+}
+
+export function guardarPreferenciaAnalitica(preferencia) {
+  preferenciaTemporal = preferencia;
+  try {
+    localStorage.setItem(CLAVE_PREFERENCIA, preferencia);
+    if (preferencia === "rechazada") localStorage.removeItem(CLAVE_SESION);
+  } catch {
+    // La elección sigue vigente durante esta visita.
+  }
+}
+
 const EVENTOS_VALIDOS = new Set([
   "pagina_vista",
   "guia_vista",
@@ -12,11 +34,10 @@ const EVENTOS_VALIDOS = new Set([
 ]);
 
 function obtenerSesionId() {
-  const clave = "oex_web_session_id";
-  let id = localStorage.getItem(clave);
+  let id = localStorage.getItem(CLAVE_SESION);
   if (!id) {
     id = crypto.randomUUID();
-    localStorage.setItem(clave, id);
+    localStorage.setItem(CLAVE_SESION, id);
   }
   return id;
 }
@@ -38,11 +59,11 @@ function referenciaSegura() {
 }
 
 export async function registrarEvento(evento, datos = {}) {
-  if (!EVENTOS_VALIDOS.has(evento)) return;
+  if (!EVENTOS_VALIDOS.has(evento) || leerPreferenciaAnalitica() !== "aceptada") return;
   try {
     await supabase.from("eventos_web").insert({
       evento,
-      pagina: window.location.pathname.slice(0, 300) || "/",
+      pagina: window.location.pathname.replace(/^\/prealerta\/[^/]+.*$/, "/prealerta").slice(0, 300) || "/",
       sesion_id: obtenerSesionId(),
       origen: "oexni.com",
       dispositivo: dispositivo(),
