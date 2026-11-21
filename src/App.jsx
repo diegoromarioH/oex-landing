@@ -3,7 +3,7 @@ import logo from "./assets/logo.png";
 import { supabase } from "./supabase";
 import { registrarEvento } from "./analytics";
 import { enlaceWhatsApp, mensajesWhatsApp, WHATSAPP_OEX } from "./whatsapp";
-import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen } from "lucide-react";
+import { Package, Plane, Ship, TowerControl, Warehouse, Truck as TruckLucide, Store, Check as CheckLucide, CheckCircle2, BookOpen, Pause, Play } from "lucide-react";
 
 const SociosPage = lazy(() => import("./SociosPage"));
 
@@ -1218,6 +1218,7 @@ function SiteNav({ whatsapp, inicioHref = "/", prealertaHref = "/prealerta" }) {
 }
 
 function ShoppingAnnouncement({ config }) {
+  const [pausado, setPausado] = useState(false);
   const hoy = new Date().toLocaleDateString("en-CA", { timeZone: "America/Managua" });
   const temporada = hoy >= "2026-11-20" && hoy <= "2026-11-30";
   const titulo = config.anuncio_titulo?.trim() || (temporada ? "Black Friday y Cyber Monday" : "Planeá tus compras en línea");
@@ -1229,11 +1230,31 @@ function ShoppingAnnouncement({ config }) {
   const destino = enlaceValido ? enlace : "#tarifas";
 
   return (
-    <aside className="shoppingAnnouncement" aria-label="Anuncios de OEx">
+    <aside className="shoppingAnnouncement" aria-label="Anuncios de OEx" data-pausado={pausado}>
       <div className="shoppingAnnouncementInner">
-        <span aria-hidden="true" className="shoppingAnnouncementIcon"><IconBag size={17} /></span>
-        <p><strong>{titulo}</strong>{detalle && <span>{detalle}</span>}</p>
+        <div className="shoppingAnnouncementViewport">
+          <p className="shoppingAnnouncementMessage"><strong>{titulo}</strong>{detalle && <span>{detalle}</span>}</p>
+          <div className="shoppingAnnouncementMotion" aria-hidden="true">
+            {[0, 1].map((grupo) => (
+              <div className="shoppingAnnouncementBatch" key={grupo}>
+                {[0, 1].map((item) => (
+                  <span className="shoppingAnnouncementItem" key={item}>
+                    <IconBag size={16} /><strong>{titulo}</strong>{detalle && <span>{detalle}</span>}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
         <a href={destino}>{config.anuncio_cta?.trim() || (enlaceValido ? "Ver anuncio" : "Ver tarifas")} <IconArrowRight size={16} /></a>
+        <button
+          type="button"
+          className="shoppingAnnouncementToggle"
+          aria-label={pausado ? "Reanudar anuncios" : "Pausar anuncios"}
+          onClick={() => setPausado((valor) => !valor)}
+        >
+          {pausado ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
+        </button>
       </div>
     </aside>
   );
