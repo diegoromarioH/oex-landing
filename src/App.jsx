@@ -543,9 +543,8 @@ function LandingPage() {
   const tiempoCopiado = useRef(null);
   useEffect(() => () => clearTimeout(tiempoCopiado.current), []);
 
-  const nombreEjemplo = nombreDireccion.trim() || "Juan Pérez";
   const firstNameOex = tipoDireccion === "MAR" ? "OEX MAR" : "OEX AEREO";
-  const lastNameOex = nombreEjemplo;
+  const lastNameOex = nombreDireccion.trim();
 
   const copiar = async (label, value) => {
     try {
@@ -559,6 +558,7 @@ function LandingPage() {
   };
 
   const copiarDireccionCompleta = async () => {
+    if (!lastNameOex) return;
     const texto = `First Name (Nombre): ${firstNameOex}
 Last Name (Apellido): ${lastNameOex}
 Address (Dirección): ${MIAMI_ADDRESS.address}
@@ -591,7 +591,7 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
               <p className="landingIntroDescription">Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
             </div>
 
-            <TrackingLookup onLanding />
+            <TrackingLookup onLanding whatsapp={config.whatsapp} />
 
             <div className="landingSecondaryActions" aria-label="Más servicios de OEx">
               <a href="#direccion"><IconPin size={18} /> Obtener mi dirección <IconArrowRight size={15} /></a>
@@ -668,7 +668,8 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
                 <CopyLine label="Phone Number (Teléfono)" value={MIAMI_ADDRESS.phone} onCopy={copiar} copiado={copiado} />
               </div>
 
-              <button type="button" className="copyAllButton" onClick={copiarDireccionCompleta}>
+              {!lastNameOex && <p className="addressCopyHint" id="address-copy-hint">Escribí tu nombre y apellido para copiar la dirección completa.</p>}
+              <button type="button" className="copyAllButton" disabled={!lastNameOex} aria-describedby={lastNameOex ? undefined : "address-copy-hint"} onClick={copiarDireccionCompleta}>
                 {copiado === "Dirección completa"
                   ? <><span className="landingReaction" aria-hidden="true">✓</span> Dirección copiada</>
                   : <><IconBox size={17} /> Copiar todos los datos</>}
@@ -870,7 +871,8 @@ function PipelineTimeline({ estado, destino, tipoEnvio, historial }) {
 }
 
 
-function TrackingLookup({ onLanding = false }) {
+function TrackingLookup({ onLanding = false, whatsapp }) {
+  const [consultaSinResultados, setConsultaSinResultados] = useState(null);
   const [modo, setModo] = useState("tracking"); // "tracking" | "cliente"
   const [valor, setValor] = useState("");
   const [buscando, setBuscando] = useState(false);
@@ -886,6 +888,7 @@ function TrackingLookup({ onLanding = false }) {
     setModo(nuevoModo);
     setValor("");
     setError("");
+    setConsultaSinResultados(null);
     setResultado(null);
     setResultados(null);
     setAbierto(null);
@@ -898,6 +901,7 @@ function TrackingLookup({ onLanding = false }) {
 
     setBuscando(true);
     setError("");
+    setConsultaSinResultados(null);
     setResultado(null);
     setResultados(null);
     setAbierto(null);
@@ -912,6 +916,7 @@ function TrackingLookup({ onLanding = false }) {
         }
         if (!data || data.length === 0) {
           registrarEvento("tracking_busqueda", { modo: "tracking", resultado: "sin_resultados" });
+          setConsultaSinResultados({ modo, texto });
           setError("No encontramos ese número de tracking. Verifica que esté bien escrito o consúltanos por WhatsApp.");
           return;
         }
@@ -926,6 +931,7 @@ function TrackingLookup({ onLanding = false }) {
         }
         if (!data || data.length === 0) {
           registrarEvento("tracking_busqueda", { modo: "cliente", resultado: "sin_resultados" });
+          setConsultaSinResultados({ modo, texto });
           setError("No encontramos envíos activos con ese código. Verifica que esté bien escrito o consúltanos por WhatsApp.");
           return;
         }
@@ -978,7 +984,18 @@ function TrackingLookup({ onLanding = false }) {
         <span className="landing-visually-hidden" role="status">
           {buscando ? "Buscando…" : resultado ? `Estado: ${estadoPublico(resultado.estado)}` : resultados ? "Consulta completada." : ""}
         </span>
-        {error && <div className="notice trackingError" role="alert">{error}</div>}
+        {error && (
+          <div className="notice trackingError">
+            <p role="alert">{error}</p>
+            {consultaSinResultados && (
+              <a className="landingTextLink" href={enlaceWhatsApp(whatsapp,
+                `Hola, OEx. No encontré resultados en el rastreo de oexni.com. ¿Me ayudan a revisar?\n\n${consultaSinResultados.modo === "tracking" ? "Tracking" : "Código de cliente"}: ${consultaSinResultados.texto}`
+              )} target="_blank" rel="noreferrer">
+                <IconWhatsapp size={16} /> Consultar por WhatsApp
+              </a>
+            )}
+          </div>
+        )}
 
         {resultado && (
           <div className="trackingResult">
@@ -1151,9 +1168,9 @@ function CopyLine({ label, value, onCopy, copiado, actualizar, ancho }) {
     <div className={`copyLine${ancho ? " copyLineWide" : ""}`}>
       <div>
         <span>{label}</span>
-        <b className={actualizar ? "landing-update" : undefined} key={actualizar}>{value}</b>
+        <b className={actualizar ? "landing-update" : undefined} key={actualizar}>{value || "Por completar"}</b>
       </div>
-      <button type="button" aria-label={`Copiar ${label}`} onClick={() => onCopy(label, value)}>
+      <button type="button" aria-label={`Copiar ${label}`} disabled={!value} onClick={() => onCopy(label, value)}>
         {copiado === label ? <CheckLucide size={16} aria-hidden="true" /> : "Copiar"}
       </button>
     </div>
@@ -1804,7 +1821,7 @@ function RastreoPage() {
           </a>
           <InstallAppButton />
         </div>
-        <TrackingLookup />
+        <TrackingLookup whatsapp={whatsapp} />
       </main>
 
       <Footer />
