@@ -564,3 +564,20 @@
   .landingStoreGrid.revealIn .landingStoreTile { animation: none; }
   .landingStoreTile:hover { transform: none; }
 }
+
+/* Dirección ocupa una franja completa con contenido alineado a la portada. */
+.landingPage .addressSection {
+  max-width: none;
+  margin-top: clamp(20px, 4vw, 42px);
+  background:
+    radial-gradient(ellipse at 86% 6%, #285f9d 0%, transparent 58%),
+    linear-gradient(116deg, #0b2449, #184b83 72%, #245d97);
+}
+.landingPage .addressSection .sectionTitle h2 { color: #fff; }
+.landingPage .addressSection .sectionTitle p { color: #e0edff; }
+.landingPage .addressSection .addressGridV2 {
+  max-width: calc(var(--container) - 2 * var(--landing-gutter));
+  margin: 0 auto;
+  border-color: #b1cdef;
+  box-shadow: 0 16px 38px #051e4a55;
+}
