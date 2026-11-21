@@ -578,40 +578,29 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
       <SiteNav whatsapp={config.whatsapp} inicioHref={prealertaHref === "/prealerta" ? "/" : `/?recomendacion=${recomendacion.toLowerCase()}`} prealertaHref={prealertaHref} />
       <ShoppingAnnouncement config={config} />
 
-      <header id="inicio" className="landingIntro">
-        <div className="landingIntroInner">
-          <p className="landingRoute">
-            <span>Miami</span>
-            <IconArrowRight size={15} />
-            <span>Managua y Ometepe</span>
-          </p>
-          <div className="landingIntroContent">
-            <h1>Comprá en Estados Unidos. <span>Recibí en Nicaragua.</span></h1>
-            <p>Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
-          </div>
-        </div>
-      </header>
-
       <main>
-        <section id="como-funciona" className="section landingStart" aria-label="Servicios de OEx">
-          <Reveal className="landingActionGrid">
-            <a className="landingAction landingActionPrimary" href="#direccion">
-              <IconPin size={21} />
-              <div><h2>Obtener mi dirección</h2><p>Personalizá y copiá los datos de tu casillero en Miami.</p></div>
-              <IconArrowRight size={18} />
-            </a>
-            <a className="landingAction" href={prealertaHref}>
-              <IconBox size={21} />
-              <div><h2>Prealertar un paquete</h2><p>Registrá el tracking que te envió la tienda.</p></div>
-              <IconArrowRight size={18} />
-            </a>
-            <a className="landingAction" href="/rastreo">
-              <IconSearch size={21} />
-              <div><h2>Rastrear mi paquete</h2><p>Consultá el estado con tu tracking o código de cliente.</p></div>
-              <IconArrowRight size={18} />
-            </a>
-          </Reveal>
+        <header id="inicio" className="landingIntro">
+          <div className="landingIntroInner">
+            <div className="landingIntroCopy">
+              <p className="landingRoute">
+                <span>Miami</span>
+                <span className="landingRouteFlow" aria-hidden="true" />
+                <span>Managua y Ometepe</span>
+              </p>
+              <h1>Comprá en Estados Unidos. <span>Recibí en Nicaragua.</span></h1>
+              <p className="landingIntroDescription">Usá tu dirección gratis en Miami y recibí tus paquetes por vía aérea o marítima.</p>
+            </div>
 
+            <TrackingLookup onLanding />
+
+            <div className="landingSecondaryActions" aria-label="Más servicios de OEx">
+              <a href="#direccion"><IconPin size={18} /> Obtener mi dirección <IconArrowRight size={15} /></a>
+              <a href={prealertaHref}><IconBox size={18} /> Prealertar un paquete <IconArrowRight size={15} /></a>
+            </div>
+          </div>
+        </header>
+
+        <section id="como-funciona" className="section landingStart" aria-label="Servicios de OEx">
           <aside id="tiendas" className="landingHelp">
             <div>
               <h2>¿Querés que compremos por vos?</h2>
@@ -875,7 +864,7 @@ function PipelineTimeline({ estado, destino, tipoEnvio, historial }) {
 }
 
 
-function TrackingLookup({ standalone = false }) {
+function TrackingLookup({ onLanding = false }) {
   const [modo, setModo] = useState("tracking"); // "tracking" | "cliente"
   const [valor, setValor] = useState("");
   const [buscando, setBuscando] = useState(false);
@@ -899,7 +888,7 @@ function TrackingLookup({ standalone = false }) {
   const buscar = async (e) => {
     e.preventDefault();
     const texto = valor.trim();
-    if (!texto) return;
+    if (!texto || buscando) return;
 
     setBuscando(true);
     setError("");
@@ -949,25 +938,27 @@ function TrackingLookup({ standalone = false }) {
   const prealertados = (resultados || []).filter((r) => r.estado === "Prealertado");
 
   return (
-    <section id="rastreo" className={`section trackingSection ${standalone ? "trackingSectionPage" : ""}`}>
-      <Reveal className="trackingBox card">
+    <section id="rastreo" aria-labelledby="tracking-heading" className={`section trackingSection ${onLanding ? "trackingSectionLanding" : "trackingSectionPage"}`}>
+      <div className="trackingBox card">
         <div className="trackingBoxCopy">
-          <span className="trackingEyebrow">Rastreo</span>
-          <h2>¿Dónde va tu paquete?</h2>
-          <p>Busca un paquete por su tracking o consulta todos tus envíos con tu código de cliente.</p>
+          <h2 id="tracking-heading">{onLanding ? "Rastreá tu paquete" : "¿Dónde va tu paquete?"}</h2>
+          {!onLanding && <p>Busca un paquete por su tracking o consulta todos tus envíos con tu código de cliente.</p>}
         </div>
 
-        <div className="trackingModeToggle" role="tablist" aria-label="Buscar por">
-          <button type="button" role="tab" aria-selected={modo === "tracking"} className={modo === "tracking" ? "trackingModeActive" : ""} onClick={() => cambiarModo("tracking")}>
+        <div className="trackingModeToggle" role="group" aria-label="Buscar por">
+          <button type="button" aria-pressed={modo === "tracking"} disabled={buscando} className={modo === "tracking" ? "trackingModeActive" : ""} onClick={() => cambiarModo("tracking")}>
             Por tracking
           </button>
-          <button type="button" role="tab" aria-selected={modo === "cliente"} className={modo === "cliente" ? "trackingModeActive" : ""} onClick={() => cambiarModo("cliente")}>
+          <button type="button" aria-pressed={modo === "cliente"} disabled={buscando} className={modo === "cliente" ? "trackingModeActive" : ""} onClick={() => cambiarModo("cliente")}>
             Por código de cliente
           </button>
         </div>
 
         <form className="trackingForm" onSubmit={buscar}>
           <input
+            required
+            autoComplete="off"
+            spellCheck={false}
             value={valor}
             onChange={(e) => setValor(e.target.value)}
             placeholder={modo === "tracking" ? "Ej. 1Z999AA10123456784" : "Ej. XXXXX"}
@@ -978,7 +969,10 @@ function TrackingLookup({ standalone = false }) {
           </button>
         </form>
 
-        {error && <div className="notice trackingError">{error}</div>}
+        <span className="landing-visually-hidden" role="status">
+          {buscando ? "Buscando…" : resultado ? `Estado: ${estadoPublico(resultado.estado)}` : resultados ? "Consulta completada." : ""}
+        </span>
+        {error && <div className="notice trackingError" role="alert">{error}</div>}
 
         {resultado && (
           <div className="trackingResult">
@@ -1065,7 +1059,7 @@ function TrackingLookup({ standalone = false }) {
             )}
           </div>
         )}
-      </Reveal>
+      </div>
     </section>
   );
 }
@@ -1772,7 +1766,7 @@ function RastreoPage() {
           </a>
           <InstallAppButton />
         </div>
-        <TrackingLookup standalone />
+        <TrackingLookup />
       </main>
 
       <Footer />
