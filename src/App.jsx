@@ -1367,6 +1367,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
   const [codigoCliente, setCodigoCliente] = useState("");
   const [codigoSocio, setCodigoSocio] = useState("");
   const [nombre, setNombre] = useState("");
+  const [correo, setCorreo] = useState("");
   const [whatsapp, setWhatsapp] = useState("+505 ");
   const [trackings, setTrackings] = useState([crearTrackingVacio()]);
   const [nota, setNota] = useState("");
@@ -1471,9 +1472,16 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
         origenRecomendacion = "manual";
       }
 
+      const correoNuevo = tipoCliente === "nuevo" ? correo.trim() : "";
+      if (correoNuevo && !/^[^\s@]+@[^\s@]+[.][^\s@]+$/.test(correoNuevo)) {
+        setMensaje("Revisá que el correo electrónico esté bien escrito.");
+        return;
+      }
+
       const registros = trackingsCompletos.map((t) => ({
         cliente: tipoCliente === "nuevo" ? nombre.trim() : null,
         contacto: normalizarWhatsapp(whatsapp),
+        ...(correoNuevo ? { correo_cliente: correoNuevo } : {}),
         cliente_codigo: tipoCliente === "existente" && codigoCliente.trim() ? codigoCliente.trim().toUpperCase() : null,
         destino: t.destino,
         tipo_envio: t.tipoEnvio,
@@ -1504,6 +1512,7 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
       setCodigoCliente("");
       setCodigoSocio("");
       setNombre("");
+      setCorreo("");
       setWhatsapp("+505 ");
       setTrackings([crearTrackingVacio()]);
       setNota("");
@@ -1627,6 +1636,14 @@ function PrealertaPage({ identificadorRecomendacion = "" }) {
               <small className="helpText">Incluye el código del país. Puedes cambiar +505 si tu WhatsApp es de otro país.</small>
             </label>
           </div>
+
+          {tipoCliente === "nuevo" && (
+            <label>
+              Correo electrónico (opcional)
+              <input type="email" autoComplete="email" autoCapitalize="none" maxLength={254}
+                value={correo} onChange={(e) => setCorreo(e.target.value)} placeholder="Ej. nombre@correo.com" />
+            </label>
+          )}
 
           {!socioRecomendacion && (
             <label>
