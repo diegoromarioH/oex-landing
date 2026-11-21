@@ -1,48 +1,113 @@
-/* La portada usa tipografía, bordes y color para marcar la jerarquía. */
+/* OEx: portada nocturna y elementos interactivos de alto contraste. */
 .landingPage {
   --container: 1120px;
   --landing-gutter: clamp(18px, 4.5vw, 44px);
   --landing-space: clamp(38px, 6vw, 78px);
-  --landing-ink: #152942;
-  --landing-copy: #475971;
-  --landing-accent: #9f3a27;
-  --landing-edge: #ced9e7;
-  --landing-wash: #edf3fa;
-  background: #fafbfc;
+  --landing-bg: #091222;
+  --landing-panel: #111f34;
+  --landing-ink: #f3f7ff;
+  --landing-copy: #becde2;
+  --landing-accent: #a0efff;
+  --landing-coral: #ffab94;
+  --landing-edge: #344e6e;
+  --landing-hover: #1d3450;
+  --line: var(--landing-edge);
+  --muted: var(--landing-copy);
+  background: var(--landing-bg);
   color: var(--landing-ink);
+  color-scheme: dark;
 }
 
 .landingPage .topNav {
   padding-inline: max(var(--landing-gutter), calc((100% - var(--container)) / 2));
-  background: #fffffff5;
+  background: #091222f2;
   border-bottom-color: var(--landing-edge);
-  color: var(--landing-ink);
 }
 
-.landingPage .landingWordmark {
-  color: var(--landing-ink);
-  font: 800 1.65rem/.92 var(--font-display);
-  letter-spacing: -.08em;
+.landingPage .landingLogo {
+  display: grid;
+  position: relative;
+  overflow: hidden;
+  place-items: center;
+  width: 88px;
+  height: 44px;
+  flex: 0 0 88px;
+  border: 1px solid #d2e6f6;
+  border-radius: 10px;
+  background: #f4f8ff;
 }
 
-.landingPage .topNav .brand .landingWordmark span,
-.landingPage .footer .landingWordmark span { display: inline; color: var(--landing-accent); font: inherit; }
-.landingPage .brand .landingBrandName { color: var(--landing-copy); }
-.landingPage .navLinks { background: #fff; border-color: var(--landing-edge); }
-.landingPage .navLinks a { color: var(--landing-ink); }
-.landingPage .navLinks a:hover { color: var(--landing-ink); background: var(--landing-wash); }
-.landingPage .menuToggle { background: #fff; border-color: var(--landing-edge); color: var(--landing-ink); }
+.landingLogo img {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 78px;
+  height: 78px;
+  max-width: none;
+  transform: translate(-50%, -50%);
+}
+
+.landingPage .brand .landingBrandName,
+.landingPage .navLinks a { color: var(--landing-copy); }
+
+.landingPage .navLinks { background: var(--landing-panel); border-color: var(--landing-edge); }
+.landingPage .navLinks a:hover { color: var(--landing-ink); background: var(--landing-hover); }
+.landingPage .menuToggle { background: var(--landing-panel); border-color: var(--landing-edge); color: var(--landing-ink); }
 .landingPage .prealertNav,
-.landingPage .navLinks a.mobilePrealerta { background: var(--landing-accent); color: #fff; }
-.landingPage .whatsappNav { background: #fff; border: 1px solid var(--landing-edge); color: var(--landing-ink); box-shadow: none; }
+.landingPage .navLinks a.mobilePrealerta { background: var(--landing-coral); color: #321b1a; }
+.landingPage .whatsappNav { background: #12263d; border: 1px solid var(--landing-edge); color: var(--landing-ink); box-shadow: none; }
 
 .landingIntro {
-  padding: clamp(38px, 7vw, 90px) var(--landing-gutter) clamp(28px, 4.5vw, 54px);
-  background: linear-gradient(132deg, #edf3fa 8%, #fafbfc 70%, #f8efe9);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(34px, 6vw, 80px) var(--landing-gutter) clamp(28px, 5vw, 64px);
+  background:
+    radial-gradient(ellipse at 24% 5%, #164765 0, transparent 56%),
+    radial-gradient(ellipse at 91% 35%, #292c62 0, transparent 51%),
+    linear-gradient(145deg, #101b30, var(--landing-bg) 85%);
 }
 
-.landingIntroInner { width: min(100%, 880px); margin: 0 auto; text-align: center; animation: landing-arrival .48s var(--ease) both; }
-.landingRoute { display: inline-flex; align-items: center; gap: 8px; color: var(--landing-copy); font-size: .82rem; font-weight: 700; margin: 0 0 12px; }
+.landingIntro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(#8cc8f219 1px, transparent 1px),
+    linear-gradient(90deg, #8cc8f219 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(#000, transparent 92%);
+}
+
+.landingIntroInner { width: min(100%, 920px); margin: 0 auto; text-align: center; animation: landing-arrival .56s var(--ease) both; }
+.landingRoute { display: inline-flex; align-items: center; gap: 9px; color: var(--landing-copy); font-size: .82rem; font-weight: 700; margin: 0 0 15px; }
+.landingRouteLine {
+  display: inline-block;
+  width: clamp(32px, 8vw, 100px);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #3c7292, #716bac);
+  position: relative;
+}
+
+.landingRouteLine::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  inset: -3px auto auto 0;
+  border-radius: 50%;
+  background: var(--landing-accent);
+  box-shadow: 0 0 13px #81eaee;
+  animation: oex-route 3.4s cubic-bezier(.37, 0, .45, 1) 2 forwards;
+}
+
+@keyframes oex-route {
+  0% { left: 0; opacity: .5; }
+  20% { opacity: 1; }
+  85%, 100% { left: calc(100% - 8px); opacity: 1; }
+}
+
 .landingIntro h1 { font-size: clamp(33px, 6vw, 71px); line-height: 1.04; letter-spacing: -.065em; text-wrap: balance; }
 .landingIntro h1 span { color: var(--landing-accent); }
 .landingIntro h1 + p { color: var(--landing-copy); max-width: 48ch; margin: 16px auto 0; font-size: clamp(.97rem, 2vw, 1.12rem); }
@@ -53,8 +118,7 @@
 }
 
 .landingPage .section { width: 100%; padding: var(--landing-space) var(--landing-gutter); scroll-margin-top: var(--nav-h); }
-.landingPage .landingStart { padding-block: clamp(18px, 3vw, 34px) 0; }
-
+.landingPage .landingStart { padding-block: clamp(10px, 2.5vw, 30px) 0; }
 .landingActionGrid { display: grid; gap: 12px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 .landingAction {
@@ -66,19 +130,27 @@
   padding: clamp(13px, 2vw, 21px);
   border: 1px solid var(--landing-edge);
   border-radius: 15px;
-  background: #fff;
+  background: linear-gradient(145deg, #17273f, var(--landing-panel));
   color: var(--landing-ink);
   text-decoration: none;
 }
 
-.landingActionPrimary { color: #fff; background: var(--landing-ink); border-color: var(--landing-ink); }
-.landingAction:not(.landingActionPrimary):hover { background: var(--landing-wash); border-color: #8196b0; }
-.landingActionPrimary:hover { background: #243e5e; }
+.landingActionPrimary {
+  border-color: #5884a1;
+  background: linear-gradient(145deg, #123851, #1b2848);
+  box-shadow: inset 0 1px #9aeeff4d, 0 8px 28px #0e52893d;
+}
+.landingAction:hover { border-color: var(--landing-accent); transform: translateY(-3px); box-shadow: 0 10px 28px #0005; }
 .landingAction:focus-visible { outline-color: var(--landing-accent); }
+.landingAction > svg:first-child { color: var(--landing-accent); }
 .landingAction h2 { font-size: clamp(.96rem, 1.6vw, 1.12rem); letter-spacing: -.025em; }
 .landingAction p { margin: 6px 0 0; font-size: .84rem; color: var(--landing-copy); }
-.landingActionPrimary p { color: #d2dff0; }
-.landingAction > svg:last-child { align-self: center; }
+.landingAction > svg:last-child { align-self: center; transition: transform .24s var(--ease); }
+.landingAction:hover > svg:last-child,
+.landingAction:focus-visible > svg:last-child { transform: translateX(3px); }
+.landingActionGrid.revealIn .landingAction { animation: landing-arrival .55s var(--ease) both; }
+.landingActionGrid.revealIn .landingAction:nth-child(2) { animation-delay: .075s; }
+.landingActionGrid.revealIn .landingAction:nth-child(3) { animation-delay: .15s; }
 
 .landingHelp {
   display: flex;
@@ -92,23 +164,37 @@
 }
 .landingHelp h2 { font-size: 1rem; }
 .landingHelp p { margin: 5px 0 0; color: var(--landing-copy); font-size: .89rem; }
-.landingTextLink { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; color: #85311f; font-weight: 700; text-underline-offset: 4px; }
+.landingTextLink { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; color: var(--landing-coral); font-weight: 700; text-underline-offset: 4px; }
 .landingTextLink:hover { color: var(--landing-ink); }
 .landingHelpLinks { display: flex; flex-wrap: wrap; gap: 8px 25px; margin-top: 18px; }
 
 .landingPage .sectionTitle { margin-bottom: clamp(17px, 2.6vw, 28px); }
 .landingPage .sectionTitle h2 { color: var(--landing-ink); letter-spacing: -.055em; text-wrap: balance; }
-.landingPage .sectionTitle > span { color: var(--landing-accent); }
-.landingPage .sectionTitle p { color: var(--landing-copy); }
-.landingPage .ratesTableWrap,
-.landingPage .addressForm,
-.landingPage .addressCard,
-.landingPage .faqItem { border: 1px solid var(--landing-edge); border-radius: 15px; box-shadow: none; }
-.landingPage .ratesSection { background: none; }
-.landingPage .rateCard { border-color: var(--landing-edge); box-shadow: none; }
+.landingPage .sectionTitle > span { color: var(--landing-coral); }
+.landingPage .sectionTitle p,
+.landingPage .notice,
+.landingPage .rateTime,
+.landingPage .faqItem p { color: var(--landing-copy); }
+.landingPage .card,
+.landingPage .faqItem,
+.landingPage .calculatorResult {
+  background: var(--landing-panel);
+  border: 1px solid var(--landing-edge);
+  border-radius: 15px;
+  box-shadow: none;
+}
+.landingPage :is(.addressForm label, .calculatorCard label, .copyLine b, .rateDestino, .ratePrice strong, .faqItem summary) { color: var(--landing-ink); }
+.landingPage :is(.ratesSection, .addressSection) { background: transparent; }
+.landingPage .rateCard { background: #0b182c; border-color: var(--landing-edge); box-shadow: none; }
+.landingPage .rateCard:hover { border-color: var(--landing-accent); }
+.landingPage :is(input, select, .notice, .copied) { background: #0b182c; color: var(--landing-ink); border-color: var(--landing-edge); }
+.landingPage input::placeholder { color: #9db1cf; }
+.landingPage .copyLine button { background: var(--landing-hover); color: var(--landing-ink); }
 .landingPage .copyAllButton,
-.landingPage .blueButton { background: var(--landing-ink); color: #fff; box-shadow: none; }
-.landingPage .notice { color: var(--landing-copy); }
+.landingPage .blueButton { background: var(--landing-accent); color: #09273b; box-shadow: none; }
+.landingPage .addressModeBadge { color: var(--landing-accent); background: #102c44; border-color: #426581; }
+.landingPage .calculatorResult span,
+.landingPage .faqItem summary::after { color: var(--landing-accent); }
 .landingPage .dateSection { padding-top: 0; }
 .landingPage .faqSection { padding-top: 12px; }
 .landingPage .finalCtaNew {
@@ -117,13 +203,17 @@
   margin: 0 auto clamp(30px, 6vw, 62px);
   padding: clamp(18px, 4vw, 36px);
   border-radius: 16px;
-  background: var(--landing-ink);
-  color: #fff;
+  border: 1px solid var(--landing-edge);
+  background: linear-gradient(120deg, #152b47, #202241);
 }
-.landingPage .finalCtaNew p { color: #d2dff0; }
+.landingPage .finalCtaNew p { color: var(--landing-copy); }
 .landingPage .finalCtaNew a { white-space: normal; max-width: 100%; }
-.landingPage .footer .landingWordmark { color: #fff; }
-.landingPage .footer .landingWordmark span { color: #ffad98; }
+.landingPage .finalCtaNew .greenCta,
+.landingPage .floatingWhatsApp { background: #096544; color: #fff; }
+.landingPage .footer { border-top: 1px solid var(--landing-edge); }
+.landingPage .footer a { color: var(--landing-coral); }
+.landingPage .floatingWhatsApp { width: 48px; height: 48px; box-shadow: 0 6px 18px #0005; }
+.landingPage .floatingWhatsApp::before { content: none; }
 
 @media (min-width: 900px) {
   .landingPage .navLinks { background: transparent; }
@@ -142,16 +232,9 @@
   .landingIntro h1 span { display: block; }
 }
 
-.landingPage .addressModeBadge { color: #85311f; }
-.landingPage .calculatorResult { background: var(--landing-ink); }
-.landingPage .calculatorResult span { color: #ffb7a5; }
-.landingPage .finalCtaNew .greenCta,
-.landingPage .floatingWhatsApp { background: #096544; color: #fff; }
-.landingPage .footer a { color: #ffb7a5; }
-
-.landingPage .floatingWhatsApp {
-  width: 48px;
-  height: 48px;
-  box-shadow: 0 6px 18px #0e382a38;
+@media (prefers-reduced-motion: reduce) {
+  .landingIntroInner,
+  .landingRouteLine::after,
+  .landingActionGrid.revealIn .landingAction { animation: none; }
+  .landingRouteLine::after { left: calc(100% - 8px); }
 }
-.landingPage .floatingWhatsApp::before { content: none; }
