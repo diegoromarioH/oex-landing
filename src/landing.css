@@ -8,7 +8,7 @@
   --landing-ink: #142743;
   --landing-copy: #455973;
   --landing-accent: #175b9a;
-  --landing-coral: #a33620;
+  --landing-coral: var(--brand-orange-strong);
   --landing-edge: #cdd9e8;
   --landing-hover: #edf5ff;
   --line: var(--landing-edge);
@@ -136,7 +136,7 @@
 
 /* Herramientas de la portada: dos columnas de una misma superficie. */
 .landingPage {
-  --landing-orange: #bd3c1e;
+  --landing-orange: var(--brand-orange-strong);
   --landing-orange-ink: #fff;
 }
 .landingPage .copyAllButton {
@@ -648,7 +648,26 @@
 .landingPage .addressSection .copyLineWide b { font-size: .94rem; }
 .landingPage .addressSection .copyLine button { background: #e7f0fd; }
 .landingPage .addressSection .copyAllButton {
-  background: linear-gradient(112deg, #a8351e, #bd3c1e);
+  background: linear-gradient(112deg, #a8351e, var(--brand-orange-strong));
   box-shadow: 0 6px 15px #b63c2838;
 }
 .landingPage .addressSection .copyAllButton:hover { background: #a3321b; }
+
+/* Fecha estimada contrasta con la franja azul del casillero. */
+.landingPage .dateSection {
+  max-width: none;
+  padding-top: var(--landing-space);
+  background:
+    radial-gradient(ellipse at 92% 0%, #ffbb87 0%, transparent 56%),
+    linear-gradient(115deg, var(--brand-orange), #ff925d);
+}
+.landingPage .dateSection .sectionTitle :is(span, h2, p) { color: #142743; }
+.landingPage .dateSection .calculatorGrid {
+  max-width: calc(var(--container) - 2 * var(--landing-gutter));
+  margin: 0 auto;
+  border-color: #efb494;
+  box-shadow: 0 15px 34px #792b1c29;
+}
+.landingPage .dateSection .calculatorGrid > .calculatorResult {
+  background: linear-gradient(145deg, #fffaf6, #ffeadb);
+}
