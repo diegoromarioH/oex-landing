@@ -471,3 +471,96 @@
   .landingIntroDescription { max-width: 41ch; }
   .trackingSectionLanding { align-self: center; }
 }
+
+/* La paleta de la barra reaparece con distintos niveles de intensidad. */
+.landingPage {
+  --landing-warm-wash: #fff2e9;
+  --landing-violet-wash: #eeedff;
+  --landing-blue-wash: #eef6ff;
+}
+.landingPage .landingStart { border-top: 0; }
+.landingStores {
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid #e1d5e4;
+  border-radius: 19px;
+  background: linear-gradient(112deg, var(--landing-warm-wash), #faf5fb 46%, var(--landing-violet-wash));
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+.landingStores h2 {
+  margin: 0 0 14px;
+  color: var(--landing-ink);
+  font-size: clamp(1.12rem, 2.1vw, 1.48rem);
+  letter-spacing: -.035em;
+}
+.landingStoreGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(4px, 1vw, 10px);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.landingStoreTile {
+  display: grid;
+  place-items: center;
+  height: clamp(49px, 7.5vw, 74px);
+  min-width: 0;
+  padding: clamp(5px, 1.2vw, 12px);
+  background: #fff;
+  border: 1px solid #e1dfeb;
+  border-radius: 11px;
+  box-shadow: 0 3px 9px #34255b0c;
+  color: var(--landing-ink);
+  font-weight: 700;
+  font-size: clamp(.59rem, 1.2vw, .88rem);
+  overflow-wrap: anywhere;
+  transition: transform .22s var(--ease), border-color .22s var(--ease);
+}
+.landingStoreTile img {
+  width: 100%;
+  max-width: 96px;
+  height: 100%;
+  min-height: 0;
+  max-height: 30px;
+  object-fit: contain;
+  display: block;
+}
+.landingStoreTile img[alt="TEMU"] { max-height: 33px; }
+.landingStoreTile:hover { transform: translateY(-2px); border-color: #b7a8cd; }
+.landingStoreGrid.revealIn .landingStoreTile { animation: store-appear .42s var(--ease) both; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(2) { animation-delay: .05s; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(3) { animation-delay: .10s; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(4) { animation-delay: .15s; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(5) { animation-delay: .20s; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(6) { animation-delay: .25s; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(7) { animation-delay: .30s; }
+.landingStoreGrid.revealIn .landingStoreTile:nth-child(8) { animation-delay: .35s; }
+
+@keyframes store-appear {
+  from { opacity: 0; translate: 0 8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.landingPage .landingHelp { margin-top: 10px; }
+.landingPage .addressGridV2 > .addressForm { background: linear-gradient(148deg, #fff, var(--landing-blue-wash)); }
+.landingPage .addressGridV2 > .addressCard { background: linear-gradient(136deg, #fff, var(--landing-violet-wash)); }
+.landingPage .ratesTableWrap { background: linear-gradient(118deg, #fff 8%, #f1efff 92%); }
+.landingPage .ratesTableWrap .rateCard { background: #fff; }
+.landingPage .calculatorGrid > .calculatorResult { background: linear-gradient(138deg, var(--landing-warm-wash), #f4edfb); }
+.landingPage .finalCtaNew {
+  background: linear-gradient(106deg, #8f3025, #763253 55%, #3e3677);
+  color: #fff;
+  border-color: transparent;
+}
+.landingPage .finalCtaNew p { color: #ffede9; }
+.landingPage .finalCtaNew .greenCta { background: #fff; color: #852f29; box-shadow: none; }
+.landingPage .finalCtaNew .greenCta:hover { background: #fff1e9; }
+.landingPage .finalCtaNew a:focus-visible { outline-color: #fff; }
+
+@media (min-width: 900px) {
+  .landingStoreGrid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landingStoreGrid.revealIn .landingStoreTile { animation: none; }
+  .landingStoreTile:hover { transform: none; }
+}

@@ -600,8 +600,14 @@ Phone Number (Teléfono): ${MIAMI_ADDRESS.phone}`;
           </div>
         </header>
 
-        <section id="como-funciona" className="section landingStart" aria-label="Servicios de OEx">
-          <aside id="tiendas" className="landingHelp">
+        <section id="como-funciona" className="section landingStart" aria-label="Tiendas y compra asistida">
+          <div id="tiendas" className="landingStores">
+            <h2>Comprá en tus tiendas favoritas</h2>
+            <Reveal className="landingStoreGrid" as="ul" aria-label="Tiendas en línea">
+              {STORES.map((store) => <LandingStoreLogo key={store.name} store={store} />)}
+            </Reveal>
+          </div>
+          <aside className="landingHelp">
             <div>
               <h2>¿Querés que compremos por vos?</h2>
               <p>Compra asistida en SHEIN, Amazon y Temu para compras menores a US$200.</p>
@@ -1165,6 +1171,17 @@ function FloatingWhatsApp({ whatsapp, mensaje }) {
     >
       <IconWhatsapp size={26} />
     </a>
+  );
+}
+
+function LandingStoreLogo({ store }) {
+  const [error, setError] = useState(false);
+  return (
+    <li className="landingStoreTile">
+      {error
+        ? <span>{store.name}</span>
+        : <img src={`/tiendas/${store.file.replace(/\.png$/, ".webp")}`} alt={store.name} loading="lazy" decoding="async" onError={() => setError(true)} />}
+    </li>
   );
 }
 
